@@ -6,7 +6,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const globalErrorHandler = require("./controllers/errorController");
-const tourRouter = require("./routes/tours");
+const tourRouter = require("./routes/tourRouter");
 
 dotenv.config();
 const app = express();
