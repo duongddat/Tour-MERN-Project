@@ -4,6 +4,8 @@ const tourController = require("../controllers/tourController");
 
 const router = express.Router();
 
+router.route("/search").get(tourController.getTourBySearch);
+
 router
   .route("/")
   .get(tourController.getAllTours)
