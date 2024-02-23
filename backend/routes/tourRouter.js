@@ -4,6 +4,7 @@ const tourController = require("../controllers/tourController");
 
 const router = express.Router();
 
+router.route("/monthy-statistic/:year").get(tourController.getMonthStatistic);
 router.route("/search").get(tourController.getTourBySearch);
 
 router

@@ -1,8 +1,8 @@
 const Tour = require("../models/tourModel");
-const cathAsync = require("../utils/catchAsync");
+const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
-exports.getAllTours = cathAsync(async (req, res, next) => {
+exports.getAllTours = catchAsync(async (req, res, next) => {
   //BUILD QUERY
   //1A. Filtering
   const queryObj = { ...req.query };
@@ -56,7 +56,7 @@ exports.getAllTours = cathAsync(async (req, res, next) => {
   });
 });
 
-exports.getTourBySearch = cathAsync(async (req, res, next) => {
+exports.getTourBySearch = catchAsync(async (req, res, next) => {
   const key = new RegExp(req.query.key, "i"); // Tạo 1 biểu thức chính quy (cờ i biểu thị tìm kiếm ko phân biệt hoa thường)
   const duration = parseInt(req.query.duration);
   const maxGroupSize = parseInt(req.query.maxGroupSize);
@@ -77,7 +77,7 @@ exports.getTourBySearch = cathAsync(async (req, res, next) => {
   const tours = await Tour.find(query);
 
   if (tours.length === 0) {
-    return next(new AppError("The search key was not found in any tours", 404));
+    next(new AppError("The search key was not found in any tours", 404));
   }
 
   res.status(200).json({
@@ -90,12 +90,12 @@ exports.getTourBySearch = cathAsync(async (req, res, next) => {
   });
 });
 
-exports.getTour = cathAsync(async (req, res, next) => {
+exports.getTour = catchAsync(async (req, res, next) => {
   const id = req.params.id;
   const tour = await Tour.findById(id);
 
   if (!tour) {
-    return next(new AppError("No tour found with that ID", 404));
+    next(new AppError("No tour found with that ID", 404));
   }
 
   res.status(200).json({
@@ -107,7 +107,7 @@ exports.getTour = cathAsync(async (req, res, next) => {
   });
 });
 
-exports.createTour = cathAsync(async (req, res, next) => {
+exports.createTour = catchAsync(async (req, res, next) => {
   const newTour = await Tour.create(req.body);
 
   res.status(200).json({
@@ -119,7 +119,7 @@ exports.createTour = cathAsync(async (req, res, next) => {
   });
 });
 
-exports.updateTour = cathAsync(async (req, res, next) => {
+exports.updateTour = catchAsync(async (req, res, next) => {
   const id = req.params.id;
   const tour = await Tour.findByIdAndUpdate(id, req.body, {
     new: true,
@@ -127,7 +127,7 @@ exports.updateTour = cathAsync(async (req, res, next) => {
   });
 
   if (!tour) {
-    return next(new AppError("No tour found with that ID", 404));
+    next(new AppError("No tour found with that ID", 404));
   }
 
   res.status(200).json({
@@ -139,17 +139,61 @@ exports.updateTour = cathAsync(async (req, res, next) => {
   });
 });
 
-exports.deleteTour = cathAsync(async (req, res, next) => {
+exports.deleteTour = catchAsync(async (req, res, next) => {
   const id = req.params.id;
   const tour = await Tour.findByIdAndDelete(id);
 
   if (!tour) {
-    return next(new AppError("No tour found with that ID", 404));
+    next(new AppError("No tour found with that ID", 404));
   }
 
   res.status(204).json({
     status: "success",
     message: "Successfully deleted",
     data: null,
+  });
+});
+
+exports.getMonthStatistic = catchAsync(async (req, res, next) => {
+  const year = req.params.year * 1;
+  const statistic = await Tour.aggregate([
+    {
+      $unwind: "$createdAt",
+    },
+    {
+      $match: {
+        createdAt: {
+          $gte: new Date(`${year}-01-01`),
+          $lte: new Date(`${year}-12-31`),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: { $month: "$createdAt" },
+        numTourCreate: { $sum: 1 },
+        tours: { $push: "$title" },
+      },
+    },
+    {
+      $addFields: { month: "$_id" },
+    },
+    {
+      $project: {
+        _id: 0,
+      },
+    },
+    {
+      $sort: { numTourCreate: -1 },
+    },
+    {
+      $limit: 12,
+    },
+  ]);
+  res.status(200).json({
+    status: "success",
+    data: {
+      statistic,
+    },
   });
 });

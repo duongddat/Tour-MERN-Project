@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 
 const globalErrorHandler = require("./controllers/errorController");
 const tourRouter = require("./routes/tourRouter");
+const userRouter = require("./routes/userRouter");
 
 dotenv.config();
 const app = express();
@@ -35,6 +36,7 @@ app.use(cookieParser());
 
 //ROUTES
 app.use("/tours", tourRouter);
+app.use("/users", userRouter);
 
 app.use(globalErrorHandler);
 //SEVER
