@@ -1,9 +1,20 @@
 const express = require("express");
 
 const userController = require("../controllers/userController");
+const authController = require("../controllers/authController");
 
 const router = express.Router();
 
+//User
+router.get(
+  "/me",
+  authController.protect,
+  userController.getMe,
+  userController.getUser
+);
+router.patch("/updateMe", authController.protect, userController.updateMe);
+
+//Admin Manager User
 router
   .route("/")
   .get(userController.getAllUsers)
