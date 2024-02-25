@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
+const otpGenerator = require("otp-generator");
 
 const userSchema = new mongoose.Schema(
   {
@@ -42,7 +43,7 @@ const userSchema = new mongoose.Schema(
       },
     },
     passwordChangedAt: Date,
-    passwordResetToken: String,
+    passwordOTPReset: String,
     passwordResetExpires: Date,
   },
   { timestamps: true }
@@ -88,19 +89,18 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   return false;
 };
 
-userSchema.methods.createPasswordResetToken = function () {
-  const resetToken = crypto.randomBytes(32).toString("hex");
+userSchema.methods.createOTPPasswordReset = function () {
+  const OTP = otpGenerator.generate(6, {
+    upperCaseAlphabets: false,
+    specialChars: false,
+  });
+  this.passwordOTPReset = OTP;
 
-  this.passwordResetToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
-    .digest("hex");
-
-  console.log({ resetToken }, this.passwordResetToken);
+  console.log({ OTP }, this.passwordOTPReset);
 
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
-  return resetToken;
+  return OTP;
 };
 
 const User = mongoose.model("User", userSchema);
