@@ -6,9 +6,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const globalErrorHandler = require("./controllers/errorController");
-const tourRouter = require("./routes/tourRouter");
-const userRouter = require("./routes/userRouter");
 const authRouter = require("./routes/authRouter");
+const userRouter = require("./routes/userRouter");
+const tourRouter = require("./routes/tourRouter");
+const countryRouter = require("./routes/countryRouter");
 
 dotenv.config();
 const app = express();
@@ -40,6 +41,7 @@ app.use(cookieParser());
 
 //ROUTES
 app.use("/tours", tourRouter);
+app.use("/countries", countryRouter);
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
 
