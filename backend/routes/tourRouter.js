@@ -1,8 +1,12 @@
 const express = require("express");
 
 const tourController = require("../controllers/tourController");
+const authController = require("../controllers/authController");
+const reviewRouter = require("../routes/reviewRouter");
 
 const router = express.Router();
+
+router.use("/:tourId/reviews", reviewRouter);
 
 router.route("/country/:slug").get(tourController.getTourByCountry);
 router.route("/monthy-statistic/:year").get(tourController.getMonthStatistic);

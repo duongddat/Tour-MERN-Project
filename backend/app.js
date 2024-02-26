@@ -10,6 +10,7 @@ const authRouter = require("./routes/authRouter");
 const userRouter = require("./routes/userRouter");
 const tourRouter = require("./routes/tourRouter");
 const countryRouter = require("./routes/countryRouter");
+const reviewRouter = require("./routes/reviewRouter");
 
 dotenv.config();
 const app = express();
@@ -42,6 +43,7 @@ app.use(cookieParser());
 //ROUTES
 app.use("/tours", tourRouter);
 app.use("/countries", countryRouter);
+app.use("/reviews", reviewRouter);
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
 
