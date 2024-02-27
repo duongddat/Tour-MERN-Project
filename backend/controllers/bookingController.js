@@ -73,24 +73,21 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 });
 
 exports.paidTour = catchAsync(async (req, res, next) => {
-  const updateBooking = await Booking.findByIdAndUpdate(
-    req.query.id,
+  const updateBooking = await Booking.updateOne(
+    { _id: req.query.id },
     {
       paid: true,
     },
     { new: true }
   );
 
-  if (!updateBooking) {
+  if (!updateBooking.acknowledged) {
     next(new AppError("Try to later!!!!", 401));
   }
 
   res.status(200).json({
     status: "success",
     message: "Successfully to Pay",
-    data: {
-      updateBooking,
-    },
   });
 });
 
