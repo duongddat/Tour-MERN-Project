@@ -1,9 +1,72 @@
+const multer = require("multer");
+const sharp = require("sharp");
+
 const Tour = require("../models/tourModel");
 const Country = require("../models/countryModel");
-const AIPFeatures = require("../utils/apiFeatures");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const AIPFeatures = require("../utils/apiFeatures");
 
+//=====================CONFIGURE IMG FILE=============================
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Not an image! Please upload only images.", 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadImages = upload.fields([
+  { name: "imageCover", maxCount: 1 },
+  { name: "images", maxCount: 5 },
+]);
+//-------------RESIZE IMAGE AND SAVE FILE TO FOLDER--------------
+exports.resizeImages = catchAsync(async (req, res, next) => {
+  if (!req.files.imageCover && !req.files.images) {
+    return next();
+  }
+
+  if (req.files.imageCover) {
+    const imageCover = `tour-cover-${Date.now()}-cover.jpeg`;
+    await sharp(req.files.imageCover[0].buffer)
+      .resize(2000, 1333)
+      .toFormat("jpeg")
+      .jpeg({ quality: 95 })
+      .toFile(`public/img/tour/${imageCover}`);
+
+    //Convert to factory function req.body
+    req.body.imageCover = imageCover;
+  }
+
+  if (req.files.images) {
+    req.body.images = [];
+
+    await Promise.all(
+      req.files.images.map(async (file, i) => {
+        const filename = `tour-images-${Date.now()}-${i + 1}.jpeg`;
+
+        await sharp(file.buffer)
+          .resize(2000, 1333)
+          .toFormat("jpeg")
+          .jpeg({ quality: 95 })
+          .toFile(`public/img/tour/${filename}`);
+
+        req.body.images.push(filename);
+      })
+    );
+  }
+
+  next();
+});
+
+//===================== END - CONFIGURE IMG FILE=========================
 exports.getAllTours = catchAsync(async (req, res, next) => {
   const features = new AIPFeatures(Tour.find(), req.query)
     .filter()
@@ -28,7 +91,7 @@ exports.getTourByCountry = catchAsync(async (req, res, next) => {
 
   const country = await Country.findOne({ slug });
   if (!country) {
-    next(new AppError("The slug was not found in any countries", 404));
+    return next(new AppError("The slug was not found in any countries", 404));
   }
 
   const features = new AIPFeatures(
@@ -43,7 +106,7 @@ exports.getTourByCountry = catchAsync(async (req, res, next) => {
   const tours = await features.query;
 
   if (tours.length === 0) {
-    next(new AppError("Not found in any tours", 404));
+    return next(new AppError("Not found in any tours", 404));
   }
 
   res.status(200).json({
@@ -77,7 +140,7 @@ exports.getTourBySearch = catchAsync(async (req, res, next) => {
   const tours = await Tour.find(query);
 
   if (tours.length === 0) {
-    next(new AppError("The search key was not found in any tours", 404));
+    return next(new AppError("The search key was not found in any tours", 404));
   }
 
   res.status(200).json({
@@ -95,7 +158,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(id).populate("reviews");
 
   if (!tour) {
-    next(new AppError("No tour found with that ID", 404));
+    return next(new AppError("No tour found with that ID", 404));
   }
 
   res.status(200).json({
@@ -120,14 +183,16 @@ exports.createTour = catchAsync(async (req, res, next) => {
 });
 
 exports.updateTour = catchAsync(async (req, res, next) => {
+  console.log("Update");
   const id = req.params.id;
+
   const tour = await Tour.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
   });
 
   if (!tour) {
-    next(new AppError("No tour found with that ID", 404));
+    return next(new AppError("No tour found with that ID", 404));
   }
 
   res.status(200).json({
@@ -144,7 +209,7 @@ exports.deleteTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findByIdAndDelete(id);
 
   if (!tour) {
-    next(new AppError("No tour found with that ID", 404));
+    return next(new AppError("No tour found with that ID", 404));
   }
 
   res.status(204).json({

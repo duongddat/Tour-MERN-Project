@@ -15,12 +15,20 @@ router.route("/search").get(tourController.getTourBySearch);
 router
   .route("/")
   .get(tourController.getAllTours)
-  .post(tourController.createTour);
+  .post(
+    tourController.uploadImages,
+    tourController.resizeImages,
+    tourController.createTour
+  );
 
 router
   .route("/:id")
   .get(tourController.getTour)
-  .patch(tourController.updateTour)
+  .patch(
+    tourController.uploadImages,
+    tourController.resizeImages,
+    tourController.updateTour
+  )
   .delete(tourController.deleteTour);
 
 module.exports = router;

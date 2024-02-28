@@ -1,6 +1,40 @@
+const multer = require("multer");
+const sharp = require("sharp");
+
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+
+//=====================CONFIGURE IMG FILE=========================
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) {
+    cb(null, true);
+  } else {
+    cb(new AppError("Not an image! Please upload only images.", 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter,
+});
+
+exports.uploadUserPhoto = upload.single("photo");
+
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
+  console.log("USer");
+  if (!req.file) return next();
+  const ext = req.file.mimetype.split("/")[1];
+  req.file.filename = `user-${req.user.id}-${Date.now()}.${ext}`;
+
+  await sharp(req.file.buffer)
+    .resize(500, 500)
+    .toFile(`public/img/user/${req.file.filename}`);
+
+  next();
+});
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find({});
@@ -20,7 +54,7 @@ exports.getUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(id);
 
   if (!user) {
-    next(new AppError("No user found with that ID", 404));
+    return next(new AppError("No user found with that ID", 404));
   }
 
   res.status(200).json({
@@ -51,7 +85,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   });
 
   if (!user) {
-    next(new AppError("No user found with that ID", 404));
+    return next(new AppError("No user found with that ID", 404));
   }
 
   res.status(200).json({
@@ -68,7 +102,7 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   const user = await User.findByIdAndDelete(id);
 
   if (!user) {
-    next(new AppError("No user found with that ID", 404));
+    return next(new AppError("No user found with that ID", 404));
   }
 
   res.status(204).json({

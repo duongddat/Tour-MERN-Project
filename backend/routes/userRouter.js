@@ -12,7 +12,13 @@ router.get(
   userController.getMe,
   userController.getUser
 );
-router.patch("/updateMe", authController.protect, userController.updateMe);
+router.patch(
+  "/updateMe",
+  authController.protect,
+  userController.uploadUserPhoto,
+  userController.resizeUserPhoto,
+  userController.updateMe
+);
 
 //Admin Manager User
 router
