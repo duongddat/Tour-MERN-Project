@@ -5,22 +5,19 @@ const authController = require("../controllers/authController");
 
 const router = express.Router();
 
+router.use(authController.protect);
 //User
-router.get(
-  "/me",
-  authController.protect,
-  userController.getMe,
-  userController.getUser
-);
+router.get("/me", userController.getMe, userController.getUser);
 router.patch(
   "/updateMe",
-  authController.protect,
   userController.uploadUserPhoto,
   userController.resizeUserPhoto,
   userController.updateMe
 );
 
 //Admin Manager User
+router.use(authController.restrictTo("admin"));
+
 router
   .route("/")
   .get(userController.getAllUsers)

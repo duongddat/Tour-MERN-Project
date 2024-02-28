@@ -82,7 +82,7 @@ exports.paidTour = catchAsync(async (req, res, next) => {
   );
 
   if (!updateBooking.acknowledged) {
-    next(new AppError("Try to later!!!!", 401));
+    return next(new AppError("Try to later!!!!", 401));
   }
 
   res.status(200).json({
@@ -120,7 +120,7 @@ exports.getBooking = catchAsync(async (req, res, next) => {
   const booking = await Booking.findById(id);
 
   if (!booking) {
-    next(new AppError("No booking found with that ID", 404));
+    return next(new AppError("No booking found with that ID", 404));
   }
 
   res.status(200).json({
@@ -137,7 +137,7 @@ exports.deleteBooking = catchAsync(async (req, res, next) => {
   const booking = await Booking.findByIdAndDelete(id);
 
   if (!booking) {
-    next(new AppError("No booking found with that ID", 404));
+    return next(new AppError("No booking found with that ID", 404));
   }
 
   res.status(204).json({

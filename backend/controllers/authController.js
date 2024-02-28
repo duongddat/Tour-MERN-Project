@@ -217,7 +217,7 @@ exports.verifyOTP = catchAsync(async (req, res, next) => {
 
   // 2) If OTP has not expired, and there is user, set the new password
   if (!user) {
-    next(new AppError("OTP is invalid or has expired", 400));
+    return next(new AppError("OTP is invalid or has expired", 400));
   }
 
   // 3) Generate the random reset token

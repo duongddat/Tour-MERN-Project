@@ -20,7 +20,7 @@ exports.getCountry = catchAsync(async (req, res, next) => {
   const country = await Country.findById(id);
 
   if (!country) {
-    next(new AppError("No country found with that ID", 404));
+    return next(new AppError("No country found with that ID", 404));
   }
 
   res.status(200).json({
@@ -51,7 +51,7 @@ exports.updateCountry = catchAsync(async (req, res, next) => {
   });
 
   if (!country) {
-    next(new AppError("No country found with that ID", 404));
+    return next(new AppError("No country found with that ID", 404));
   }
 
   res.status(200).json({
@@ -68,7 +68,7 @@ exports.deleteCountry = catchAsync(async (req, res, next) => {
   const country = await Country.findByIdAndDelete(id);
 
   if (!country) {
-    next(new AppError("No country found with that ID", 404));
+    return next(new AppError("No country found with that ID", 404));
   }
 
   res.status(204).json({
