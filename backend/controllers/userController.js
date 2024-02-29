@@ -24,7 +24,6 @@ const upload = multer({
 exports.uploadUserPhoto = upload.single("photo");
 
 exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
-  console.log("USer");
   if (!req.file) return next();
   const ext = req.file.mimetype.split("/")[1];
   req.file.filename = `user-${req.user.id}-${Date.now()}.${ext}`;

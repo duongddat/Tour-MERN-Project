@@ -53,7 +53,7 @@ exports.checkReviewOfUser = catchAsync(async (req, res, next) => {
 
   if (
     (!currentReview || currentReview.user._id != req.user.id) &&
-    req.user.role !== "admin"
+    !(req.method === "DELETE" && req.user.role === "admin")
   ) {
     return next(
       new AppError("This review is not yours or doesn't exist!", 401)
