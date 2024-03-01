@@ -1,0 +1,76 @@
+.login-button {
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 20px;
+  border-radius: 50px;
+  transition: 0.3s background-color;
+}
+
+.login-button:hover {
+  background-color: var(--secondary-color);
+}
+
+/*Custom Boostrap*/
+.navbar {
+  background-color: #fff;
+  height: 60px;
+  border-bottom: 1px solid #f1f4f9;
+}
+.navbar-brand,
+.offcanvas-title {
+  font-weight: 800;
+  color: var(--primary-color);
+  font-size: 26px;
+  transition: 0.3s color;
+}
+.navbar-brand:hover {
+  color: var(--primary-color);
+}
+
+.navbar-toggler {
+  border: none;
+  font-size: 1.25rem;
+}
+
+.navbar-toggler:focus,
+.btn-close:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.nav-link {
+  text-align: center;
+  color: #666777;
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-link:hover,
+.nav-link:active {
+  color: #000;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: 0.3s ease-in-out;
+  width: 0;
+  height: 5px;
+  border-radius: 50px;
+  background-color: var(--primary-color);
+  visibility: hidden;
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+  width: 60%;
+  visibility: visible;
+}
+
+.navbar-user {
+  display: flex;
+}

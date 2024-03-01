@@ -13,3 +13,14 @@ body {
   margin: 0;
   list-style: none;
 }
+
+@media (max-width: 1023px) {
+  .show-on-pc {
+    display: block;
+  }
+}
+@media (max-width: 600px) {
+  .show-on-pc {
+    display: none;
+  }
+}

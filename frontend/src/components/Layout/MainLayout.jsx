@@ -5,7 +5,7 @@ function MainLayout({ children }) {
   return (
     <>
       <Header />
-      {children}
+      <section className="hero-sesction">{children}</section>
       <Footer />
     </>
   );
