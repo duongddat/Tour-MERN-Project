@@ -1,4 +1,4 @@
-.login-button {
+.button {
   background-color: var(--primary-color);
   color: #fff;
   font-size: 14px;
@@ -7,7 +7,7 @@
   transition: 0.3s background-color;
 }
 
-.login-button:hover {
+.button:hover {
   background-color: var(--secondary-color);
 }
 

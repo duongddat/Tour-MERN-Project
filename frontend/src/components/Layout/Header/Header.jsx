@@ -65,8 +65,8 @@ function Header() {
             </div>
           </div>
           <div className="navbar-user ms-auto column-gap-3">
-            <Link className="login-button">Login</Link>
-            <Link className="login-button">Register</Link>
+            <Link className="button">Login</Link>
+            <Link className="button">Register</Link>
           </div>
         </div>
       </nav>

@@ -14,13 +14,25 @@ body {
   list-style: none;
 }
 
-@media (max-width: 1023px) {
+@media (min-width: 1023px) {
   .show-on-pc {
     display: block;
   }
+  .mt-5-md-size {
+    margin-top: 3rem;
+  }
 }
+@media (max-width: 1023px) and (min-width: 600px) {
+  .mt-5-md-size {
+    margin-top: 3rem;
+  }
+}
+
 @media (max-width: 600px) {
   .show-on-pc {
     display: none;
+  }
+  .mt-5-md-size {
+    margin-top: 1.5rem;
   }
 }

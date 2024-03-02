@@ -1,0 +1,62 @@
+.hero__subtitle img {
+  width: 2.3em;
+  height: 2.3em;
+}
+
+.hero__content h1 {
+  font-size: 3.2rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  color: var(--heading-color);
+}
+
+.hero__content h1 .highlight {
+  color: var(--secondary-color);
+}
+
+.hero__content p {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  line-height: 2rem;
+}
+
+.hero__img-box img,
+.hero__img-box video {
+  width: 100%;
+  height: 350px;
+  border-radius: 20px;
+  border: 1px solid var(--secondary-color);
+  object-fit: cover;
+}
+
+.hero__content {
+  padding-top: 3.5rem;
+}
+
+.hero__img-box {
+  padding-top: 2rem;
+}
+.services__subtitle {
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: var(--primary-color);
+  font-family: var(--subtitle-font-name);
+}
+.services__title {
+  font-weight: 700;
+  font-size: 30px;
+}
+.services__description {
+  font-size: 16px !important;
+  color: #475467 !important;
+  width: 100%;
+}
+.button > svg {
+  width: 20px;
+  height: 20px;
+}
+.btn-see-more {
+  padding: 16px 20px;
+  white-space: nowrap;
+}
