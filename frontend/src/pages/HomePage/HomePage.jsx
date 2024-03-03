@@ -10,6 +10,8 @@ import headingBorderImg from "../../assets/img/heading-border.webp";
 import "./HomePage.css";
 import SearchBar from "../../shared/SearchBar";
 import { Link } from "react-router-dom";
+import TourList from "../../components/Tours/TourList";
+import ServiceList from "../../components/Home/Service/ServiceList";
 
 export default function HomePage() {
   // const data = useLoaderData();
@@ -61,11 +63,12 @@ export default function HomePage() {
       </section>
       {/*========================Hero section(end)===============================*/}
       <SearchBar />
-      <section className="m-5">
+      {/*=========================== Featured tour section (start)=========================== */}
+      <section className="mt-5">
         <div className="container">
-          <div className="row">
+          <div className="row align-items-center mb-5">
             <div className="col-lg-6 gap-40">
-              <h5 className="services__subtitle">What we serve</h5>
+              <h5 className="services__subtitle">What about tour</h5>
               <h3 className="services__title">
                 Tour du lịch mới và phổ biến nhất
               </h3>
@@ -81,6 +84,9 @@ export default function HomePage() {
               </p>
             </div>
           </div>
+          <div className="mt-10">
+            <TourList />
+          </div>
         </div>
       </section>
       <div className="d-flex justify-content-center">
@@ -88,7 +94,7 @@ export default function HomePage() {
           to="/tours"
           className="button btn-see-more d-flex align-items-center"
         >
-          <div className="md">Xem tất cả tour </div>
+          <div className="md me-2">Xem tất cả tour</div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -98,6 +104,28 @@ export default function HomePage() {
           </svg>
         </Link>
       </div>
+      {/*=========================== Featured tour section (end)=========================== */}
+      {/*========================== Service section (start)================================== */}
+      <section>
+        <div className="section-bg">
+          <div className="container p-5">
+            <div className="row align-items-center mb-5">
+              <div className="col-lg-3 gap-40">
+                <h5 className="services__subtitle">What we service</h5>
+                <h3 className="services__title">
+                  HoYoViVu phục vụ bạn với những dịch vụ tốt nhất!
+                </h3>
+                <div>
+                  <img src={headingBorderImg} alt="Heading Border Image" />
+                </div>
+              </div>
+              <div className="col-lg-9">
+                <ServiceList />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

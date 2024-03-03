@@ -43,6 +43,13 @@ a {
 ul {
   list-style: none;
 }
+.mt-10 {
+  margin-top: 5rem;
+}
+.section-bg {
+  background-image: url(./assets/img/section-background.png);
+  background-repeat: repeat;
+}
 
 .hero-sesction {
   margin-top: 10px;
@@ -92,6 +99,11 @@ ul {
   font-size: 1.7rem;
   color: #fff;
 }
+.xs {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 500;
+}
 
 /*Boostrap Custom */
 .card {
@@ -99,6 +111,7 @@ ul {
   border: 1px solid #eaecf0;
   background: #fff;
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
 }
 .gap-40 {
   gap: 40px;
