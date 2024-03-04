@@ -8,14 +8,14 @@ import AboutUsPage from "../pages/AboutUsPage/AboutUsPage.jsx";
 import LoginPage from "../pages/LoginPage/LoginPage.jsx";
 import RegisterPage from "../pages/RegisterPage/RegisterPage.jsx";
 
-// import { loader as loadTour } from "../utils/loadTour";
+import { loader as loadData } from "../utils/loadHomeData.js";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootPage />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <HomePage />, loader: loadData },
       { path: "tours", element: <TourPage /> },
       { path: "blog", element: <BlogPage /> },
       { path: "about-us", element: <AboutUsPage /> },

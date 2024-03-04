@@ -1,4 +1,4 @@
-// import { useLoaderData } from "react-router-dom";
+import { Await, useLoaderData } from "react-router-dom";
 
 import Subtitle from "../../shared/Subtitle";
 import heroImg from "../../assets/img/hero-img01.jpg";
@@ -16,10 +16,10 @@ import ServiceList from "../../components/Service/ServiceList";
 import CountryList from "../../components/CountryHeader/CountryList";
 import MasonnryImageGallery from "../../components/Gallery/MasonnryImageGallery";
 import Testimonial from "../../components/Testimonial/Testimonial";
+import { Suspense } from "react";
 
 export default function HomePage() {
-  // const data = useLoaderData();
-  // console.log(data.data.tours);
+  const { tours, countries, reviews } = useLoaderData();
   return (
     <>
       {/*========================Hero section(start)===============================*/}
@@ -89,7 +89,13 @@ export default function HomePage() {
             </div>
           </div>
           <div className="mt-10">
-            <TourList />
+            <Suspense
+              fallback={<p style={{ textAlign: "center" }}>Loading Tour...</p>}
+            >
+              <Await resolve={tours}>
+                {(loadedTours) => <TourList tours={loadedTours} />}
+              </Await>
+            </Suspense>
           </div>
         </div>
       </section>
@@ -149,7 +155,17 @@ export default function HomePage() {
               </div>
             </div>
             <div className="mt-5">
-              <CountryList />
+              <Suspense
+                fallback={
+                  <p style={{ textAlign: "center" }}>Loading Country...</p>
+                }
+              >
+                <Await resolve={countries}>
+                  {(loadedCountries) => (
+                    <CountryList countries={loadedCountries} />
+                  )}
+                </Await>
+              </Suspense>
             </div>
           </div>
         </div>
@@ -239,7 +255,15 @@ export default function HomePage() {
               </div>
             </div>
             <div className="row mt-5">
-              <Testimonial />
+              <Suspense
+                fallback={
+                  <p style={{ textAlign: "center" }}>Loading Review...</p>
+                }
+              >
+                <Await resolve={reviews}>
+                  {(loadedReviews) => <Testimonial reviews={loadedReviews} />}
+                </Await>
+              </Suspense>
             </div>
           </div>
         </div>

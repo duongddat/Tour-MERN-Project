@@ -43,6 +43,7 @@
   font-size: 16px;
 }
 .client-data-details p {
+  text-transform: capitalize;
   margin-top: 2px;
   font-size: 12px;
   font-weight: 400;

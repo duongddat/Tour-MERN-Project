@@ -1,7 +1,7 @@
 import TourItem from "./TourItem.jsx";
-import tours from "../../assets/data/tour";
+// import tours from "../../assets/data/tour";
 
-function TourList() {
+function TourList({ tours }) {
   return (
     <div className="row row-gap-5">
       {tours.map((tour) => (

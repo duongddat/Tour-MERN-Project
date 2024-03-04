@@ -79,7 +79,7 @@ function Footer() {
                     title={item.dispatch}
                     className="footer-link"
                   >
-                    {item.dispatch}
+                    {item.dispatch} Page
                   </Link>
                 </li>
               ))}

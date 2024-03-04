@@ -6,10 +6,10 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import ava01 from "../../assets/img/ava-3.jpg";
+// import ava01 from "../../assets/img/ava-3.jpg";
 import "./Testimonial.css";
 
-function Testimonial() {
+function Testimonial({ reviews }) {
   return (
     <Swiper
       slidesPerView={3}
@@ -37,67 +37,44 @@ function Testimonial() {
         },
       }}
     >
-      <SwiperSlide>
-        <div className="testimonial py-4 px-3">
-          <div className="swiper-client-msg">
-            <p>Tour du lịch Mù Cang chải thật tuyệt vời tôi rất thích nó!!!</p>
-          </div>
-          <div className="swiper-client-data d-flex justify-content-center align-items-center gap-4 mt-3">
-            <img src={ava01} alt="" />
-            <div className="client-data-details">
-              <h6 className="mb-0 mt-3">User 1</h6>
-              <p>User 1</p>
+      {reviews.map((review) => (
+        <>
+          <SwiperSlide key={review._id}>
+            <div className="testimonial py-4 px-3">
+              <div className="swiper-client-msg">
+                <p>{review.review}</p>
+              </div>
+              <div className="swiper-client-data d-flex justify-content-center align-items-center gap-4 mt-3">
+                <img
+                  src={`http://localhost:8080/img/user/${review.user.photo}`}
+                  alt={review.user._id}
+                />
+                <div className="client-data-details">
+                  <h6 className="mb-0 mt-3">{review.user.name}</h6>
+                  <p>Role: {review.user.role}</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="testimonial py-4 px-3">
-          <div className="swiper-client-msg">
-            <p>Tour du lịch Mù Cang chải thật tuyệt vời tôi rất thích nó!!!</p>
-          </div>
-          <div className="swiper-client-data d-flex justify-content-center align-items-center gap-4 mt-3">
-            <img src={ava01} alt="" />
-            <div className="client-data-details">
-              <h6 className="mb-0 mt-3">User 1</h6>
-              <p>User 1</p>
+          </SwiperSlide>
+          <SwiperSlide key={review._id}>
+            <div className="testimonial py-4 px-3">
+              <div className="swiper-client-msg">
+                <p>{review.review}</p>
+              </div>
+              <div className="swiper-client-data d-flex justify-content-center align-items-center gap-4 mt-3">
+                <img
+                  src={`http://localhost:8080/img/user/${review.user.photo}`}
+                  alt={review.user._id}
+                />
+                <div className="client-data-details">
+                  <h6 className="mb-0 mt-3">{review.user.name}</h6>
+                  <p>Role: {review.user.role}</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="testimonial py-4 px-3">
-          <div className="swiper-client-msg">
-            <p>Tour du lịch Mù Cang chải thật tuyệt vời tôi rất thích nó!!!</p>
-          </div>
-          <div className="swiper-client-data d-flex justify-content-center align-items-center gap-4 mt-3">
-            <img src={ava01} alt="" />
-            <div className="client-data-details">
-              <h6 className="mb-0 mt-3">User 1</h6>
-              <p>User 1</p>
-            </div>
-          </div>
-        </div>
-      </SwiperSlide>
-      <SwiperSlide>
-        <div className="testimonial py-4 px-3">
-          <div className="swiper-client-msg">
-            <p>
-              Tour du lịch Mù Cang chải thật tuyệt!!! Tour du lịch Mù Cang chải
-              thật!!! Tour du lịch Mù Cang chải thật!!!Tour du lịch Mù Cang chải
-              thật!!! Tour du lịch Mù Cang chải thật!!! Tour du lịch Mù Cang
-              chải thật!!!
-            </p>
-          </div>
-          <div className="swiper-client-data d-flex justify-content-center align-items-center gap-4 mt-3">
-            <img src={ava01} alt="" />
-            <div className="client-data-details">
-              <h6 className="mb-0 mt-3">User 1</h6>
-              <p>User 1</p>
-            </div>
-          </div>
-        </div>
-      </SwiperSlide>
+          </SwiperSlide>
+        </>
+      ))}
     </Swiper>
   );
 }
