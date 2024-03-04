@@ -50,6 +50,9 @@ ul {
   background-image: url(./assets/img/section-background.png);
   background-repeat: repeat;
 }
+.section-bg-color {
+  background-color: #f3f9ff;
+}
 
 .hero-sesction {
   margin-top: 10px;
@@ -99,6 +102,12 @@ ul {
   font-size: 1.7rem;
   color: #fff;
 }
+.lg {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28px;
+  color: #101828;
+}
 .xs {
   font-size: 12px;
   line-height: 18px;
@@ -112,6 +121,9 @@ ul {
   background: #fff;
   box-shadow: var(--shadow-sm);
   overflow: hidden;
+}
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 .gap-40 {
   gap: 40px;

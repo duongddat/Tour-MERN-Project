@@ -1,7 +1,7 @@
 import ServiceCard from "./ServiceCard";
-import weatherImg from "../../../assets/img/weather.png";
-import guideImg from "../../../assets/img/guide.png";
-import customizationImg from "../../../assets/img/customization.png";
+import weatherImg from "../../assets/img/weather.png";
+import guideImg from "../../assets/img/guide.png";
+import customizationImg from "../../assets/img/customization.png";
 
 const serviceData = [
   {
@@ -23,9 +23,9 @@ const serviceData = [
 
 const ServiceList = () => {
   return (
-    <div className="row row-gap-3">
+    <div className="row row-gap-5">
       {serviceData.map((item, index) => (
-        <div key={index} className="col-md-4">
+        <div key={index} className="col-lg-4 col-md-6 col-12">
           <ServiceCard item={item} />
         </div>
       ))}

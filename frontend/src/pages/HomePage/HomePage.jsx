@@ -6,12 +6,16 @@ import heroImg02 from "../../assets/img/hero-img02.jpg";
 import heroVideo from "../../assets/video/hero-video.mp4";
 import worldImg from "../../assets/img/world.png";
 import headingBorderImg from "../../assets/img/heading-border.webp";
+import experienceImg from "../../assets/img/tour.webp";
 
 import "./HomePage.css";
 import SearchBar from "../../shared/SearchBar";
 import { Link } from "react-router-dom";
 import TourList from "../../components/Tours/TourList";
-import ServiceList from "../../components/Home/Service/ServiceList";
+import ServiceList from "../../components/Service/ServiceList";
+import CountryList from "../../components/CountryHeader/CountryList";
+import MasonnryImageGallery from "../../components/Gallery/MasonnryImageGallery";
+import Testimonial from "../../components/Testimonial/Testimonial";
 
 export default function HomePage() {
   // const data = useLoaderData();
@@ -69,7 +73,7 @@ export default function HomePage() {
           <div className="row align-items-center mb-5">
             <div className="col-lg-6 gap-40">
               <h5 className="services__subtitle">What about tour</h5>
-              <h3 className="services__title">
+              <h3 className="header__title">
                 Tour du lịch mới và phổ biến nhất
               </h3>
               <div>
@@ -112,7 +116,7 @@ export default function HomePage() {
             <div className="row align-items-center mb-5">
               <div className="col-lg-3 gap-40">
                 <h5 className="services__subtitle">What we service</h5>
-                <h3 className="services__title">
+                <h3 className="header__title">
                   HoYoViVu phục vụ bạn với những dịch vụ tốt nhất!
                 </h3>
                 <div>
@@ -126,6 +130,121 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      {/*========================== Service section (end)================================== */}
+      {/*=========================== Country section (start) ==============================*/}
+      <section>
+        <div className="section-bg section-bg-color">
+          <div className="container section-container">
+            <div className="section-header text-center gap-16">
+              <div className="section-title">
+                <h4 className="header__title">Các địa điểm của HoYoViVu</h4>
+              </div>
+              <label className="section-description lg">
+                Khám phá vẻ đẹp tuyệt vời của những địa điểm du lịch: Hành trình
+                khám phá vẻ đẹp và độc đáo của những quốc gia tuyệt vời trên thế
+                giới
+              </label>
+              <div>
+                <img src={headingBorderImg} alt="Heading Border Image" />
+              </div>
+            </div>
+            <div className="mt-5">
+              <CountryList />
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*=========================== Country section (end) ==============================*/}
+      {/*=========================== Experience section (start) ==============================*/}
+      <section>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="experience__content">
+                <Subtitle subtitle="Experience" />
+                <h4 className="header__title">
+                  Với tất cả kinh nghiệm của chúng tôi
+                  <br /> chúng tôi sẽ phục vụ bạn
+                </h4>
+                <p>
+                  Sự tận tâm và am hiểu về nhu cầu của khách hàng là chìa khóa
+                  để tạo ra trải nghiệm du lịch đặc biệt.
+                  <br /> Chúng tôi luôn cố gắng tạo ra một không khí thoải mái
+                  và giao tiếp tích cực, giúp du khách cảm thấy như là một phần
+                  của cộng đồng du lịch.
+                </p>
+              </div>
+              <div className="counter__wrapper d-flex align-item-center gap-5">
+                <div className="counter__box">
+                  <span>12k+</span>
+                  <h6>Follower</h6>
+                </div>
+                <div className="counter__box">
+                  <span>2k+</span>
+                  <h6>Member</h6>
+                </div>
+                <div className="counter__box">
+                  <span>6k+</span>
+                  <h6>Tour</h6>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="experience__img">
+                <img src={experienceImg} alt="Experience imgae" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*=========================== Experience section (end) ==============================*/}
+      {/*=========================== Gallery section (start) ==============================*/}
+      <section>
+        <div className="section-bg p-5">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <Subtitle subtitle="Gallery" />
+                <h4 className="gallery__title header__title">
+                  Bộ sưu tập tour du lịch của khách hàng
+                </h4>
+              </div>
+              <div className="col-lg-12">
+                <MasonnryImageGallery />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*=========================== Gallery section (end) ==============================*/}
+      {/*=========================== Testimonial section (start) ==============================*/}
+      <section>
+        <div className="section-bg section-bg-color p-5">
+          <div className="container">
+            <div className="row d-flex align-items-center">
+              <div className="col-lg-6">
+                <Subtitle subtitle="Testimonial" />
+                <h4 className="testimonial__title header__title">
+                  Đánh giá từ những người đã trải nghiệm
+                </h4>
+                <div>
+                  <img src={headingBorderImg} alt="Heading Border Image" />
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <p className="lg services__description">
+                  Khách hàng chia sẻ về những kỷ niệm tuyệt vời các tour du lịch
+                  với chúng tôi.
+                </p>
+              </div>
+            </div>
+            <div className="row mt-5">
+              <Testimonial />
+            </div>
+          </div>
+        </div>
+      </section>
+      {/*=========================== Testimonial section (end) ==============================*/}
     </>
   );
 }
