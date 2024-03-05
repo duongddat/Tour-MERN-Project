@@ -98,3 +98,29 @@
 .card__footer-text {
   color: #999;
 }
+
+.card-message {
+  width: 100%;
+  height: fit-content;
+  padding: 54px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  text-align: center;
+}
+
+.card-message:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.message-img {
+  width: 150px;
+  height: 150px;
+}
+.message-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

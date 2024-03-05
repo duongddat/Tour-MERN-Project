@@ -10,7 +10,10 @@ export default function TourPage() {
   const { tours } = useRouteLoaderData("tours");
   const [tourData, setTourData] = useState([]);
   const [isShowDropDown, setIsShowDropDown] = useState(false);
-  const [sortTour, setSortTour] = useState("");
+  const [sortTour, setSortTour] = useState({
+    name: "",
+    path: "",
+  });
 
   useEffect(() => {
     async function getTour() {
@@ -29,17 +32,26 @@ export default function TourPage() {
   }
 
   function handleSortTourDecrease() {
-    setSortTour("decrease");
+    setSortTour({
+      name: "decrease",
+      path: "?-price",
+    });
     handleFilter();
   }
 
   function handleSortTourIncrease() {
-    setSortTour("increase");
+    setSortTour({
+      name: "increase",
+      path: "?price",
+    });
     handleFilter();
   }
 
   function handleNoSort() {
-    setSortTour("");
+    setSortTour({
+      name: "",
+      path: "",
+    });
     handleFilter();
   }
 
@@ -57,9 +69,9 @@ export default function TourPage() {
           </div>
           <div className="search-detail-filter dropdowm">
             <div className="md btn btn-filter btn-icon" onClick={handleFilter}>
-              {sortTour === ""
+              {sortTour.name === ""
                 ? "Không sắp xếp"
-                : sortTour === "increase"
+                : sortTour.name === "increase"
                 ? "Giá thấp đến cao"
                 : "Giá cao đến thấp"}
               <svg
