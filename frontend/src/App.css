@@ -113,6 +113,42 @@ ul {
   line-height: 18px;
   font-weight: 500;
 }
+.dropdowm {
+  position: relative;
+}
+
+.dropdown-container {
+  min-width: 200px;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding-top: 10px;
+  position: absolute;
+  inset: 0 0 auto auto;
+  transform: translate3d(0, 70px, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  border-radius: 8px;
+  border: 1px solid var(--gray-100, #f2f4f7);
+  background: var(--base-white, #fff);
+  box-shadow: 0 8px 8px -4px rgba(16, 24, 40, 0.03),
+    0 20px 24px -4px rgba(16, 24, 40, 0.08);
+  z-index: 1;
+}
+.dropdown-list {
+  width: 100%;
+  padding-left: 0px;
+}
+.dropdown-item {
+  font-weight: 450;
+  width: 100%;
+  padding: 15px 30px;
+  cursor: pointer;
+}
+.dropdown-item:hover {
+  background: var(--gray-50, #f9fafb);
+}
 
 /*Boostrap Custom */
 .card {
@@ -124,6 +160,12 @@ ul {
 }
 .card:hover {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.h-full {
+  height: 100%;
+}
+.gap-80 {
+  gap: 80px;
 }
 .gap-40 {
   gap: 40px;

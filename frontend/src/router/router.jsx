@@ -10,6 +10,7 @@ import LoginPage from "../pages/LoginPage/LoginPage.jsx";
 import RegisterPage from "../pages/RegisterPage/RegisterPage.jsx";
 
 import { loader as loadData } from "../utils/loadHomeData.js";
+import { loader as loadTourData } from "../utils/loadTourPageData.js";
 
 const router = createBrowserRouter([
   {
@@ -19,10 +20,13 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage />, loader: loadData },
       {
         path: "tours",
+        id: "tours",
+        loader: loadTourData,
         children: [
           { index: true, element: <TourPage /> },
           { path: "search", method: "POST", element: <TourPage /> },
           { path: ":slug", element: <DetailPage /> },
+          { path: "country/:slug", element: <TourPage /> },
         ],
       },
       { path: "blog", element: <BlogPage /> },

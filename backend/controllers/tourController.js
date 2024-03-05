@@ -6,6 +6,7 @@ const Country = require("../models/countryModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const AIPFeatures = require("../utils/apiFeatures");
+const { query } = require("express");
 
 //=====================CONFIGURE IMG FILE=============================
 const multerStorage = multer.memoryStorage();
@@ -76,10 +77,16 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 
   const tours = await features.query;
 
+  //Pagination Size
+  const toursLenght = (await Tour.find()).length;
+  const limit = req.query.limit || 8;
+  const size = Math.ceil(toursLenght / limit);
+
   res.status(200).json({
     status: "success",
     message: "Successfully retrieved",
     lenght: tours.length,
+    size: size,
     data: {
       tours,
     },
@@ -105,14 +112,16 @@ exports.getTourByCountry = catchAsync(async (req, res, next) => {
 
   const tours = await features.query;
 
-  if (tours.length === 0) {
-    return next(new AppError("Not found in any tours", 404));
-  }
+  //Pagination Size
+  const toursLenght = (await Tour.find()).length;
+  const limit = req.query.limit || 8;
+  const size = Math.ceil(toursLenght / limit);
 
   res.status(200).json({
     status: "success",
     message: "Successfully retrieved",
     lenght: tours.length,
+    size: size,
     data: {
       tours,
     },
@@ -139,14 +148,16 @@ exports.getTourBySearch = catchAsync(async (req, res, next) => {
 
   const tours = await Tour.find(query);
 
-  if (tours.length === 0) {
-    return next(new AppError("The search key was not found in any tours", 404));
-  }
+  //Pagination Size
+  const toursLenght = (await Tour.find()).length;
+  const limit = req.query.limit || 8;
+  const size = Math.ceil(toursLenght / limit);
 
   res.status(200).json({
     status: "success",
     message: "Successfully retrieved",
     lenght: tours.length,
+    size: size,
     data: {
       tours,
     },

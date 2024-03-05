@@ -92,7 +92,12 @@ export default function HomePage() {
               fallback={<p style={{ textAlign: "center" }}>Loading Tour...</p>}
             >
               <Await resolve={tours}>
-                {(loadedTours) => <TourList tours={loadedTours} />}
+                {(loadedTours) => (
+                  <TourList
+                    tours={loadedTours}
+                    classes="col-xl-3 col-lg-4 col-md-6 col-sm-12"
+                  />
+                )}
               </Await>
             </Suspense>
           </div>
