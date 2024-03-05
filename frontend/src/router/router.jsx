@@ -3,6 +3,7 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 import RootPage from "../pages/RootPage";
 import HomePage from "../pages/HomePage/HomePage.jsx";
 import TourPage from "../pages/ToursPage/TourPage.jsx";
+import DetailPage from "../pages/DetailTourPage/DetailTourPage.jsx";
 import BlogPage from "../pages/BlogPage/BlogPage.jsx";
 import AboutUsPage from "../pages/AboutUsPage/AboutUsPage.jsx";
 import LoginPage from "../pages/LoginPage/LoginPage.jsx";
@@ -16,7 +17,14 @@ const router = createBrowserRouter([
     element: <RootPage />,
     children: [
       { index: true, element: <HomePage />, loader: loadData },
-      { path: "tours", element: <TourPage /> },
+      {
+        path: "tours",
+        children: [
+          { index: true, element: <TourPage /> },
+          { path: "search", method: "POST", element: <TourPage /> },
+          { path: ":slug", element: <DetailPage /> },
+        ],
+      },
       { path: "blog", element: <BlogPage /> },
       { path: "about-us", element: <AboutUsPage /> },
     ],

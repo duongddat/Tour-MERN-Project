@@ -1,4 +1,5 @@
-import { Await, useLoaderData } from "react-router-dom";
+import { Suspense } from "react";
+import { Await, useLoaderData, Link } from "react-router-dom";
 
 import Subtitle from "../../shared/Subtitle";
 import heroImg from "../../assets/img/hero-img01.jpg";
@@ -10,13 +11,11 @@ import experienceImg from "../../assets/img/tour.webp";
 
 import "./HomePage.css";
 import SearchBar from "../../shared/SearchBar";
-import { Link } from "react-router-dom";
 import TourList from "../../components/Tours/TourList";
 import ServiceList from "../../components/Service/ServiceList";
 import CountryList from "../../components/CountryHeader/CountryList";
 import MasonnryImageGallery from "../../components/Gallery/MasonnryImageGallery";
 import Testimonial from "../../components/Testimonial/Testimonial";
-import { Suspense } from "react";
 
 export default function HomePage() {
   const { tours, countries, reviews } = useLoaderData();
@@ -30,7 +29,7 @@ export default function HomePage() {
               <div className="hero__content">
                 <div className="hero__subtitle d-flex align-items-center">
                   <Subtitle subtitle="Know Before You Go" />
-                  <img src={worldImg} alt="World Image" />
+                  <img loading="lazy" src={worldImg} alt="World Image" />
                 </div>
                 <h1>
                   Traveling opens the door to creating

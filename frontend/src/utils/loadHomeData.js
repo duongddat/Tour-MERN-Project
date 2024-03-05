@@ -48,9 +48,9 @@ async function loaderReview() {
   }
 }
 
-export function loader() {
+export async function loader() {
   return defer({
-    tours: loaderTour(),
+    tours: await loaderTour(),
     countries: loaderCountry(),
     reviews: loaderReview(),
   });

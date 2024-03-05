@@ -1,6 +1,7 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // Import Swiper styles
 import "swiper/css";
@@ -38,42 +39,23 @@ function Testimonial({ reviews }) {
       }}
     >
       {reviews.map((review) => (
-        <>
-          <SwiperSlide key={review._id}>
-            <div className="testimonial py-4 px-3">
-              <div className="swiper-client-msg">
-                <p>{review.review}</p>
-              </div>
-              <div className="swiper-client-data d-flex justify-content-center align-items-center gap-4 mt-3">
-                <img
-                  src={`http://localhost:8080/img/user/${review.user.photo}`}
-                  alt={review.user._id}
-                />
-                <div className="client-data-details">
-                  <h6 className="mb-0 mt-3">{review.user.name}</h6>
-                  <p>Role: {review.user.role}</p>
-                </div>
+        <SwiperSlide key={review._id}>
+          <div className="testimonial py-4 px-3">
+            <div className="swiper-client-msg">
+              <p>{review.review}</p>
+            </div>
+            <div className="swiper-client-data d-flex justify-content-center align-items-center gap-4 mt-3">
+              <LazyLoadImage
+                src={`http://localhost:8080/img/user/${review.user.photo}`}
+                alt={review.user._id}
+              />
+              <div className="client-data-details">
+                <h6 className="mb-0 mt-3">{review.user.name}</h6>
+                <p>Role: {review.user.role}</p>
               </div>
             </div>
-          </SwiperSlide>
-          <SwiperSlide key={review._id}>
-            <div className="testimonial py-4 px-3">
-              <div className="swiper-client-msg">
-                <p>{review.review}</p>
-              </div>
-              <div className="swiper-client-data d-flex justify-content-center align-items-center gap-4 mt-3">
-                <img
-                  src={`http://localhost:8080/img/user/${review.user.photo}`}
-                  alt={review.user._id}
-                />
-                <div className="client-data-details">
-                  <h6 className="mb-0 mt-3">{review.user.name}</h6>
-                  <p>Role: {review.user.role}</p>
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-        </>
+          </div>
+        </SwiperSlide>
       ))}
     </Swiper>
   );
