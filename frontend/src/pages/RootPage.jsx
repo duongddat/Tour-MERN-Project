@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import MainLayout from "../components/Layout/MainLayout";
 
 const RootPage = () => {
@@ -7,6 +7,7 @@ const RootPage = () => {
       <MainLayout>
         <Outlet />
       </MainLayout>
+      <ScrollRestoration />
     </>
   );
 };

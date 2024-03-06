@@ -132,6 +132,7 @@ exports.getTourBySearch = catchAsync(async (req, res, next) => {
   const key = new RegExp(req.query.key, "i"); // Tạo 1 biểu thức chính quy (cờ i biểu thị tìm kiếm ko phân biệt hoa thường)
   const duration = parseInt(req.query.duration);
   const maxGroupSize = parseInt(req.query.maxGroupSize);
+
   const query = {
     $or: [{ title: key }, { description: key }],
   };
@@ -146,7 +147,21 @@ exports.getTourBySearch = catchAsync(async (req, res, next) => {
     query.maxGroupSize = { $gte: maxGroupSize };
   }
 
-  const tours = await Tour.find(query);
+  //Lọc các query còn lại
+  const additionalQueries = {};
+  for (const param in req.query) {
+    if (!["key", "duration", "maxGroupSize"].includes(param)) {
+      additionalQueries[param] = req.query[param];
+    }
+  }
+
+  const features = new AIPFeatures(Tour.find(query), additionalQueries)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const tours = await features.query;
 
   //Pagination Size
   const toursLenght = (await Tour.find()).length;

@@ -78,7 +78,9 @@ function TourItem({ tour }) {
           <span className="card__footer-value">{tour.price}đ</span>
           <span className="card__footer-text"> / người</span>
         </div>
-        <Link className="button text-center">Xem chi tiết</Link>
+        <Link className="button text-center" to={`/tours/detail/${tour.slug}`}>
+          Xem chi tiết
+        </Link>
       </div>
     </div>
   );
