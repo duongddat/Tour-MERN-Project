@@ -178,6 +178,23 @@ exports.getTour = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getTourBySlug = catchAsync(async (req, res, next) => {
+  const slug = req.params.slug;
+  const tour = await Tour.findOne({ slug: slug }).populate("reviews");
+
+  if (!tour) {
+    return next(new AppError("No tour found with that ID", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    message: "Successfully retrieved",
+    data: {
+      tour,
+    },
+  });
+});
+
 exports.createTour = catchAsync(async (req, res, next) => {
   const newTour = await Tour.create(req.body);
 

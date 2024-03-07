@@ -11,6 +11,7 @@ import RegisterPage from "../pages/RegisterPage/RegisterPage.jsx";
 
 import { loader as loadData } from "../utils/loadHomeData.js";
 import { loader as loadTourData } from "../utils/loadTourData.js";
+import { loader as loadTourDetailData } from "../utils/loadTourDetailData.js";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,11 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <TourPage />, loader: loadTourData },
           { path: "search", element: <TourPage />, loader: loadTourData },
-          { path: "detail/:slug", element: <DetailPage /> },
+          {
+            path: "detail/:slug",
+            element: <DetailPage />,
+            loader: loadTourDetailData,
+          },
           {
             path: "country/:slug",
             element: <TourPage />,

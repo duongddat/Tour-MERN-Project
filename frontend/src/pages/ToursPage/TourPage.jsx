@@ -16,8 +16,8 @@ const defaultSort = {
 export default function TourPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [tourData, setTourData] = useState([]);
   const { tours, countries } = useLoaderData();
+  const [tourData, setTourData] = useState([]);
   const [isShowDropDown, setIsShowDropDown] = useState(false);
   const [sortTour, setSortTour] = useState(defaultSort);
   //================= Load Data ==================================
@@ -144,7 +144,7 @@ export default function TourPage() {
                 <TourListPagination
                   tours={tourData}
                   classes="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12"
-                  itemsPerPage={1}
+                  itemsPerPage={8}
                 />
               </div>
             </div>
