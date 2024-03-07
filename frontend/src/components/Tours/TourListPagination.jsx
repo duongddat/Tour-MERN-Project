@@ -1,18 +1,31 @@
 import TourItem from "./TourItem.jsx";
 
 import NoData from "../../assets/img/NoData.png";
+import Pagination from "../Pagination/Pagination.jsx";
+import { useState } from "react";
 // import tours from "../../assets/data/tour";
 
-function TourList({ tours, classes }) {
+function TourListPagination({ tours, classes, itemsPerPage }) {
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = tours.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(tours.length / itemsPerPage);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % tours.length;
+    setItemOffset(newOffset);
+  };
+
   return (
     <div className="row row-gap-5 sticky">
-      {tours.length > 0 &&
-        tours.map((tour) => (
+      {currentItems.length > 0 &&
+        currentItems.map((tour) => (
           <div key={tour.id} className={classes}>
             <TourItem tour={tour} />
           </div>
         ))}
-      {tours.length === 0 && (
+      {currentItems.length === 0 && (
         <div className="card card-message d-flex">
           <div className="message-img">
             <img src={NoData} alt="Message image" />
@@ -25,8 +38,9 @@ function TourList({ tours, classes }) {
           </div>
         </div>
       )}
+      <Pagination pageCount={pageCount} onPageClick={handlePageClick} />
     </div>
   );
 }
 
-export default TourList;
+export default TourListPagination;

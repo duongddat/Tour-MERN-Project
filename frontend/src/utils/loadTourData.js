@@ -41,7 +41,11 @@ export async function loader({ request, params }) {
   if (match && match[1]) {
     const afterTours = match[1];
 
-    if (afterTours.startsWith("/country") || afterTours.startsWith("/search")) {
+    if (
+      afterTours.startsWith("/country") ||
+      afterTours.startsWith("/search") ||
+      afterTours.startsWith("?")
+    ) {
       requestUrl = afterTours;
     }
   }

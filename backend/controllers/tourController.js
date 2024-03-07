@@ -77,16 +77,10 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 
   const tours = await features.query;
 
-  //Pagination Size
-  const toursLenght = (await Tour.find()).length;
-  const limit = req.query.limit || 8;
-  const size = Math.ceil(toursLenght / limit);
-
   res.status(200).json({
     status: "success",
     message: "Successfully retrieved",
     lenght: tours.length,
-    size: size,
     data: {
       tours,
     },
@@ -112,16 +106,10 @@ exports.getTourByCountry = catchAsync(async (req, res, next) => {
 
   const tours = await features.query;
 
-  //Pagination Size
-  const toursLenght = (await Tour.find()).length;
-  const limit = req.query.limit || 8;
-  const size = Math.ceil(toursLenght / limit);
-
   res.status(200).json({
     status: "success",
     message: "Successfully retrieved",
     lenght: tours.length,
-    size: size,
     data: {
       tours,
     },
@@ -163,16 +151,10 @@ exports.getTourBySearch = catchAsync(async (req, res, next) => {
 
   const tours = await features.query;
 
-  //Pagination Size
-  const toursLenght = (await Tour.find()).length;
-  const limit = req.query.limit || 8;
-  const size = Math.ceil(toursLenght / limit);
-
   res.status(200).json({
     status: "success",
     message: "Successfully retrieved",
     lenght: tours.length,
-    size: size,
     data: {
       tours,
     },

@@ -113,6 +113,17 @@ ul {
   line-height: 18px;
   font-weight: 500;
 }
+.sm {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.btn-text {
+  cursor: pointer;
+}
+.btn-text:hover {
+  opacity: 0.65;
+}
 .dropdowm {
   position: relative;
 }
@@ -134,7 +145,7 @@ ul {
   background: var(--base-white, #fff);
   box-shadow: 0 8px 8px -4px rgba(16, 24, 40, 0.03),
     0 20px 24px -4px rgba(16, 24, 40, 0.08);
-  z-index: 1;
+  z-index: 5;
 }
 .dropdown-list {
   width: 100%;
@@ -151,6 +162,10 @@ ul {
 }
 
 /*Boostrap Custom */
+.sticky {
+  position: sticky;
+  top: 70px;
+}
 .card {
   border-radius: 32px;
   border: 1px solid #eaecf0;
