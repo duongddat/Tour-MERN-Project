@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Tours.css";
+import { currencyFormatter } from "../../helper/formattingPrice";
 
 function TourItem({ tour }) {
   return (
@@ -12,7 +13,7 @@ function TourItem({ tour }) {
             alt={tour.title}
           />
         </div>
-        <div className="card__ratings d-flex justify-content-center align-items-center">
+        <div className="card__ratings item__ratings d-flex justify-content-center align-items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -75,8 +76,10 @@ function TourItem({ tour }) {
       </div>
       <div className="card__footer d-flex justify-content-between align-items-center">
         <div>
-          <span className="card__footer-value">{tour.price}đ</span>
-          <span className="card__footer-text"> / người</span>
+          <span className="card__footer-value">
+            {currencyFormatter.format(tour.price)}
+          </span>
+          <span className="card__footer-text"> / khách</span>
         </div>
         <Link className="button text-center" to={`/tours/detail/${tour.slug}`}>
           Xem chi tiết

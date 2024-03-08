@@ -30,7 +30,7 @@ exports.uploadImages = upload.fields([
 ]);
 //-------------RESIZE IMAGE AND SAVE FILE TO FOLDER--------------
 exports.resizeImages = catchAsync(async (req, res, next) => {
-  if (!req.files.imageCover && !req.files.images) {
+  if (!req.files || (!req.files.imageCover && !req.files.images)) {
     return next();
   }
 
@@ -208,7 +208,6 @@ exports.createTour = catchAsync(async (req, res, next) => {
 });
 
 exports.updateTour = catchAsync(async (req, res, next) => {
-  console.log("Update");
   const id = req.params.id;
 
   const tour = await Tour.findByIdAndUpdate(id, req.body, {

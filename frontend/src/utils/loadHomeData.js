@@ -12,6 +12,7 @@ async function loaderTour() {
     );
   } else {
     const resData = await response.json();
+    console.log(resData);
     return resData.data.tours;
   }
 }

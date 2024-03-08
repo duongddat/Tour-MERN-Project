@@ -13,17 +13,20 @@
   height: 100%;
   width: 100%;
 }
+
 .card__ratings {
-  border-radius: 16px;
-  padding: 2px 8px 2px 6px;
-  gap: 4px;
   position: absolute;
   left: 18px;
   top: 10px;
+}
+.item__ratings {
+  border-radius: 16px;
+  padding: 2px 8px 2px 6px;
+  gap: 4px;
   color: #7a2e0e;
   background-color: #fedf89;
 }
-.card__ratings svg {
+.item__ratings svg {
   stroke: #f79009;
   width: 12px;
   height: 12px;

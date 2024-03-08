@@ -12,7 +12,10 @@ const RootPage = () => {
     const currentRoute = splitLocation[1];
 
     if (prevRouteRef.current !== currentRoute) {
-      window.scrollTo(0, 0);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     }
 
     prevRouteRef.current = currentRoute;
