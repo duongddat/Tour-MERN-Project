@@ -21,6 +21,6 @@ export async function loader({ request, params }) {
   const slug = params.slug;
 
   return defer({
-    tour: loadTourDetail(slug),
+    tour: await loadTourDetail(slug),
   });
 }

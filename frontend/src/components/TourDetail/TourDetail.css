@@ -3,7 +3,7 @@
   border: 1px solid #eaecf0;
   background: #fff;
   box-shadow: var(--shadow-sm);
-  padding: 10px 15px;
+  padding: 15px 35px;
 }
 
 .tour__header {
@@ -30,7 +30,6 @@
   font-size: 24px;
   font-weight: 700;
   line-height: 26px;
-  color: var(--primary-color);
 }
 
 .description-box .description__text {
@@ -59,8 +58,8 @@
   margin-bottom: 20px;
 }
 .overview-box__icon {
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1.2rem;
+  width: 1.2rem;
   fill: var(--primary-color);
 }
 .overview-box__label {
