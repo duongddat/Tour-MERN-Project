@@ -1,8 +1,8 @@
 import { Await, useLoaderData } from "react-router-dom";
-
-import "./DetailTourPage.css";
 import { Suspense } from "react";
+
 import TourDetail from "../../components/TourDetail/TourDetail";
+import Booking from "../../components/Booking/Booking";
 
 function DetailTourPage() {
   const { tour } = useLoaderData();
@@ -10,8 +10,8 @@ function DetailTourPage() {
   return (
     <section>
       <div className="container">
-        <div className="row">
-          <div className="col-md-9">
+        <div className="row row-gap-3">
+          <div className="col-md-8">
             <Suspense
               fallback={<p style={{ textAlign: "center" }}>Loading Tour...</p>}
             >
@@ -20,7 +20,9 @@ function DetailTourPage() {
               </Await>
             </Suspense>
           </div>
-          <div className="col-md-3"></div>
+          <div className="col-md-4">
+            <Booking tour={tour} />
+          </div>
         </div>
       </div>
     </section>
