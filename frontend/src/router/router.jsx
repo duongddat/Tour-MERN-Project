@@ -1,6 +1,7 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 
-import RootPage from "../pages/RootPage";
+import RootPage from "../pages/RootPage.jsx";
+import RootAuthPage from "../pages/RootAuthPage.jsx";
 import HomePage from "../pages/HomePage/HomePage.jsx";
 import TourPage from "../pages/ToursPage/TourPage.jsx";
 import DetailPage from "../pages/DetailTourPage/DetailTourPage.jsx";
@@ -8,6 +9,7 @@ import BlogPage from "../pages/BlogPage/BlogPage.jsx";
 import AboutUsPage from "../pages/AboutUsPage/AboutUsPage.jsx";
 import LoginPage from "../pages/LoginPage/LoginPage.jsx";
 import RegisterPage from "../pages/RegisterPage/RegisterPage.jsx";
+import ErrorPage from "../pages/ErrorPage/ErrorPage.jsx";
 
 import { loader as loadData } from "../utils/loadHomeData.js";
 import { loader as loadTourData } from "../utils/loadTourData.js";
@@ -17,6 +19,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootPage />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage />, loader: loadData },
       {
@@ -41,8 +44,24 @@ const router = createBrowserRouter([
     ],
   },
   { path: "/home", element: <Navigate to="/" /> },
-  { path: "/login", element: <LoginPage /> },
-  { path: "/register", element: <RegisterPage /> },
+  {
+    path: "/login",
+    errorElement: <ErrorPage />,
+    element: (
+      <RootAuthPage>
+        <LoginPage />
+      </RootAuthPage>
+    ),
+  },
+  {
+    path: "/register",
+    errorElement: <ErrorPage />,
+    element: (
+      <RootAuthPage>
+        <RegisterPage />
+      </RootAuthPage>
+    ),
+  },
 ]);
 
 export default router;

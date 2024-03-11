@@ -92,7 +92,6 @@ export default function TourPage() {
     let currentURL = location.pathname + location.search;
 
     if (!paramName) {
-      // Nếu paramName không có giá trị, xóa các query parameters ratingsAverage và duration
       currentURL = currentURL.replace(
         /(\?|&)(ratingsAverage|duration)(\[lte\]|\[gte\])=([^&]+)/g,
         ""
@@ -104,7 +103,7 @@ export default function TourPage() {
       `(\\?|&)${paramName}(\\[lte\\]|\\[gte\\])=([^&]+)`,
       "g"
     );
-    currentURL = currentURL.replace(regex, "");
+    currentURL = currentURL.replace(regex, "$1");
 
     const hasQuery = currentURL.includes("?");
     const separator = hasQuery ? "&" : "?";

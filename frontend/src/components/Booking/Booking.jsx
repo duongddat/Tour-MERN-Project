@@ -3,6 +3,14 @@ import { currencyFormatter } from "../../helper/formattingPrice";
 import "./Booking.css";
 
 function Booking({ tour }) {
+  function handleCreateBooking(event) {
+    event.preventDefault();
+
+    const fd = new FormData(event.target);
+    const data = Object.fromEntries(fd.entries());
+    console.log(data);
+  }
+
   return (
     <div className="tour-content booking sticky">
       <div className="booking__top d-flex align-items-center jusstify-content-between flex-wrap">
@@ -24,52 +32,72 @@ function Booking({ tour }) {
       {/* ==================== Booking from (start)====================== */}
       <div className="booking__form">
         <h5>Thông tin</h5>
-        <Form className="booking__info-form">
-          <div className="mb-3">
-            <input
-              type="text"
-              placeholder="Nhập họ tên"
-              id="fullName"
-              name="fullName"
-              required
-            />
+        <Form onSubmit={handleCreateBooking}>
+          <div className="booking__info-form">
+            <div className="mb-3">
+              <input
+                type="text"
+                placeholder="Nhập họ tên"
+                id="fullName"
+                name="fullName"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="text"
+                placeholder="Nhập số điện thoại"
+                id="phone"
+                name="phone"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input
+                type="email"
+                placeholder="Nhập email"
+                id="phone"
+                name="phone"
+                required
+              />
+            </div>
+            <div className="mb-3 d-flex align-items-center gap-3">
+              <input
+                type="date"
+                placeholder=""
+                id="date"
+                name="date"
+                required
+              />
+              <input
+                type="number"
+                placeholder="Nhập số lượng"
+                id="guestSize"
+                name="guestSize"
+                required
+              />
+            </div>
           </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              placeholder="Nhập số điện thoại"
-              id="phone"
-              name="phone"
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="email"
-              placeholder="Nhập email"
-              id="phone"
-              name="phone"
-              required
-            />
-          </div>
-          <div className="mb-3 d-flex align-items-center gap-3">
-            <input type="date" placeholder="" id="date" name="date" required />
-            <input
-              type="number"
-              placeholder="Nhập số lượng"
-              id="guestSize"
-              name="guestSize"
-              required
-            />
+          <div className="booking__bottom mt-2">
+            <ul className="list-group">
+              <li className="list-group-item border-0 px-0">
+                <h5 className="d-flex align-items-center gap-1">
+                  {currencyFormatter.format(tour.price)} x 1 người
+                </h5>
+                <span>{currencyFormatter.format(tour.price)}</span>
+              </li>
+              <li className="list-group-item border-0 px-0 total">
+                <h5>Tổng tiền:</h5>
+                <span>{currencyFormatter.format(tour.price)}</span>
+              </li>
+            </ul>
+            <button type="submit" className="button btn w-100">
+              Đặt ngay
+            </button>
           </div>
         </Form>
       </div>
       {/* ==================== Booking from (end)====================== */}
-      {/* ==================== Booking bottom (start)====================== */}
-      <div className="booking__bottom mt-4">
-        <button className="button btn w-100">Đặt ngay</button>
-      </div>
-      {/* ==================== Booking bottom (end)====================== */}
     </div>
   );
 }

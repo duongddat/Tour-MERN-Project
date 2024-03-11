@@ -1,17 +1,10 @@
-export async function sortTourHTTP(filterUrl) {
-  console.log(filterUrl);
-  const response = await fetch(`http://localhost:8080${filterUrl}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export async function fetchAvailablePlaces() {
+  const response = await fetch("http://localhost:3000/places");
+  const resData = await response.json();
 
   if (!response.ok) {
-    throw new Error("Fail to update user data");
+    throw new Error("Fail to fetch places");
   }
 
-  const resDate = await response.json();
-
-  return resDate.data.tours;
+  return resData.places;
 }
