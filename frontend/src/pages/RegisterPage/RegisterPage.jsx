@@ -19,7 +19,7 @@ const RegisterPage = () => {
             style={{ backgroundImage: `url(${BgRegister})` }}
           >
             <div className="text">
-              <p>HoYoViVu ~ </p>
+              <p>HoYoViVu</p>
             </div>
           </div>
           <div className="col-md-6 d-flex justify-content-center align-items-center">

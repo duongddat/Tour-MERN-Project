@@ -1,15 +1,43 @@
 import { Form, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+
 import LoginImg from "../../assets/img/login.png";
 import BgLogin from "../../assets/img/bg-login.jpg";
+import { fetchingLogin } from "../../utils/https.js";
+import { clearMessage, setMessage } from "../../store/message-slice.js";
 import "./LoginPage.css";
 
 function LoginPage() {
-  function handleSubmit(event) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, [dispatch]);
+
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
     console.log(data);
+
+    try {
+      const response = await fetchingLogin(data);
+      dispatch(
+        setMessage({
+          type: response.status,
+          message: response.message,
+        })
+      );
+    } catch (error) {
+      dispatch(
+        setMessage({
+          type: "error",
+          message: error.message,
+        })
+      );
+    }
   }
 
   return (
@@ -21,7 +49,7 @@ function LoginPage() {
             style={{ backgroundImage: `url(${BgLogin})` }}
           >
             <div className="text">
-              <p>HoYoViVu ~ </p>
+              <p>HoYoViVu</p>
             </div>
           </div>
           <div className="col-md-6 d-flex justify-content-center align-items-center">

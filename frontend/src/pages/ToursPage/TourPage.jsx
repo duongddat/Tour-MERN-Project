@@ -17,17 +17,20 @@ export default function TourPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { tours, countries } = useLoaderData();
+  const [loading, setLoading] = useState(false);
   const [tourData, setTourData] = useState([]);
   const [isShowDropDown, setIsShowDropDown] = useState(false);
   const [sortTour, setSortTour] = useState(defaultSort);
   //================= Load Data ==================================
   useEffect(() => {
     async function getTour() {
+      setLoading(true);
       try {
         setTourData(await tours);
       } catch (error) {
         console.error("Error loading tour data:", error);
       }
+      setLoading(false);
     }
     getTour();
   }, [tours]);
@@ -140,11 +143,16 @@ export default function TourPage() {
                 <TourFilter countries={countries} onFilter={handleFilter} />
               </div>
               <div className="col-xl-9 col-lg-8 col-md-6 col-sm-12 col-12">
-                <TourListPagination
-                  tours={tourData}
-                  classes="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12"
-                  itemsPerPage={8}
-                />
+                {loading && (
+                  <h5 className="text-center mt-5">Loading tour......</h5>
+                )}
+                {!loading && (
+                  <TourListPagination
+                    tours={tourData}
+                    classes="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12"
+                    itemsPerPage={8}
+                  />
+                )}
               </div>
             </div>
           </div>
