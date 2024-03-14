@@ -29,10 +29,13 @@ const RootAuthPage = ({ children }) => {
       } else {
         toast.error(message, option);
       }
-
-      dispatch(clearMessage());
     }
-  }, [message, type, dispatch]);
+  }, [message, type]);
+
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, [dispatch]);
+
   return (
     <>
       <ToastContainer />

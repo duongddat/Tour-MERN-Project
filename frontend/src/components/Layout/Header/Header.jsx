@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
 import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import NavItem from "./NavItem";
+import DropdownItem from "./DropdownItem";
 import "./Header.css";
+import { logout } from "../../../store/auth-slice";
+import { setMessage } from "../../../store/message-slice";
 
 function Header() {
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.auth);
   const refOffCanvas = useRef();
   const refBtnClose = useRef();
 
@@ -15,6 +21,13 @@ function Header() {
       refBtnClose.current.click();
     }
   }
+
+  function handleLogOut() {
+    dispatch(logout());
+    localStorage.removeItem("token");
+    dispatch(setMessage({ type: "success", message: "Đăng xuất thành công!" }));
+  }
+
   return (
     <header>
       <nav className="navbar navbar-expand-lg fixed-top">
@@ -65,12 +78,44 @@ function Header() {
             </div>
           </div>
           <div className="navbar-user ms-auto column-gap-3">
-            <Link to="/login" className="button">
-              Login
-            </Link>
-            <Link to="/register" className="button">
-              Register
-            </Link>
+            {userInfo && (
+              <>
+                <div className="nav-item dropdown">
+                  <button
+                    className="nav-link dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img
+                      src={`http://localhost:8080/img/user/${userInfo.photo}`}
+                      alt="user avatar"
+                      className="nav-user-avatar"
+                    />
+                    <span>{userInfo.name}</span>
+                  </button>
+                  <ul className="dropdown-menu dropdown-menu-end mt-3">
+                    <DropdownItem title="Quản lý tài khoản" to="/" />
+                    <DropdownItem divider />
+                    <li>
+                      <button className="dropdown-item" onClick={handleLogOut}>
+                        Log out
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            )}
+            {!userInfo && (
+              <>
+                <Link to="/login" className="button">
+                  Login
+                </Link>
+                <Link to="/register" className="button">
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>

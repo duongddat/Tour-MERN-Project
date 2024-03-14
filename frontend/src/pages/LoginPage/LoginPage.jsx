@@ -1,43 +1,34 @@
-import { Form, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Form, Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import LoginImg from "../../assets/img/login.png";
 import BgLogin from "../../assets/img/bg-login.jpg";
-import { fetchingLogin } from "../../utils/https.js";
-import { clearMessage, setMessage } from "../../store/message-slice.js";
+import { clearMessage } from "../../store/message-slice.js";
 import "./LoginPage.css";
+import { userLogin } from "../../store/auth-action.js";
 
 function LoginPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { loading, userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(clearMessage());
   }, [dispatch]);
 
-  async function handleSubmit(event) {
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
+
+  function handleSubmit(event) {
     event.preventDefault();
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
-    console.log(data);
-
-    try {
-      const response = await fetchingLogin(data);
-      dispatch(
-        setMessage({
-          type: response.status,
-          message: response.message,
-        })
-      );
-    } catch (error) {
-      dispatch(
-        setMessage({
-          type: "error",
-          message: error.message,
-        })
-      );
-    }
+    dispatch(userLogin(data));
   }
 
   return (
@@ -76,8 +67,12 @@ function LoginPage() {
                   <Link to="/register">Quên mật khẩu?</Link>
                 </div>
                 <div className="input-field">
-                  <button type="submit" className="button btn-submit">
-                    Đăng nhập
+                  <button
+                    type="submit"
+                    className="button btn-submit"
+                    disabled={loading}
+                  >
+                    {loading ? "Loading...." : "Đăng nhập"}
                   </button>
                 </div>
                 <div className="text-footer text-center mt-3">

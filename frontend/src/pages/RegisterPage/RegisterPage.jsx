@@ -1,13 +1,45 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
 import LoginImg from "../../assets/img/login.png";
 import BgRegister from "../../assets/img/register.jpg";
+import { clearMessage, setMessage } from "../../store/message-slice";
+import { registerUser } from "../../store/auth-action";
+
 const RegisterPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/");
+    }
+  }, [navigate, userInfo]);
+
   function handleSubmit(event) {
     event.preventDefault();
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
-    console.log(data);
+    const { password, passwordConfirm } = data;
+
+    if (password !== passwordConfirm) {
+      dispatch(
+        setMessage({
+          type: "error",
+          message: "Xác nhận mật khẩu không thành công!",
+        })
+      );
+      return;
+    }
+
+    dispatch(registerUser(data));
   }
 
   return (
@@ -56,8 +88,12 @@ const RegisterPage = () => {
                   <label htmlFor="passwird">Xác nhận mật khẩu</label>
                 </div>
                 <div className="input-field mt-2">
-                  <button type="submit" className="button btn-submit">
-                    Đăng ký
+                  <button
+                    type="submit"
+                    className="button btn-submit"
+                    disabled={loading}
+                  >
+                    {loading ? "Loading..." : "Đăng ký"}
                   </button>
                 </div>
                 <div className="text-footer text-center mt-3">

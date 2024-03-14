@@ -6,7 +6,7 @@ function NavItem({ title, to, onToggle }) {
     <li className="nav-item">
       <NavLink
         className={({ isActive }) =>
-          `nav-link mx-lg-2 ${isActive ? "active" : ""}`
+          `nav-link nav-link__item mx-lg-2 ${isActive ? "active" : ""}`
         }
         to={to}
         onClick={onToggle}

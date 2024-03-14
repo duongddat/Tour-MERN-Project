@@ -124,6 +124,7 @@ ul {
 .btn-text:hover {
   opacity: 0.65;
 }
+/*Boostrap Custom */
 .dropdowm {
   position: relative;
 }
@@ -151,6 +152,14 @@ ul {
   width: 100%;
   padding-left: 0px;
 }
+.dropdown-menu {
+  padding: 0px;
+  overflow: hidden;
+}
+.dropdown-divider {
+  margin: 0px;
+}
+
 .dropdown-item {
   font-weight: 450;
   width: 100%;
@@ -161,7 +170,6 @@ ul {
   background: var(--gray-50, #f9fafb);
 }
 
-/*Boostrap Custom */
 .sticky {
   position: sticky;
   top: 70px;

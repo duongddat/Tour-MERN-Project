@@ -8,7 +8,7 @@ export async function fetchingLogin(data) {
     body: JSON.stringify(data),
   });
 
-  const resDate = await response.json();
+  const resData = await response.json();
 
-  return resDate;
+  return resData;
 }

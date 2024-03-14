@@ -46,10 +46,12 @@ const RootPage = () => {
       } else {
         toast.error(message, option);
       }
-
-      dispatch(clearMessage());
     }
-  }, [message, type, dispatch]);
+  }, [message, type]);
+
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, [dispatch]);
 
   return (
     <>
