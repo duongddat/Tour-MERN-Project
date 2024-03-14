@@ -12,7 +12,9 @@ function App() {
   const { data } = useGetUserDetailsQuery("userDetails");
 
   useEffect(() => {
-    if (data) dispatch(setCredentials(data));
+    if (data) {
+      dispatch(setCredentials(data));
+    }
   }, [data, dispatch]);
 
   return <RouterProvider router={router} />;

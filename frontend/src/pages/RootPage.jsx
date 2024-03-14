@@ -39,6 +39,9 @@ const RootPage = () => {
         progress: undefined,
         theme: "light",
         transition: Bounce,
+        onClose: () => {
+          dispatch(clearMessage());
+        },
       };
 
       if (type === "success") {
@@ -47,11 +50,7 @@ const RootPage = () => {
         toast.error(message, option);
       }
     }
-  }, [message, type]);
-
-  useEffect(() => {
-    dispatch(clearMessage());
-  }, [dispatch]);
+  }, [message, type, dispatch]);
 
   return (
     <>

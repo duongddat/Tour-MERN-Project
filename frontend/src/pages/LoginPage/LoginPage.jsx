@@ -4,18 +4,14 @@ import { useEffect } from "react";
 
 import LoginImg from "../../assets/img/login.png";
 import BgLogin from "../../assets/img/bg-login.jpg";
-import { clearMessage } from "../../store/message-slice.js";
 import "./LoginPage.css";
 import { userLogin } from "../../store/auth-action.js";
+import Spin from "../../components/common/Spin.jsx";
 
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, userInfo } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    dispatch(clearMessage());
-  }, [dispatch]);
 
   useEffect(() => {
     if (userInfo) {
@@ -29,6 +25,7 @@ function LoginPage() {
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
     dispatch(userLogin(data));
+    navigate("/");
   }
 
   return (
@@ -72,7 +69,7 @@ function LoginPage() {
                     className="button btn-submit"
                     disabled={loading}
                   >
-                    {loading ? "Loading...." : "Đăng nhập"}
+                    {loading ? <Spin text="Đăng nhập" /> : "Đăng nhập"}
                   </button>
                 </div>
                 <div className="text-footer text-center mt-3">

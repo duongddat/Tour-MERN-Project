@@ -2,7 +2,6 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 
 import RootPage from "../pages/RootPage.jsx";
 import RootAuthPage from "../pages/RootAuthPage.jsx";
-import RootProtect from "../pages/RootProtect.jsx";
 import HomePage from "../pages/HomePage/HomePage.jsx";
 import TourPage from "../pages/ToursPage/TourPage.jsx";
 import DetailPage from "../pages/DetailTourPage/DetailTourPage.jsx";
@@ -16,6 +15,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage.jsx";
 import { loader as loadData } from "../utils/loadHomeData.js";
 import { loader as loadTourData } from "../utils/loadTourData.js";
 import { loader as loadTourDetailData } from "../utils/loadTourDetailData.js";
+import { loader as loadUserDetail } from "../utils/loadUserDetail.js";
 
 const router = createBrowserRouter([
   {
@@ -44,9 +44,9 @@ const router = createBrowserRouter([
       { path: "blog", element: <BlogPage /> },
       { path: "about-us", element: <AboutUsPage /> },
       {
-        path: "auth",
-        element: <RootProtect />,
-        children: [{ path: "user-detail", element: <UserDetailPage /> }],
+        path: "user-detail",
+        element: <UserDetailPage />,
+        loader: loadUserDetail,
       },
     ],
   },

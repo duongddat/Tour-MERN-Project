@@ -4,17 +4,13 @@ import { useEffect } from "react";
 
 import LoginImg from "../../assets/img/login.png";
 import BgRegister from "../../assets/img/register.jpg";
-import { clearMessage, setMessage } from "../../store/message-slice";
+import { setMessage } from "../../store/message-slice";
 import { registerUser } from "../../store/auth-action";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, userInfo } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    dispatch(clearMessage());
-  }, [dispatch]);
 
   useEffect(() => {
     if (userInfo) {
@@ -40,6 +36,7 @@ const RegisterPage = () => {
     }
 
     dispatch(registerUser(data));
+    navigate("/");
   }
 
   return (

@@ -22,7 +22,6 @@ export const registerUser = createAsyncThunk(
   async (data, { rejectWithValue, dispatch }) => {
     try {
       const resData = await handleAPICall("/auth/register", "POST", data);
-      console.log(resData);
       dispatch(setMessage({ type: resData.status, message: resData.message }));
       if (resData.token) {
         localStorage.setItem("token", resData.token);
@@ -44,7 +43,6 @@ export const userLogin = createAsyncThunk(
       if (resData.token) {
         localStorage.setItem("token", resData.token);
       }
-      console.log(resData);
       return resData;
     } catch (error) {
       dispatch(setMessage({ type: "error", message: error.message }));

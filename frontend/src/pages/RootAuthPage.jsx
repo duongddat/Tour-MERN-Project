@@ -3,7 +3,6 @@ import { ScrollRestoration } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { clearMessage } from "../store/message-slice";
 
 const RootAuthPage = ({ children }) => {
@@ -22,6 +21,9 @@ const RootAuthPage = ({ children }) => {
         progress: undefined,
         theme: "light",
         transition: Bounce,
+        onClose: () => {
+          dispatch(clearMessage());
+        },
       };
 
       if (type === "success") {
@@ -30,11 +32,7 @@ const RootAuthPage = ({ children }) => {
         toast.error(message, option);
       }
     }
-  }, [message, type]);
-
-  useEffect(() => {
-    dispatch(clearMessage());
-  }, [dispatch]);
+  }, [message, type, dispatch]);
 
   return (
     <>
