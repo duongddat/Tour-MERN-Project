@@ -61,7 +61,7 @@ function LoginPage() {
                   <label htmlFor="password">Mật khẩu</label>
                 </div>
                 <div className="text-footer text-end mt-2 mb-3">
-                  <Link to="/register">Quên mật khẩu?</Link>
+                  <Link to="/forgot-password">Quên mật khẩu?</Link>
                 </div>
                 <div className="input-field">
                   <button

@@ -9,6 +9,9 @@ import BlogPage from "../pages/BlogPage/BlogPage.jsx";
 import AboutUsPage from "../pages/AboutUsPage/AboutUsPage.jsx";
 import LoginPage from "../pages/LoginPage/LoginPage.jsx";
 import RegisterPage from "../pages/RegisterPage/RegisterPage.jsx";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword.jsx";
+import OTPPage from "../pages/ForgotPassword/OTPPage.jsx";
+import ResetPassword from "../pages/ForgotPassword/ResetPassword.jsx";
 import UserDetailPage from "../pages/UserDetailPage/UserDetailPage.jsx";
 import ErrorPage from "../pages/ErrorPage/ErrorPage.jsx";
 
@@ -66,6 +69,33 @@ const router = createBrowserRouter([
     element: (
       <RootAuthPage>
         <RegisterPage />
+      </RootAuthPage>
+    ),
+  },
+  {
+    path: "/forgot-password",
+    errorElement: <ErrorPage />,
+    element: (
+      <RootAuthPage>
+        <ForgotPassword />
+      </RootAuthPage>
+    ),
+  },
+  {
+    path: "/verify-otp",
+    errorElement: <ErrorPage />,
+    element: (
+      <RootAuthPage>
+        <OTPPage />
+      </RootAuthPage>
+    ),
+  },
+  {
+    path: "/reset-password",
+    errorElement: <ErrorPage />,
+    element: (
+      <RootAuthPage>
+        <ResetPassword />
       </RootAuthPage>
     ),
   },

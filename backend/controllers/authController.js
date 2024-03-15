@@ -242,12 +242,11 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   const user = await User.findOne({
     passwordResetToken: hashedToken,
-    passwordResetExpires: { $gt: Date.now() },
   });
 
   // 2) If token has not expired, and there is user, set the new password
   if (!user) {
-    return next(new AppError("OTP is invalid or has expired", 400));
+    return next(new AppError("Reset Token is invalid", 400));
   }
 
   user.password = req.body.password;
@@ -258,8 +257,11 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // 3) Update changedPasswordAt property for the user
-  // 4) Log the user in, send JWT
-  createSendToken(user, 200, res);
+  // 4) Send message
+  res.status(200).json({
+    status: "success",
+    message: "Reset password successful",
+  });
 });
 //=====================FORGOT PASSWORD ==========================
 
