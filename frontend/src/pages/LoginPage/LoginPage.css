@@ -115,7 +115,8 @@
   font-size: small;
 }
 
-.text-footer a {
+.text-footer a,
+.text-footer span {
   font-weight: 700;
   color: var(--primary-color);
 }

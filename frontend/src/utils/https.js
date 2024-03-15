@@ -13,6 +13,10 @@ export async function forgotPassword(data) {
 
   const resData = await response.json();
 
+  if (resData.status === "success") {
+    localStorage.setItem("emailResetOTP", data.email);
+  }
+
   return resData;
 }
 
@@ -63,6 +67,7 @@ export async function resetPassword(data) {
 
   if (resData.status === "success") {
     localStorage.setItem("token", resData.token);
+    localStorage.removeItem("emailResetOTP");
     localStorage.removeItem("resetToken");
   }
 

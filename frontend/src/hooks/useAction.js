@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setMessage } from "../store/message-slice";
 
-export function useAction(actionFn, navigateRoute) {
+export function useAction(actionFn, navigateRoute = null) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);

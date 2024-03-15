@@ -1,35 +1,62 @@
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
 
-import { useAction } from "../../hooks/useAction";
 import { resetPassword } from "../../utils/https";
 import { setMessage } from "../../store/message-slice";
 import Spin from "../../components/common/Spin";
+import { setUser } from "../../store/auth-slice";
 
 function ResetPassword() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, action } = useAction(resetPassword, "/login");
+  const [isLoading, setIsLoading] = useState(false);
 
-  function handleResetPassword(event) {
-    event.preventDefault();
+  useEffect(() => {
+    const resetToken = localStorage.getItem("resetToken");
 
-    const fd = new FormData(event.target);
-    const data = Object.fromEntries(fd.entries());
-    const { password, passwordConfirm } = data;
-    console.log(password, passwordConfirm);
-
-    if (password !== passwordConfirm) {
-      dispatch(
-        setMessage({
-          type: "error",
-          message: "Xác nhận mật khẩu không thành công!",
-        })
-      );
-      return;
+    if (!resetToken) {
+      navigate("/forgot-password");
     }
+  }, [navigate]);
 
-    action(data);
-  }
+  const handleResetPassword = useCallback(
+    async function handleResetPassword(event) {
+      event.preventDefault();
+
+      const fd = new FormData(event.target);
+      const data = Object.fromEntries(fd.entries());
+      const { password, passwordConfirm } = data;
+
+      if (password !== passwordConfirm) {
+        dispatch(
+          setMessage({
+            type: "error",
+            message: "Xác nhận mật khẩu không thành công!",
+          })
+        );
+        return;
+      }
+
+      setIsLoading(true);
+      try {
+        const resData = await resetPassword(data);
+        dispatch(
+          setMessage({ type: resData.status, message: resData.message })
+        );
+        if (resData.status === "success") {
+          dispatch(
+            setUser({ token: resData.token, userInfo: resData.data.user })
+          );
+          navigate("/");
+        }
+      } catch (error) {
+        dispatch(setMessage({ type: "error", message: error.message }));
+      }
+      setIsLoading(false);
+    },
+    [dispatch, navigate]
+  );
 
   return (
     <div className="wrapper">

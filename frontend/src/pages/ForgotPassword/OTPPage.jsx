@@ -1,12 +1,25 @@
-import { Form, Link } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { useAction } from "../../hooks/useAction";
-import { verifyOTP } from "../../utils/https";
+import { forgotPassword, verifyOTP } from "../../utils/https";
 import Spin from "../../components/common/Spin";
 import "./ForgotPassword.css";
+import { useEffect } from "react";
 
 function OTPPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { isLoading, action } = useAction(verifyOTP, "/reset-password");
+  const { isLoading: isLoadingOTP, action: actionSendOTP } =
+    useAction(forgotPassword);
+  const email = localStorage.getItem("emailResetOTP");
+
+  useEffect(() => {
+    if (!email) {
+      navigate("/forgot-password");
+    }
+  }, [navigate, email]);
 
   function handleSubmitOTP(event) {
     event.preventDefault();
@@ -15,6 +28,15 @@ function OTPPage() {
     const data = Object.fromEntries(fd.entries());
 
     action(data);
+  }
+
+  function handleSendOTP() {
+    if (!email) {
+      dispatch({ type: "error", message: "Fail to set email to send OTP!" });
+      return;
+    }
+
+    actionSendOTP({ email });
   }
 
   return (
@@ -35,15 +57,21 @@ function OTPPage() {
                 <label htmlFor="otp">Mã OTP</label>
               </div>
               <div className="text-footer text-end mt-2 mb-4">
-                <Link to="/verify-otp">Gửi lại OTP</Link>
+                <span className="text-pointer" onClick={handleSendOTP}>
+                  Gửi lại OTP
+                </span>
               </div>
               <div className="input-field">
                 <button
                   type="submit"
                   className="button btn-submit"
-                  disabled={isLoading}
+                  disabled={isLoading || isLoadingOTP}
                 >
-                  {isLoading ? <Spin text="Xác thực..." /> : "Xác nhận"}
+                  {isLoading || isLoadingOTP ? (
+                    <Spin text="Xác thực..." />
+                  ) : (
+                    "Xác nhận"
+                  )}
                 </button>
               </div>
             </Form>

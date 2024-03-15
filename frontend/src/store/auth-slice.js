@@ -24,6 +24,10 @@ const authSlice = createSlice({
     setCredentials: (state, { payload }) => {
       state.userInfo = payload.data.user;
     },
+    setUser: (state, { payload }) => {
+      state.token = payload.token;
+      state.userInfo = payload.userInfo;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -56,5 +60,5 @@ const authSlice = createSlice({
 });
 
 const { reducer, actions } = authSlice;
-export const { logout, setCredentials } = actions;
+export const { logout, setCredentials, setUser } = actions;
 export default reducer;

@@ -257,11 +257,8 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // 3) Update changedPasswordAt property for the user
-  // 4) Send message
-  res.status(200).json({
-    status: "success",
-    message: "Reset password successful",
-  });
+  // 4) Log user in, send JWT
+  createSendToken(user, 200, res);
 });
 //=====================FORGOT PASSWORD ==========================
 
