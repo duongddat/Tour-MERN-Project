@@ -145,7 +145,6 @@ export async function editReview(data) {
 //3.Delete Review
 export async function deleteReview(data) {
   const { tourId, reviewId } = data;
-  console.log(tourId, reviewId);
   const token = localStorage.getItem("token");
 
   if (!token) {

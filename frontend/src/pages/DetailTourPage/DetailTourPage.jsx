@@ -11,7 +11,7 @@ function DetailTourPage() {
     <section>
       <div className="container">
         <div className="row row-gap-3">
-          <div className="col-lg-8 col-md-12 col-12">
+          <div className="col-xl-8 col-lg-7 col-md-12 col-12">
             <Suspense
               fallback={<p style={{ textAlign: "center" }}>Loading Tour...</p>}
             >
@@ -20,7 +20,7 @@ function DetailTourPage() {
               </Await>
             </Suspense>
           </div>
-          <div className="col-lg-4 col-md-12 col-12">
+          <div className="col-xl-4 col-lg-5 col-md-12 col-12">
             <Booking tour={tour} />
           </div>
         </div>

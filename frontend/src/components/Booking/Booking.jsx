@@ -1,13 +1,66 @@
 import { Form } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+
 import { currencyFormatter } from "../../helper/formattingPrice";
+import { setMessage } from "../../store/message-slice";
 import "./Booking.css";
 
 function Booking({ tour }) {
+  const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const [amount, setAmount] = useState(null);
+  const totalPrice = tour.price * (amount || 1);
+
+  function handleChangeAmount(event) {
+    setAmount(event.target.value);
+  }
+
   function handleCreateBooking(event) {
     event.preventDefault();
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
+    const { email, date } = data;
+
+    if (!userInfo) {
+      dispatch(
+        setMessage({
+          type: "error",
+          message: "Vui lòng đăng nhập để đặt tour!",
+        })
+      );
+      return;
+    }
+
+    if (userInfo.email !== email) {
+      dispatch(
+        setMessage({
+          type: "error",
+          message: "Vui lòng nhập đúng email của bạn!",
+        })
+      );
+
+      return;
+    }
+
+    const selectedDate = new Date(date);
+    const currentDate = new Date();
+
+    currentDate.setDate(currentDate.getDate() + 2);
+
+    if (selectedDate < currentDate) {
+      dispatch(
+        setMessage({
+          type: "error",
+          message:
+            "Vui lòng chọn một ngày ít nhất là 2 ngày sau ngày hiện tại!",
+        })
+      );
+      return;
+    }
+
     console.log(data);
   }
 
@@ -56,8 +109,8 @@ function Booking({ tour }) {
               <input
                 type="email"
                 placeholder="Nhập email"
-                id="phone"
-                name="phone"
+                id="email"
+                name="email"
                 required
               />
             </div>
@@ -74,6 +127,7 @@ function Booking({ tour }) {
                 placeholder="Nhập số lượng"
                 id="guestSize"
                 name="guestSize"
+                onChange={(event) => handleChangeAmount(event)}
                 required
               />
             </div>
@@ -82,16 +136,16 @@ function Booking({ tour }) {
             <ul className="list-group">
               <li className="list-group-item border-0 px-0">
                 <h5 className="d-flex align-items-center gap-1">
-                  {currencyFormatter.format(tour.price)} x 1 người
+                  {currencyFormatter.format(tour.price)} x {amount || 1} người
                 </h5>
-                <span>{currencyFormatter.format(tour.price)}</span>
+                <span>{currencyFormatter.format(totalPrice)}</span>
               </li>
               <li className="list-group-item border-0 px-0 total">
                 <h5>Tổng tiền:</h5>
-                <span>{currencyFormatter.format(tour.price)}</span>
+                <span>{currencyFormatter.format(totalPrice)}</span>
               </li>
             </ul>
-            <button type="submit" className="button btn w-100">
+            <button type="submit" className="button w-100">
               Đặt ngay
             </button>
           </div>

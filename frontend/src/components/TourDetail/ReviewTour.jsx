@@ -1,18 +1,22 @@
 import { Form, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 
 import ListReviews from "./ListReviews";
 import { setMessage } from "../../store/message-slice";
 import { useAction } from "../../hooks/useAction";
 import { createReview, editReview } from "../../utils/https";
+import Spin from "../common/Spin";
 import "./ReviewTour.css";
 
 function ReviewTour({ reviews, tourId }) {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPatch = location.pathname;
+
+  const { userInfo } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
   const [rating, setRating] = useState(null);
   const [hoverRating, setHoverRating] = useState(null);
   const [reviewId, setReviewId] = useState("");
@@ -30,6 +34,16 @@ function ReviewTour({ reviews, tourId }) {
   async function handleSubmit(event) {
     event.preventDefault();
     const review = refReview.current.value;
+
+    if (!userInfo) {
+      dispatch(
+        setMessage({
+          type: "error",
+          message: "Vui lòng đăng nhập để bình luận",
+        })
+      );
+      return;
+    }
 
     if (!rating) {
       dispatch(
@@ -115,10 +129,10 @@ function ReviewTour({ reviews, tourId }) {
           />
           <button
             type="submit"
-            className="btn button text-white"
+            className="button text-white"
             disabled={loadingCreate || loadingEdit}
           >
-            {loadingCreate || loadingEdit ? "Gửi..." : "Gửi"}
+            {loadingCreate || loadingEdit ? <Spin text="Gửi" /> : "Gửi"}
           </button>
         </div>
       </Form>

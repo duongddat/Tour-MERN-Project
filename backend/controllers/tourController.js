@@ -163,7 +163,10 @@ exports.getTourBySearch = catchAsync(async (req, res, next) => {
 
 exports.getTour = catchAsync(async (req, res, next) => {
   const id = req.params.id;
-  const tour = await Tour.findById(id).populate("reviews");
+  const tour = await Tour.findById(id).populate({
+    path: "reviews",
+    options: { sort: { createdAt: 1 } },
+  });
 
   if (!tour) {
     return next(new AppError("No tour found with that ID", 404));
@@ -180,7 +183,10 @@ exports.getTour = catchAsync(async (req, res, next) => {
 
 exports.getTourBySlug = catchAsync(async (req, res, next) => {
   const slug = req.params.slug;
-  const tour = await Tour.findOne({ slug: slug }).populate("reviews");
+  const tour = await Tour.findOne({ slug: slug }).populate({
+    path: "reviews",
+    options: { sort: { createdAt: 1 } },
+  });
 
   if (!tour) {
     return next(new AppError("No tour found with that ID", 404));

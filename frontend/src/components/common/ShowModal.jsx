@@ -12,7 +12,10 @@ function ShowModal({ children, isOpen, onClose }) {
       boxShadow: `rgba(99, 99, 99, 0.2) 0px 2px 8px 0px`,
       borderRadius: "10px",
       border: "none",
-      zIndex: "10",
+    },
+    overlay: {
+      backgroundColor: "rgba(173, 173, 173, 0.56)",
+      zIndex: "2",
     },
   };
 
