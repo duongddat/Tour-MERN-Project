@@ -73,3 +73,99 @@ export async function resetPassword(data) {
 
   return resData;
 }
+
+//===============Tour Detail Review======================
+//1. Create Review
+export async function createReview(data) {
+  const { review, rating, tourId } = data;
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to review." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(
+    `http://localhost:8080/tours/${tourId}/reviews`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        review,
+        rating,
+      }),
+    }
+  );
+
+  const resData = await response.json();
+
+  return resData;
+}
+//2. Edit Review
+export async function editReview(data) {
+  const { review, rating, tourId, reviewId } = data;
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to review." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(
+    `http://localhost:8080/tours/${tourId}/reviews/${reviewId}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        review,
+        rating,
+      }),
+    }
+  );
+
+  const resData = await response.json();
+
+  return resData;
+}
+
+//3.Delete Review
+export async function deleteReview(data) {
+  const { tourId, reviewId } = data;
+  console.log(tourId, reviewId);
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to delete review." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(
+    `http://localhost:8080/tours/${tourId}/reviews/${reviewId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+
+  return response;
+}

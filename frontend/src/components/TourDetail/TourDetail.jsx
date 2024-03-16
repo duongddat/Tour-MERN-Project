@@ -171,7 +171,7 @@ function TourDetail({ tour }) {
           <div className="mb-3">
             <img src={headingBorderImg} alt="Heading Border Image" />
           </div>
-          <ReviewTour reviews={tour.reviews} />
+          <ReviewTour reviews={tour.reviews} tourId={tour._id} />
         </div>
         {/* =======================Review section (end)============================= */}
       </div>

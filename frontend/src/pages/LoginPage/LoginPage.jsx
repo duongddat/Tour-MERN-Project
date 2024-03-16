@@ -25,7 +25,6 @@ function LoginPage() {
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
     dispatch(userLogin(data));
-    navigate("/");
   }
 
   return (

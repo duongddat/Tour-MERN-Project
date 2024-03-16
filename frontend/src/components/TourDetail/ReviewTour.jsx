@@ -1,28 +1,77 @@
-import { Form } from "react-router-dom";
+import { Form, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useRef, useState } from "react";
 
-import "./ReviewTour.css";
-import { useState } from "react";
 import ListReviews from "./ListReviews";
+import { setMessage } from "../../store/message-slice";
+import { useAction } from "../../hooks/useAction";
+import { createReview, editReview } from "../../utils/https";
+import "./ReviewTour.css";
 
-function ReviewTour({ reviews }) {
+function ReviewTour({ reviews, tourId }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPatch = location.pathname;
+  const dispatch = useDispatch();
   const [rating, setRating] = useState(null);
   const [hoverRating, setHoverRating] = useState(null);
+  const [reviewId, setReviewId] = useState("");
+  const refReview = useRef();
 
-  function handleSubmit(event) {
+  const { isLoading: loadingCreate, action: createReviewAction } = useAction(
+    createReview,
+    currentPatch
+  );
+  const { isLoading: loadingEdit, action: editReviewAction } = useAction(
+    editReview,
+    currentPatch
+  );
+
+  async function handleSubmit(event) {
     event.preventDefault();
-    const form = new FormData(event.target);
-    const review = form.get("review");
+    const review = refReview.current.value;
 
     if (!rating) {
-      alert("Please ratings before reviews!");
-      return;
+      dispatch(
+        setMessage({ type: "error", message: "Vui lòng đánh giá số sao!" })
+      );
     }
-    alert(`${review} : rating ${rating}`);
+
+    if (reviewId !== "") {
+      await editReviewAction({
+        review: review,
+        rating: rating,
+        tourId: tourId,
+        reviewId: reviewId,
+      });
+    } else {
+      await createReviewAction({
+        review,
+        rating,
+        tourId,
+      });
+    }
+    setRating(null);
+    setReviewId("");
+    refReview.current.value = "";
+    navigate(currentPatch);
+  }
+
+  function handleEditReview(review) {
+    setRating(review.rating);
+    setReviewId(review._id);
+    refReview.current.value = review.review;
   }
 
   return (
     <div className="tour-review__container">
-      {reviews.length > 0 && <ListReviews reviews={reviews} />}
+      {reviews.length > 0 && (
+        <ListReviews
+          reviews={reviews}
+          onEdit={handleEditReview}
+          tourId={tourId}
+        />
+      )}
       <Form className="review-box" onSubmit={handleSubmit}>
         <div className="review-content">
           <label className="text-label md">Chất lượng:</label>
@@ -57,14 +106,19 @@ function ReviewTour({ reviews }) {
         </div>
         <div className="review-content flex-wrap mt-3">
           <input
+            ref={refReview}
             name="review"
             type="text"
             className="input-review"
             placeholder="Nhập đánh giá của bản"
             required
           />
-          <button type="submit" className="btn button text-white">
-            Gửi
+          <button
+            type="submit"
+            className="btn button text-white"
+            disabled={loadingCreate || loadingEdit}
+          >
+            {loadingCreate || loadingEdit ? "Gửi..." : "Gửi"}
           </button>
         </div>
       </Form>

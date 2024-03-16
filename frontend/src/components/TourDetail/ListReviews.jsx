@@ -1,7 +1,41 @@
+import { useSelector } from "react-redux";
+import { useCallback, useState } from "react";
 import { formatVietnameseDate } from "../../helper/formattingDate";
 import "./ReviewTour.css";
+import ShowModal from "../common/ShowModal";
+import { useAction } from "../../hooks/useAction";
+import { deleteReview } from "../../utils/https";
+import { useLocation } from "react-router-dom";
 
-function ListReviews({ reviews }) {
+function ListReviews({ reviews, onEdit, tourId }) {
+  const location = useLocation();
+  const { userInfo } = useSelector((state) => state.auth);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const { action: actionDeleteReview } = useAction(
+    deleteReview,
+    location.pathname
+  );
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const handleDeleteReview = useCallback(
+    async function handleDeleteReview(reviewId) {
+      await actionDeleteReview({
+        reviewId,
+        tourId,
+      });
+
+      closeModal();
+    },
+    [actionDeleteReview, tourId]
+  );
+
   return (
     <div className="mb-5 user__reviews">
       {reviews.map((review) => (
@@ -32,7 +66,51 @@ function ListReviews({ reviews }) {
               </div>
             </div>
           </div>
-          <div className="user-review sm">{review.review}</div>
+          <div className="user-review sm d-flex justify-content-between align-items-center column-gap-3">
+            <span>{review.review}</span>
+            {userInfo &&
+              (userInfo._id === review.user._id ||
+                userInfo.role === "admin") && (
+                <div className="user-review_tool d-flex column-gap-2">
+                  {userInfo._id === review.user._id && (
+                    <i
+                      className="ri-edit-2-line"
+                      onClick={() => onEdit(review)}
+                    ></i>
+                  )}
+                  <i className="ri-delete-bin-line" onClick={openModal}></i>
+                  <ShowModal isOpen={modalIsOpen} onClose={closeModal}>
+                    <div className="p-3 modal-container">
+                      <div className="modal-close">
+                        <i
+                          className="ri-close-circle-fill"
+                          onClick={closeModal}
+                        ></i>
+                      </div>
+                      <div className="modal-title">
+                        <h5 className="sm p-2">
+                          Bạn có chắc xoá bài bình luận?
+                        </h5>
+                      </div>
+                      <div className="d-flex justify-content-center align-items-center column-gap-3 mt-4">
+                        <button
+                          onClick={() => handleDeleteReview(review._id)}
+                          className="btn button text-white"
+                        >
+                          Đồng ý
+                        </button>
+                        <button
+                          onClick={closeModal}
+                          className="btn button btn-red text-white"
+                        >
+                          Đóng
+                        </button>
+                      </div>
+                    </div>
+                  </ShowModal>
+                </div>
+              )}
+          </div>
         </div>
       ))}
     </div>

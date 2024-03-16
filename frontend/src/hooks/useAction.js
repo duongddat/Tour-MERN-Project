@@ -13,10 +13,11 @@ export function useAction(actionFn, navigateRoute = null) {
     try {
       const resData = await actionFn(argument);
       dispatch(setMessage({ type: resData.status, message: resData.message }));
-      if (resData.status === "success" && navigateRoute) {
+      if ((resData.status === "success" || resData.ok) && navigateRoute) {
         navigate(navigateRoute);
       }
     } catch (error) {
+      console.log(error);
       dispatch(setMessage({ type: "error", message: error.message }));
     }
 

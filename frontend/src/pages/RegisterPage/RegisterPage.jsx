@@ -36,7 +36,6 @@ const RegisterPage = () => {
     }
 
     dispatch(registerUser(data));
-    navigate("/");
   }
 
   return (
