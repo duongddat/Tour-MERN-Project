@@ -1,68 +1,106 @@
 import { Form } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import moment from "moment";
 
 import { currencyFormatter } from "../../helper/formattingPrice";
 import { setMessage } from "../../store/message-slice";
+import Spin from "../../components/common/Spin";
 import "./Booking.css";
 
 function Booking({ tour }) {
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
+  const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState(null);
+
   const totalPrice = tour.price * (amount || 1);
 
   function handleChangeAmount(event) {
     setAmount(event.target.value);
   }
 
-  function handleCreateBooking(event) {
-    event.preventDefault();
+  const handleCreateBooking = useCallback(
+    async function handleCreateBooking(event) {
+      event.preventDefault();
 
-    const fd = new FormData(event.target);
-    const data = Object.fromEntries(fd.entries());
-    const { email, date } = data;
+      const fd = new FormData(event.target);
+      const data = Object.fromEntries(fd.entries());
+      const { email, date, guestSize } = data;
 
-    if (!userInfo) {
-      dispatch(
-        setMessage({
-          type: "error",
-          message: "Vui lòng đăng nhập để đặt tour!",
-        })
-      );
-      return;
-    }
+      if (!userInfo || !token) {
+        dispatch(
+          setMessage({
+            type: "error",
+            message: "Vui lòng đăng nhập để đặt tour!",
+          })
+        );
+        return;
+      }
 
-    if (userInfo.email !== email) {
-      dispatch(
-        setMessage({
-          type: "error",
-          message: "Vui lòng nhập đúng email của bạn!",
-        })
-      );
+      if (userInfo.email !== email) {
+        dispatch(
+          setMessage({
+            type: "error",
+            message: "Vui lòng nhập đúng email của bạn!",
+          })
+        );
 
-      return;
-    }
+        return;
+      }
 
-    const selectedDate = new Date(date);
-    const currentDate = new Date();
+      const selectedDate = new Date(date);
+      const currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 2);
+      if (selectedDate < currentDate) {
+        dispatch(
+          setMessage({
+            type: "error",
+            message:
+              "Vui lòng chọn một ngày ít nhất là 2 ngày sau ngày hiện tại!",
+          })
+        );
+        return;
+      }
 
-    currentDate.setDate(currentDate.getDate() + 2);
+      const formattedDate = moment(date, "YYYY-MM-DD").format("DD/MM/YYYY");
+      //Call api create booking
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `http://localhost:8080/booking/checkout-session/${tour._id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              guestSize: guestSize,
+              bookAt: formattedDate,
+            }),
+          }
+        );
 
-    if (selectedDate < currentDate) {
-      dispatch(
-        setMessage({
-          type: "error",
-          message:
-            "Vui lòng chọn một ngày ít nhất là 2 ngày sau ngày hiện tại!",
-        })
-      );
-      return;
-    }
+        const resData = await response.json();
 
-    console.log(data);
-  }
+        if (!response.ok) {
+          dispatch(
+            setMessage({ type: "error", message: "Vui lòng thử lại sau!" })
+          );
+        }
+
+        if (resData.session) {
+          window.location.href = resData.session;
+        }
+      } catch (error) {
+        console.log(error);
+        dispatch(setMessage({ type: "error", message: error.message }));
+      }
+      setLoading(false);
+    },
+    [dispatch, userInfo, token, tour]
+  );
 
   return (
     <div className="tour-content booking sticky">
@@ -145,8 +183,8 @@ function Booking({ tour }) {
                 <span>{currencyFormatter.format(totalPrice)}</span>
               </li>
             </ul>
-            <button type="submit" className="button w-100">
-              Đặt ngay
+            <button type="submit" className="button w-100" disabled={loading}>
+              {loading ? <Spin text="Đặt ngay" /> : "Đặt ngay"}
             </button>
           </div>
         </Form>

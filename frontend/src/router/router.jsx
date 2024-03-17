@@ -13,12 +13,14 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword.jsx";
 import OTPPage from "../pages/ForgotPassword/OTPPage.jsx";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword.jsx";
 import UserDetailPage from "../pages/UserDetailPage/UserDetailPage.jsx";
+import SuccessCheckout from "../components/Booking/SuccessCheckout.jsx";
 import ErrorPage from "../pages/ErrorPage/ErrorPage.jsx";
 
 import { loader as loadData } from "../utils/loadHomeData.js";
 import { loader as loadTourData } from "../utils/loadTourData.js";
 import { loader as loadTourDetailData } from "../utils/loadTourDetailData.js";
 import { loader as loadUserDetail } from "../utils/loadUserDetail.js";
+import { loader as loadSuccessCheckout } from "../utils/loadSuccessCheckout.js";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +52,11 @@ const router = createBrowserRouter([
         path: "user-detail",
         element: <UserDetailPage />,
         loader: loadUserDetail,
+      },
+      {
+        path: "checkout-success/:idBooking",
+        element: <SuccessCheckout />,
+        loader: loadSuccessCheckout,
       },
     ],
   },

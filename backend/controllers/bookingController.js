@@ -15,7 +15,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   //Current booked tour
   const tour = await Tour.findById(req.params.tourID);
 
-  const totalPrice = guestSize * tour.price;
+  const totalPrice = guestSize * 1 * tour.price;
   const parsedDate = moment(bookAt, "DD/MM/YYYY").toDate();
 
   //Save booking tour
@@ -49,10 +49,8 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
       },
     ],
     mode: "payment",
-    success_url: `${req.protocol}://${req.get("host")}/booking/success/?id=${
-      booking._id
-    }`,
-    cancel_url: `${req.protocol}://${req.get("host")}/tours/${tour.slug}`,
+    success_url: `${process.env.CLIENT_SITE_URL}/checkout-success/${booking._id}`,
+    cancel_url: `${process.env.CLIENT_SITE_URL}/tours/detail/${tour.slug}`,
   });
 
   if (!session) {
