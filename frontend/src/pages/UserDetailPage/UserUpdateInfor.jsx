@@ -1,15 +1,20 @@
 import { Suspense, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Await, Form, useLoaderData } from "react-router-dom";
-import { setMessage } from "../../store/message-slice";
+import { Await, Form, useLoaderData, useNavigate } from "react-router-dom";
 
+import { setMessage } from "../../store/message-slice";
 import headingBorderImg from "../../assets/img/heading-border.webp";
+import { updateUserInfo } from "../../utils/https";
+import Spin from "../../components/common/Spin";
+import { setCredentials } from "../../store/auth-slice";
 
 function UserUpdateInfor() {
   const { user } = useLoaderData();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [avatar, setAvatar] = useState();
   const inputAvaRef = useRef();
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleImageClick() {
     inputAvaRef.current.click();
@@ -27,12 +32,29 @@ function UserUpdateInfor() {
     }
   }
 
-  function handleUpdateInfo(event) {
+  async function handleUpdateInfo(event) {
     event.preventDefault();
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
-    console.log(data);
+    const { name, email, photo } = data;
+
+    const requestData = { name, email };
+    if (photo.name !== null) {
+      requestData.photo = photo;
+    }
+    setIsLoading(true);
+    try {
+      const resData = await updateUserInfo(requestData);
+      dispatch(setMessage({ type: resData.status, message: resData.message }));
+      if (resData.status === "success") {
+        dispatch(setCredentials(resData));
+        navigate("/user/update-info");
+      }
+    } catch (error) {
+      dispatch(setMessage({ type: "error", message: error.message }));
+    }
+    setIsLoading(false);
   }
 
   return (
@@ -85,7 +107,7 @@ function UserUpdateInfor() {
                     type="text"
                     id="name"
                     name="name"
-                    value={loadedUser.name}
+                    defaultValue={loadedUser.name}
                     required
                   />
                   <label htmlFor="name">Họ tên</label>
@@ -95,7 +117,7 @@ function UserUpdateInfor() {
                     type="email"
                     id="email"
                     name="email"
-                    value={loadedUser.email}
+                    defaultValue={loadedUser.email}
                     required
                   />
                   <label htmlFor="email">Email</label>
@@ -103,9 +125,10 @@ function UserUpdateInfor() {
                 <div className="input-field mt-2 mb-3">
                   <button
                     type="submit"
-                    className="button btn-submit w-25 m-auto"
+                    className="button btn-submit"
+                    disabled={isLoading}
                   >
-                    Cập nhật
+                    {isLoading ? <Spin text="Cập nhật..." /> : "Cập nhật"}
                   </button>
                 </div>
               </Form>

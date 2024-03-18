@@ -168,3 +168,61 @@ export async function deleteReview(data) {
 
   return response;
 }
+//=========================User detail (current)======================
+//1.Update user info
+export async function updateUserInfo(data) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to update info." },
+      {
+        status: 400,
+      }
+    );
+  }
+  const formData = new FormData();
+  for (const key in data) {
+    formData.append(key, data[key]);
+  }
+
+  const response = await fetch(`http://localhost:8080/users/updateMe`, {
+    method: "PATCH",
+    headers: {
+      // "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  const resData = await response.json();
+  console.log(resData);
+  return resData;
+}
+
+//2.Change Password
+export async function changePassword(data) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to update password." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(`http://localhost:8080/auth/updateMyPassword`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  const resData = await response.json();
+
+  return resData;
+}
