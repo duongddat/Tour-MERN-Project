@@ -117,7 +117,7 @@ export default function TourPage() {
   }
 
   return (
-    <div className="section-bg p-5 d-flex flex-column gap-80">
+    <div className="section-bg pt-5 d-flex flex-column gap-80">
       <div className="d-flex flex-column gap-80">
         <SearchBar />
       </div>

@@ -14,7 +14,7 @@ function ShowModal({ children, isOpen, onClose }) {
       border: "none",
     },
     overlay: {
-      backgroundColor: "rgba(173, 173, 173, 0.56)",
+      backgroundColor: "rgba(255, 252, 252, 0.56)",
       zIndex: "2",
     },
   };

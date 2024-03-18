@@ -13,6 +13,8 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword.jsx";
 import OTPPage from "../pages/ForgotPassword/OTPPage.jsx";
 import ResetPassword from "../pages/ForgotPassword/ResetPassword.jsx";
 import UserDetailPage from "../pages/UserDetailPage/UserDetailPage.jsx";
+import UserUpdateInfo from "../pages/UserDetailPage/UserUpdateInfor.jsx";
+import UserChangePassword from "../pages/UserDetailPage/UserChangePassword.jsx";
 import SuccessCheckout from "../components/Booking/SuccessCheckout.jsx";
 import ErrorPage from "../pages/ErrorPage/ErrorPage.jsx";
 
@@ -21,6 +23,7 @@ import { loader as loadTourData } from "../utils/loadTourData.js";
 import { loader as loadTourDetailData } from "../utils/loadTourDetailData.js";
 import { loader as loadUserDetail } from "../utils/loadUserDetail.js";
 import { loader as loadSuccessCheckout } from "../utils/loadSuccessCheckout.js";
+import RootUserPage from "../pages/RootUserPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -49,9 +52,23 @@ const router = createBrowserRouter([
       { path: "blog", element: <BlogPage /> },
       { path: "about-us", element: <AboutUsPage /> },
       {
-        path: "user-detail",
-        element: <UserDetailPage />,
-        loader: loadUserDetail,
+        path: "user",
+        element: <RootUserPage />,
+        children: [
+          {
+            path: "detail",
+            element: <UserDetailPage />,
+            loader: loadUserDetail,
+          },
+          {
+            path: "update-info",
+            element: <UserUpdateInfo />,
+          },
+          {
+            path: "update-password",
+            element: <UserChangePassword />,
+          },
+        ],
       },
       {
         path: "checkout-success/:idBooking",

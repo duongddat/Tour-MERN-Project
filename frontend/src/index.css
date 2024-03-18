@@ -34,4 +34,7 @@ body {
   .mt-5-md-size {
     margin-top: 1.5rem;
   }
+  .pxy-sm-2 {
+    padding: 12px;
+  }
 }

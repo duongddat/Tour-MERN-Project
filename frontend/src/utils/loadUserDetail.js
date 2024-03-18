@@ -2,7 +2,6 @@
 import { defer, json } from "react-router-dom";
 
 async function loaderUserDetail() {
-  console.log("hahaha");
   const token = localStorage.getItem("token");
   if (!token) {
     throw json(

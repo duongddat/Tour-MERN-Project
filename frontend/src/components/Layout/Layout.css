@@ -1,0 +1,10 @@
+.container-user {
+  max-width: 920px;
+}
+
+.menu-header {
+  font-size: 18px;
+  line-height: 24px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gray-200, #eaecf0);
+}

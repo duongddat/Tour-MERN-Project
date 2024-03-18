@@ -13,7 +13,7 @@ function FilterTourOption({ onFilter }) {
   }
 
   return (
-    <div className="card card-filter">
+    <div className="card card-filter mb-3">
       <div className="card-padding title-filter">
         <h5 className="md">Lọc kết quả</h5>
         <div className="text-center btn-text">
