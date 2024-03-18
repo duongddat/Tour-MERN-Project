@@ -10,7 +10,7 @@ function UserDetailPage() {
   return (
     <div className="tour-content">
       <Suspense
-        fallback={<p style={{ textAlign: "center" }}>Loading Tour...</p>}
+        fallback={<p style={{ textAlign: "center" }}>Loading User...</p>}
       >
         <Await resolve={user}>
           {(loadedUser) => (

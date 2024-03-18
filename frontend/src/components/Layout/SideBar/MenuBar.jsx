@@ -2,9 +2,9 @@ import { NavLink } from "react-router-dom";
 
 function MenuBar() {
   return (
-    <div className="tour-content pxy-sm-2 d-flex flex-column  sticky">
+    <div className="tour-content pxy-sm-2 d-flex flex-column sticky">
       <h5 className=" md menu-header d-none d-sm-inline">Quản lý tài khoản</h5>
-      <ul className="nav nav-pills flex-column">
+      <ul className="nav nav-pills flex-sm-column">
         <li className="nav-item fs-4 my-1">
           <NavLink to="/user/detail" className="nav-link text-start fs-6">
             <i className="ri-user-settings-fill"></i>

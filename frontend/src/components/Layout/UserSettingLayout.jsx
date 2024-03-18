@@ -6,10 +6,10 @@ function UserSettingLayout({ children }) {
     <section className="section-bg">
       <div className="container container-user">
         <div className="row">
-          <div className="col-lg-4 col-md-4 col-3">
+          <div className="col-lg-4 col-md-4 col-auto mb-3">
             <MenuBar />
           </div>
-          <div className="col-lg-8 col-md-8 col-9">{children}</div>
+          <div className="col-lg-8 col-md-8 col-12">{children}</div>
         </div>
       </div>
     </section>

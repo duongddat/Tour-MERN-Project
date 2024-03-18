@@ -63,6 +63,7 @@ const router = createBrowserRouter([
           {
             path: "update-info",
             element: <UserUpdateInfo />,
+            loader: loadUserDetail,
           },
           {
             path: "update-password",

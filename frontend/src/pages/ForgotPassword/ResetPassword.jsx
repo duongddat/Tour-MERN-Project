@@ -69,7 +69,7 @@ function ResetPassword() {
             <Form className="w-100 p-3" onSubmit={handleResetPassword}>
               <div className="input-field mb-4">
                 <input type="password" id="password" name="password" required />
-                <label htmlFor="otp">Mật khẩu</label>
+                <label htmlFor="password">Mật khẩu</label>
               </div>
               <div className="input-field mb-5">
                 <input
