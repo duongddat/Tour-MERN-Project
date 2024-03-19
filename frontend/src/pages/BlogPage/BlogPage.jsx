@@ -1,10 +1,10 @@
 import Subtitle from "../../shared/Subtitle";
+import { Await, Link, useLoaderData } from "react-router-dom";
+import { Suspense } from "react";
 
 import headingBorderImg from "../../assets/img/heading-border.webp";
-import "./BlogPage.css";
-import { Await, useLoaderData } from "react-router-dom";
-import { Suspense } from "react";
 import BlogList from "../../components/Blogs/BlogList";
+import "./BlogPage.css";
 
 function BlogPage() {
   const { blogs } = useLoaderData();
@@ -44,7 +44,22 @@ function BlogPage() {
             </Suspense>
           </div>
           <div className="col-xl-3 col-lg-3 col-md-none col-sm-none">
-            <div className="tour-content sticky">hahahah</div>
+            <div className="tour-content px-3 sticky">
+              <div className="text-center py-2 px-1 mb-2">
+                <h5 className="md fs-5 fw-bold mb-3">Creator HoYo</h5>
+                <p className="sm">Số bài viết của bạn: 0 / bài</p>
+              </div>
+              <div className="blog-tool__list">
+                <Link className="blog-tool__item">
+                  <i className="ri-add-circle-fill"></i>
+                  <span className="sm fs-6">Tạo bài viết</span>
+                </Link>
+                <Link className="blog-tool__item">
+                  <i className="ri-settings-5-fill"></i>
+                  <span className="sm fs-6">Quản lý bài viết</span>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>

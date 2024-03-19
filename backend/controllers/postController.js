@@ -66,6 +66,20 @@ exports.getAllPostes = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getPostOfUser = catchAsync(async (req, res, next) => {
+  const id = req.user.id;
+  const posts = await Post.find({ user: id });
+
+  res.status(200).json({
+    status: "success",
+    message: "Successfully retrieved",
+    lenght: posts.length,
+    data: {
+      posts,
+    },
+  });
+});
+
 exports.getPost = catchAsync(async (req, res, next) => {
   const id = req.params.id;
   const post = await Post.findById(id);
@@ -147,14 +161,14 @@ exports.likePost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(id);
 
   if (!post.likes.includes(req.user._id)) {
-    await Post.updateOne({ $push: { likes: req.user._id } });
+    await Post.updateOne({ _id: id }, { $push: { likes: req.user._id } });
 
     res.status(200).json({
       status: "success",
       message: "The Post has been liked!",
     });
   } else {
-    await Post.updateOne({ $pull: { likes: req.user._id } });
+    await Post.updateOne({ _id: id }, { $pull: { likes: req.user._id } });
     res.status(200).json({
       status: "success",
       message: "The Post has been disliked!",

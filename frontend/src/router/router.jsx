@@ -2,10 +2,14 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 
 import RootPage from "../pages/RootPage.jsx";
 import RootAuthPage from "../pages/RootAuthPage.jsx";
+import RootUserPage from "../pages/RootUserPage.jsx";
 import HomePage from "../pages/HomePage/HomePage.jsx";
 import TourPage from "../pages/ToursPage/TourPage.jsx";
 import DetailPage from "../pages/DetailTourPage/DetailTourPage.jsx";
 import BlogPage from "../pages/BlogPage/BlogPage.jsx";
+import BlogDetailPage from "../pages/BlogPage/BlogDetailPage.jsx";
+import BlogCreatePage from "../pages/BlogPage/BlogCreatePage.jsx";
+import BlogEditPage from "../pages/BlogPage/BlogEditPage.jsx";
 import AboutUsPage from "../pages/AboutUsPage/AboutUsPage.jsx";
 import LoginPage from "../pages/LoginPage/LoginPage.jsx";
 import RegisterPage from "../pages/RegisterPage/RegisterPage.jsx";
@@ -24,7 +28,6 @@ import { loader as loadTourDetailData } from "../utils/loadTourDetailData.js";
 import { loader as loadUserDetail } from "../utils/loadUserDetail.js";
 import { loader as loadSuccessCheckout } from "../utils/loadSuccessCheckout.js";
 import { loader as loadBlogData } from "../utils/loadBlogData.js";
-import RootUserPage from "../pages/RootUserPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +53,15 @@ const router = createBrowserRouter([
           },
         ],
       },
-      { path: "blog", element: <BlogPage />, loader: loadBlogData },
+      {
+        path: "blog",
+        children: [
+          { index: true, element: <BlogPage />, loader: loadBlogData },
+          { path: "detail", element: <BlogDetailPage /> },
+          { path: "create", element: <BlogCreatePage /> },
+          { path: "edit", element: <BlogEditPage /> },
+        ],
+      },
       { path: "about-us", element: <AboutUsPage /> },
       {
         path: "user",

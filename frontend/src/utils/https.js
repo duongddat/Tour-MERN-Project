@@ -226,3 +226,31 @@ export async function changePassword(data) {
 
   return resData;
 }
+
+//================= Blog Page==========================
+//1.Like Blog
+export async function likeBlog(data) {
+  const { blogId } = data;
+  console.log(blogId);
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to delete review." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(`http://localhost:8080/posts/${blogId}/like`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+
+  const resData = await response.json();
+
+  return resData;
+}

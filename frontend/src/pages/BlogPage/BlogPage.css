@@ -6,3 +6,36 @@
   line-height: 28px;
   font-weight: 500;
 }
+
+.blog-tool__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.blog-tool__item {
+  padding: 15px 10px;
+  border-radius: 10px;
+  background-color: #eaeef3;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.blog-tool__item i {
+  font-size: 25px;
+  margin-left: 10px;
+}
+
+.blog-tool__item:nth-child(1) i {
+  color: rgba(41, 226, 178, 0.8);
+}
+
+.blog-tool__item:nth-child(2) i {
+  color: rgba(61, 184, 245, 0.8);
+}
+
+.blog-tool__item:hover {
+  background-color: #eff2ff;
+}

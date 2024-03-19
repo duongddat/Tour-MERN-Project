@@ -6,6 +6,9 @@ const authController = require("../controllers/authController");
 const router = express.Router();
 
 router.route("/:id/like").get(authController.protect, postController.likePost);
+router
+  .route("/my-post")
+  .get(authController.protect, postController.getPostOfUser);
 
 router
   .route("/")
