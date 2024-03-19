@@ -1,0 +1,8 @@
+.blog-header p {
+  width: 62%;
+  color: var(--gray-600, #475467);
+  flex-shrink: 0;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+}

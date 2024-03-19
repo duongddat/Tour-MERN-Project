@@ -23,6 +23,7 @@ import { loader as loadTourData } from "../utils/loadTourData.js";
 import { loader as loadTourDetailData } from "../utils/loadTourDetailData.js";
 import { loader as loadUserDetail } from "../utils/loadUserDetail.js";
 import { loader as loadSuccessCheckout } from "../utils/loadSuccessCheckout.js";
+import { loader as loadBlogData } from "../utils/loadBlogData.js";
 import RootUserPage from "../pages/RootUserPage.jsx";
 
 const router = createBrowserRouter([
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
           },
         ],
       },
-      { path: "blog", element: <BlogPage /> },
+      { path: "blog", element: <BlogPage />, loader: loadBlogData },
       { path: "about-us", element: <AboutUsPage /> },
       {
         path: "user",

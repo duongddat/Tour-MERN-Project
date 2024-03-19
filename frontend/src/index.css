@@ -21,6 +21,13 @@ body {
     margin-top: 3rem;
   }
 }
+
+@media (max-width: 1023px) {
+  .blog-header p {
+    width: 100%;
+  }
+}
+
 @media (max-width: 1023px) and (min-width: 600px) {
   .mt-5-md-size {
     margin-top: 3rem;
