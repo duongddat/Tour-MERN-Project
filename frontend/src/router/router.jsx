@@ -7,6 +7,7 @@ import HomePage from "../pages/HomePage/HomePage.jsx";
 import TourPage from "../pages/ToursPage/TourPage.jsx";
 import DetailPage from "../pages/DetailTourPage/DetailTourPage.jsx";
 import BlogPage from "../pages/BlogPage/BlogPage.jsx";
+import BlogManagePage from "../pages/BlogPage/BlogManagePage.jsx";
 import BlogDetailPage from "../pages/BlogPage/BlogDetailPage.jsx";
 import BlogCreatePage from "../pages/BlogPage/BlogCreatePage.jsx";
 import BlogEditPage from "../pages/BlogPage/BlogEditPage.jsx";
@@ -57,6 +58,7 @@ const router = createBrowserRouter([
         path: "blog",
         children: [
           { index: true, element: <BlogPage />, loader: loadBlogData },
+          { path: "manage", element: <BlogManagePage /> },
           { path: "detail", element: <BlogDetailPage /> },
           { path: "create", element: <BlogCreatePage /> },
           { path: "edit", element: <BlogEditPage /> },

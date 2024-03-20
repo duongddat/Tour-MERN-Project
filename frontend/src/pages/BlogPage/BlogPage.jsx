@@ -50,11 +50,11 @@ function BlogPage() {
                 <p className="sm">Số bài viết của bạn: 0 / bài</p>
               </div>
               <div className="blog-tool__list">
-                <Link className="blog-tool__item">
+                <Link to="/blog/create" className="blog-tool__item">
                   <i className="ri-add-circle-fill"></i>
                   <span className="sm fs-6">Tạo bài viết</span>
                 </Link>
-                <Link className="blog-tool__item">
+                <Link to="/blog/manage" className="blog-tool__item">
                   <i className="ri-settings-5-fill"></i>
                   <span className="sm fs-6">Quản lý bài viết</span>
                 </Link>

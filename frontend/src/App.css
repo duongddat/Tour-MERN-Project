@@ -247,6 +247,26 @@ ul {
   height: 20px;
   width: 20px;
 }
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+  margin-bottom: 12px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.form-control,
+.form-select {
+  border: 1px solid #e5e6e7;
+  border-radius: 8px;
+  padding: 12px 22px;
+}
+
+.form-md {
+  max-width: 400px;
+}
 
 @-webkit-keyframes rotation {
   from {
