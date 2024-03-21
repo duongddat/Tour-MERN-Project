@@ -254,3 +254,6 @@ export async function likeBlog(data) {
 
   return resData;
 }
+//2. Create Blog
+//3. Edit Blog
+//4. Delete Blog

@@ -82,7 +82,10 @@ function BlogItem({ blog }) {
                     userInfo.role === "admin") && (
                     <>
                       {userInfo._id === blog.user._id && (
-                        <Link className="button button-icon">
+                        <Link
+                          to={`/blog/edit/${blog._id}`}
+                          className="button button-icon"
+                        >
                           <i className="ri-pencil-line"></i>
                         </Link>
                       )}

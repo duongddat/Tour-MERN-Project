@@ -1,10 +1,14 @@
-import { useRef, useState } from "react";
-import { Form } from "react-router-dom";
+import { Suspense, useRef, useState } from "react";
+import { Await, Form } from "react-router-dom";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+
 import "./Blog.css";
 
-function BlogForm() {
+function BlogForm({ countries, blog = null }) {
   const inputPhotoRef = useRef();
   const [selectedImages, setSelectedImages] = useState([]);
+  const [description, setDescription] = useState(blog ? blog.description : "");
 
   function handleImageClick() {
     inputPhotoRef.current.click();
@@ -15,7 +19,10 @@ function BlogForm() {
     const selectedFilesArray = Array.from(selectedFiles);
 
     const imagesArray = selectedFilesArray.map((file) => {
-      return URL.createObjectURL(file);
+      return {
+        file: file,
+        url: URL.createObjectURL(file),
+      };
     });
 
     setSelectedImages(imagesArray);
@@ -25,8 +32,21 @@ function BlogForm() {
     setSelectedImages(selectedImages.filter((e) => e !== image));
   }
 
+  function handleSumbitForm(event) {
+    event.preventDefault();
+
+    const data = {
+      title: event.target.title.value,
+      country: event.target.country.value,
+      description: description,
+      photo: selectedImages,
+    };
+
+    console.log(data);
+  }
+
   return (
-    <Form className="mb-5">
+    <Form className="mb-5" onSubmit={handleSumbitForm}>
       <div className="form-item-container">
         <div className="mb-4">
           <label htmlFor="title" className="form-label">
@@ -35,19 +55,38 @@ function BlogForm() {
           <input
             type="text"
             id="title"
+            name="title"
             className="form-control"
             placeholder="Tiêu đề blog"
+            defaultValue={blog ? blog.title : ""}
           />
         </div>
         <div className="mb-4">
           <label htmlFor="country" className="form-label">
             Quốc gia
           </label>
-          <select id="country" className="form-select form-md">
-            <option value="Viet nam">Việt nam</option>
-            <option value="Viet nam">Việt nam</option>
-            <option value="Viet nam">Việt nam</option>
-          </select>
+          <Suspense
+            fallback={
+              <p style={{ textAlign: "center" }}>Loading Countries...</p>
+            }
+          >
+            <Await resolve={countries}>
+              {(loadedCountry) => (
+                <select
+                  id="country"
+                  name="country"
+                  className="form-select form-md"
+                  defaultValue={blog && blog.country.name}
+                >
+                  {loadedCountry.map((c) => (
+                    <option key={c._id} value={c._id}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </Await>
+          </Suspense>
         </div>
         <div className="mb-4">
           <label className="form-label">Hình ảnh</label>
@@ -75,7 +114,11 @@ function BlogForm() {
             {selectedImages &&
               selectedImages.map((image, index) => (
                 <div key={index} className="form-img-upload__img">
-                  <img src={image} alt="image upload" className="upload-img" />
+                  <img
+                    src={image.url}
+                    alt="image upload"
+                    className="upload-img"
+                  />
                   <div
                     className="upload-status"
                     onClick={() => handleRemoveImage(image)}
@@ -86,20 +129,36 @@ function BlogForm() {
               ))}
           </div>
         </div>
-        <div className="mb-5">
+        {blog.photo.length > 0 && (
+          <div className="mb-4">
+            <label className="form-label">Hình ảnh hiện tại</label>
+            <div className="form-img-upload__imgs">
+              {blog.photo.map((image, index) => (
+                <div key={index} className="form-img-upload__img">
+                  <img
+                    src={`http://localhost:8080/img/post/${image}`}
+                    alt="image upload"
+                    className="upload-img"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        <div className="mb-4">
           <label htmlFor="description" className="form-label">
             Bài bình luận
           </label>
-          <textarea
-            className="form-control"
-            rows="5"
-            id="description"
-            name="description"
-          ></textarea>
+          <ReactQuill
+            theme="snow"
+            className="quill-height"
+            value={description}
+            onChange={setDescription}
+          />
         </div>
         <div className="mb-4 w-100 text-center">
           <button type="submit" className="button btn-submit">
-            Xác nhận
+            Đăng bài
           </button>
         </div>
       </div>

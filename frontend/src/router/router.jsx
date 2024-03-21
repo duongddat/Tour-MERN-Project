@@ -29,6 +29,8 @@ import { loader as loadTourDetailData } from "../utils/loadTourDetailData.js";
 import { loader as loadUserDetail } from "../utils/loadUserDetail.js";
 import { loader as loadSuccessCheckout } from "../utils/loadSuccessCheckout.js";
 import { loader as loadBlogData } from "../utils/loadBlogData.js";
+import { loader as loadBlogCreate } from "../utils/loadBlogCreate.js";
+import { loader as loadBlogEdit } from "../utils/loadBlogEdit.js";
 
 const router = createBrowserRouter([
   {
@@ -60,8 +62,16 @@ const router = createBrowserRouter([
           { index: true, element: <BlogPage />, loader: loadBlogData },
           { path: "manage", element: <BlogManagePage /> },
           { path: "detail", element: <BlogDetailPage /> },
-          { path: "create", element: <BlogCreatePage /> },
-          { path: "edit", element: <BlogEditPage /> },
+          {
+            path: "create",
+            element: <BlogCreatePage />,
+            loader: loadBlogCreate,
+          },
+          {
+            path: "edit/:idBlog",
+            element: <BlogEditPage />,
+            loader: loadBlogEdit,
+          },
         ],
       },
       { path: "about-us", element: <AboutUsPage /> },
