@@ -12,6 +12,7 @@ export function useAction(actionFn, navigateRoute = null) {
     setIsLoading(true);
     try {
       const resData = await actionFn(argument);
+      console.log(resData);
       dispatch(setMessage({ type: resData.status, message: resData.message }));
       if ((resData.status === "success" || resData.ok) && navigateRoute) {
         navigate(navigateRoute);

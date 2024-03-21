@@ -32,6 +32,9 @@ body {
   .mt-5-md-size {
     margin-top: 3rem;
   }
+  .col-md-none {
+    display: none;
+  }
 }
 
 @media (max-width: 600px) {

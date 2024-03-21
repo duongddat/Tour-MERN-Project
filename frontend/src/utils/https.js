@@ -196,7 +196,6 @@ export async function updateUserInfo(data) {
   });
 
   const resData = await response.json();
-  console.log(resData);
   return resData;
 }
 
@@ -231,7 +230,6 @@ export async function changePassword(data) {
 //1.Like Blog
 export async function likeBlog(data) {
   const { blogId } = data;
-  console.log(blogId);
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -255,5 +253,74 @@ export async function likeBlog(data) {
   return resData;
 }
 //2. Create Blog
+export async function createBlog(data) {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    throw json(
+      { message: "Please login to create blog." },
+      {
+        status: 400,
+      }
+    );
+  }
+  const { formData } = data;
+
+  const response = await fetch("http://localhost:8080/posts", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  const resData = await response.json();
+
+  return resData;
+}
 //3. Edit Blog
+export async function editBlog(data) {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    throw json(
+      { message: "Please login to create blog." },
+      {
+        status: 400,
+      }
+    );
+  }
+  const { formData, idBlog } = data;
+
+  const response = await fetch(`http://localhost:8080/posts/${idBlog}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  const resData = await response.json();
+
+  return resData;
+}
 //4. Delete Blog
+export async function deleteBlog(blogId) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to delete review." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(`http://localhost:8080/posts/${blogId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+
+  return response;
+}

@@ -54,6 +54,10 @@ ul {
   background-color: #f3f9ff;
 }
 
+.section-relative {
+  position: relative;
+}
+
 .hero-sesction {
   margin-top: 10px;
 }

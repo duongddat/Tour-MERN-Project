@@ -31,7 +31,7 @@ function BlogPage() {
             <img src={headingBorderImg} alt="Heading Border Image" />
           </div>
         </div>
-        <div className="row mt-5">
+        <div className="row row-gap-5 mt-5">
           <div className="col-xl-9 col-lg-9 col-md-12 col-12">
             <Suspense
               fallback={<p style={{ textAlign: "center" }}>Loading Blog...</p>}
@@ -43,7 +43,7 @@ function BlogPage() {
               </Await>
             </Suspense>
           </div>
-          <div className="col-xl-3 col-lg-3 col-md-none col-sm-none">
+          <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12">
             <div className="tour-content px-3 sticky">
               <div className="text-center py-2 px-1 mb-2">
                 <h5 className="md fs-5 fw-bold mb-3">Creator HoYo</h5>

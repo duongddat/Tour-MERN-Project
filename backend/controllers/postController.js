@@ -102,6 +102,7 @@ exports.createPost = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
+    message: "Successfull to create blog",
     data: {
       data: newPost,
     },

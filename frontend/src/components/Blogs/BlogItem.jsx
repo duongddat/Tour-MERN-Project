@@ -1,23 +1,38 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import parse from "html-react-parser";
 
 import { formatVietnameseDate } from "../../helper/formattingDate";
+import ShowModal from "../common/ShowModal";
 import { useAction } from "../../hooks/useAction";
-import { likeBlog } from "../../utils/https";
+import { deleteBlog, likeBlog } from "../../utils/https";
 import { setMessage } from "../../store/message-slice";
+import Spin from "../common/Spin";
 import "./Blog.css";
+
+function truncateDescription(description, maxLength) {
+  if (!description || typeof description !== "string") return "";
+  maxLength = maxLength || 80;
+  return description.length > maxLength
+    ? description.substring(0, maxLength) + "..."
+    : description;
+}
 
 function BlogItem({ blog }) {
   const dispatch = useDispatch();
+  const [modalIsOpen, setIsOpen] = useState(false);
   const { userInfo } = useSelector((state) => state.auth);
   const { action } = useAction(likeBlog, "/blog");
+  const { isLoading, action: actionDeleteBlog } = useAction(
+    deleteBlog,
+    "/blog"
+  );
 
-  const maxLength = 150;
-  const shortDescription =
-    blog.description.length > maxLength
-      ? blog.description.substring(0, maxLength - 3) + "..."
-      : blog.description;
   const liked = userInfo && blog.likes.includes(userInfo._id);
+
+  const truncatedDescription = truncateDescription(blog.description);
+  const parsedDescription = parse(truncatedDescription);
 
   function handleLikeBlog() {
     if (!userInfo) {
@@ -31,17 +46,37 @@ function BlogItem({ blog }) {
     action({ blogId: blog._id });
   }
 
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function loadingAction() {
+    if (isLoading) {
+      closeModal();
+    }
+  }
+
+  function handleDeleteBlog(blogId) {
+    actionDeleteBlog(blogId);
+
+    loadingAction();
+  }
+
   return (
     <div className="card">
       <div className="row">
-        <div className="col-lg-5 col-md-6 col-sm-12 col-12">
+        <div className="col-lg-5 col-md-5 col-12">
           <img
             src={`http://localhost:8080/img/post/${blog.photo[0]}`}
             alt="Blog image"
             className="blog-image"
           />
         </div>
-        <div className="col-lg-7 col-md-6 col-sm-12 col-12">
+        <div className="col-lg-7 col-md-7 col-12">
           <div className="p-4 card-blog__content">
             <div className="blog__body">
               <h5 className="blog-title">{blog.title}</h5>
@@ -60,7 +95,7 @@ function BlogItem({ blog }) {
                   </span>
                 </div>
               </div>
-              <p className="blog-description sm">{shortDescription}</p>
+              <div className="blog-description sm">{parsedDescription}</div>
               <p className="blog-country sm"># {blog.country.name}</p>
             </div>
             <div className="blog__footer d-flex flex-wrap justify-content-between row-gap-3">
@@ -89,7 +124,10 @@ function BlogItem({ blog }) {
                           <i className="ri-pencil-line"></i>
                         </Link>
                       )}
-                      <span className="button button-icon btn-red">
+                      <span
+                        className="button button-icon btn-red"
+                        onClick={openModal}
+                      >
                         <i className="ri-delete-bin-fill"></i>
                       </span>
                     </>
@@ -100,6 +138,32 @@ function BlogItem({ blog }) {
           </div>
         </div>
       </div>
+      <ShowModal isOpen={modalIsOpen} onClose={closeModal}>
+        <div className="p-3 modal-container">
+          <div className="modal-close">
+            <i className="ri-close-circle-fill" onClick={closeModal}></i>
+          </div>
+          <div className="modal-title">
+            <h5 className="sm p-2">Bạn có chắc xoá bài?</h5>
+          </div>
+          <div className="d-flex justify-content-center align-items-center column-gap-3 mt-4">
+            <button
+              onClick={() => handleDeleteBlog(blog._id)}
+              className="button text-white"
+              disabled={isLoading}
+            >
+              {isLoading ? <Spin text="Xoá..." /> : "Đồng ý"}
+            </button>
+            <button
+              onClick={closeModal}
+              className="button btn-red text-white"
+              disabled={isLoading}
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </ShowModal>
     </div>
   );
 }

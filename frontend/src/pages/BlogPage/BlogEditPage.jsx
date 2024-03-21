@@ -1,9 +1,13 @@
 import { Await, useLoaderData } from "react-router-dom";
-import BlogForm from "../../components/Blogs/BlogForm";
 import { Suspense } from "react";
+
+import BlogForm from "../../components/Blogs/BlogForm";
+import { useAction } from "../../hooks/useAction";
+import { editBlog } from "../../utils/https";
 
 function BlogEditPage() {
   const { blog, countries } = useLoaderData();
+  const { isLoading, action } = useAction(editBlog, "/blog");
 
   return (
     <section>
@@ -15,7 +19,12 @@ function BlogEditPage() {
           >
             <Await resolve={blog}>
               {(loadedBlog) => (
-                <BlogForm countries={countries} blog={loadedBlog} />
+                <BlogForm
+                  countries={countries}
+                  isLoading={isLoading}
+                  action={action}
+                  blog={loadedBlog}
+                />
               )}
             </Await>
           </Suspense>

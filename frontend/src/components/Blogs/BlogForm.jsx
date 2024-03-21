@@ -4,8 +4,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 import "./Blog.css";
+import Spin from "../common/Spin";
 
-function BlogForm({ countries, blog = null }) {
+function BlogForm({ countries, isLoading, action, blog = null }) {
   const inputPhotoRef = useRef();
   const [selectedImages, setSelectedImages] = useState([]);
   const [description, setDescription] = useState(blog ? blog.description : "");
@@ -35,14 +36,24 @@ function BlogForm({ countries, blog = null }) {
   function handleSumbitForm(event) {
     event.preventDefault();
 
-    const data = {
-      title: event.target.title.value,
-      country: event.target.country.value,
-      description: description,
-      photo: selectedImages,
-    };
+    const formData = new FormData();
+    formData.append("title", event.target.title.value);
+    formData.append("country", event.target.country.value);
+    formData.append("description", description);
 
-    console.log(data);
+    if (selectedImages.length > 0) {
+      selectedImages.forEach((image) => {
+        formData.append("photo", image.file);
+      });
+    }
+
+    const data = { formData: formData };
+
+    if (blog != null) {
+      data.idBlog = blog._id;
+    }
+
+    action(data);
   }
 
   return (
@@ -129,7 +140,7 @@ function BlogForm({ countries, blog = null }) {
               ))}
           </div>
         </div>
-        {blog.photo.length > 0 && (
+        {blog && blog.photo.length > 0 && (
           <div className="mb-4">
             <label className="form-label">Hình ảnh hiện tại</label>
             <div className="form-img-upload__imgs">
@@ -157,8 +168,12 @@ function BlogForm({ countries, blog = null }) {
           />
         </div>
         <div className="mb-4 w-100 text-center">
-          <button type="submit" className="button btn-submit">
-            Đăng bài
+          <button
+            type="submit"
+            className="button btn-submit"
+            disabled={isLoading}
+          >
+            {isLoading ? <Spin text="Loading..." /> : "Đăng bài"}
           </button>
         </div>
       </div>

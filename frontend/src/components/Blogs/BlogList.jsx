@@ -18,7 +18,7 @@ function BlogList({ blogs, itemsPerPage }) {
     <>
       <div className="row row-gap-4 mb-4">
         {currentItems.map((blog) => (
-          <div key={blog._id} className="col-12">
+          <div key={blog._id} className="col-lg-12 col-md-12 col-12">
             <BlogItem blog={blog} />
           </div>
         ))}
