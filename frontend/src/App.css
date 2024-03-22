@@ -43,6 +43,12 @@ a {
 ul {
   list-style: none;
 }
+.section-title__header {
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: 700;
+  color: var(--gray-900, #101828);
+}
 .mt-10 {
   margin-top: 5rem;
 }
@@ -223,6 +229,9 @@ ul {
 }
 .gap-80 {
   gap: 80px;
+}
+.gap-60 {
+  gap: 60px;
 }
 .gap-40 {
   gap: 40px;

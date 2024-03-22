@@ -31,6 +31,8 @@ import { loader as loadSuccessCheckout } from "../utils/loadSuccessCheckout.js";
 import { loader as loadBlogData } from "../utils/loadBlogData.js";
 import { loader as loadBlogCreate } from "../utils/loadBlogCreate.js";
 import { loader as loadBlogEdit } from "../utils/loadBlogEdit.js";
+import { loader as loadBlogDetail } from "../utils/loadBlogDetail.js";
+import { loader as loadBlogManage } from "../utils/loadBlogManage.js";
 
 const router = createBrowserRouter([
   {
@@ -60,8 +62,16 @@ const router = createBrowserRouter([
         path: "blog",
         children: [
           { index: true, element: <BlogPage />, loader: loadBlogData },
-          { path: "manage", element: <BlogManagePage /> },
-          { path: "detail", element: <BlogDetailPage /> },
+          {
+            path: "manage",
+            element: <BlogManagePage />,
+            loader: loadBlogManage,
+          },
+          {
+            path: "detail/:idBlog",
+            element: <BlogDetailPage />,
+            loader: loadBlogDetail,
+          },
           {
             path: "create",
             element: <BlogCreatePage />,

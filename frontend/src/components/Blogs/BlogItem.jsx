@@ -67,7 +67,7 @@ function BlogItem({ blog }) {
   }
 
   return (
-    <div className="card">
+    <div className="card card-border">
       <div className="row">
         <div className="col-lg-5 col-md-5 col-12">
           <img
@@ -132,7 +132,9 @@ function BlogItem({ blog }) {
                       </span>
                     </>
                   )}
-                <Link className="button">Xem chi tiết</Link>
+                <Link to={`/blog/detail/${blog._id}`} className="button">
+                  Xem chi tiết
+                </Link>
               </div>
             </div>
           </div>
