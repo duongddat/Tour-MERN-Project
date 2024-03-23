@@ -1,16 +1,9 @@
-import { Await, useLoaderData, useNavigate } from "react-router-dom";
+import { Await, useLoaderData } from "react-router-dom";
 import { Suspense } from "react";
 import BlogManage from "../../components/Blogs/BlogManage";
-import { useSelector } from "react-redux";
 
 function BlogManagePage() {
-  const navigate = useNavigate();
   const { blogs } = useLoaderData();
-  const { userInfo } = useSelector((state) => state.auth);
-
-  if (!userInfo) {
-    navigate("/blog");
-  }
 
   return (
     <Suspense

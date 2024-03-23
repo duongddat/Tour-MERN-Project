@@ -43,7 +43,7 @@ postSchema.pre(/^find/, function (next) {
     select: "-__v -createdAt -updatedAt",
   }).populate({
     path: "user",
-    select: "_id name email photo",
+    select: "_id name email photo role",
   });
 
   next();

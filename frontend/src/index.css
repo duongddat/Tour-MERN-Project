@@ -26,6 +26,9 @@ body {
   .blog-header p {
     width: 100%;
   }
+  .account-center-topbar_container {
+    margin: 0;
+  }
 }
 
 @media (max-width: 1023px) and (min-width: 600px) {
@@ -46,5 +49,13 @@ body {
   }
   .pxy-sm-2 {
     padding: 12px;
+  }
+  .mhy-avatar {
+    width: 80px;
+    height: 80px;
+    top: -50px;
+  }
+  .account-center-btn {
+    top: -100px;
   }
 }

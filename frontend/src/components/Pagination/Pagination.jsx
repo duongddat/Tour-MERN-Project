@@ -5,7 +5,7 @@ function Pagination({ pageCount, onPageClick }) {
   return (
     <div className="text-center">
       <ReactPaginate
-        containerClassName="d-flex flex-wrap align-items-center justify-content-center"
+        containerClassName="d-flex p-0 flex-wrap align-items-center justify-content-center"
         pageClassName="d-flex align-items-center justify-content-center btn-pagination"
         activeClassName="btn-active"
         breakLabel="..."

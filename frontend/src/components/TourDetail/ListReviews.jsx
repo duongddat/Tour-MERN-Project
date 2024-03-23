@@ -1,17 +1,19 @@
 import { useSelector } from "react-redux";
 import { useCallback, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 import { formatVietnameseDate } from "../../helper/formattingDate";
-import "./ReviewTour.css";
 import ShowModal from "../common/ShowModal";
 import { useAction } from "../../hooks/useAction";
 import { deleteReview } from "../../utils/https";
-import { useLocation } from "react-router-dom";
+import Spin from "../common/Spin";
+import "./ReviewTour.css";
 
 function ListReviews({ reviews, onEdit, tourId }) {
   const location = useLocation();
   const { userInfo } = useSelector((state) => state.auth);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const { action: actionDeleteReview } = useAction(
+  const { isLoading, action: actionDeleteReview } = useAction(
     deleteReview,
     location.pathname
   );
@@ -31,9 +33,11 @@ function ListReviews({ reviews, onEdit, tourId }) {
         tourId,
       });
 
-      closeModal();
+      if (isLoading) {
+        closeModal();
+      }
     },
-    [actionDeleteReview, tourId]
+    [actionDeleteReview, tourId, isLoading]
   );
 
   return (
@@ -95,13 +99,14 @@ function ListReviews({ reviews, onEdit, tourId }) {
                       <div className="d-flex justify-content-center align-items-center column-gap-3 mt-4">
                         <button
                           onClick={() => handleDeleteReview(review._id)}
-                          className="btn button text-white"
+                          className="button text-white"
+                          disabled={isLoading}
                         >
-                          Đồng ý
+                          {isLoading ? <Spin text="Loading..." /> : "Đồng ý"}
                         </button>
                         <button
                           onClick={closeModal}
-                          className="btn button btn-red text-white"
+                          className="button btn-red text-white"
                         >
                           Đóng
                         </button>

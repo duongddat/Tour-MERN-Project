@@ -6,6 +6,7 @@ import LoginImg from "../../assets/img/login.png";
 import BgRegister from "../../assets/img/register.jpg";
 import { setMessage } from "../../store/message-slice";
 import { registerUser } from "../../store/auth-action";
+import Spin from "../../components/common/Spin";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -89,7 +90,7 @@ const RegisterPage = () => {
                     className="button btn-submit"
                     disabled={loading}
                   >
-                    {loading ? "Loading..." : "Đăng ký"}
+                    {loading ? <Spin text="Creating..." /> : "Đăng ký"}
                   </button>
                 </div>
                 <div className="text-footer text-center mt-3">

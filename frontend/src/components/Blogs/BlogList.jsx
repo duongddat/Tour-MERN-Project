@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Pagination from "../Pagination/Pagination";
 import BlogItem from "./BlogItem";
+import noDataMessage from "../../assets/img/no-data-message.png";
 
 function BlogList({ blogs, itemsPerPage }) {
   const [itemOffset, setItemOffset] = useState(0);
@@ -16,14 +17,26 @@ function BlogList({ blogs, itemsPerPage }) {
 
   return (
     <>
-      <div className="row row-gap-4 mb-4">
-        {currentItems.map((blog) => (
-          <div key={blog._id} className="col-lg-12 col-md-12 col-12">
-            <BlogItem blog={blog} />
+      {blogs.length > 0 && (
+        <>
+          <div className="row row-gap-4 mb-4">
+            {currentItems.map((blog) => (
+              <div key={blog._id} className="col-lg-12 col-md-12 col-12">
+                <BlogItem blog={blog} />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <Pagination pageCount={pageCount} onPageClick={handlePageClick} />
+          <Pagination pageCount={pageCount} onPageClick={handlePageClick} />
+        </>
+      )}
+      {blogs.length === 0 && (
+        <div className="tour-content">
+          <div className="mhy-data-lg">
+            <img src={noDataMessage} alt="No data message blog" />
+            <p className="mhy-data-lg_text">Bạn chưa có bài viết nào~</p>
+          </div>
+        </div>
+      )}
     </>
   );
 }

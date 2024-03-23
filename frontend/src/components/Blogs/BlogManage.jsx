@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import bgManage from "../../assets/img/bg.webp";
 import borderAva from "../../assets/img/border-ava.png";
-import { Link } from "react-router-dom";
 import BlogList from "./BlogList";
 
 function BlogManage({ blogs }) {
@@ -23,8 +23,8 @@ function BlogManage({ blogs }) {
             <div className="profile-bg_bot-mark"></div>
           </div>
         </div>
-        <div className="profile-content">
-          <div className="layout-topbar">
+        {userInfo && (
+          <div className="profile-content">
             <div className="mhy-topbar">
               <div className="mhy-topbar_container">
                 <div className="account-center-topbar_container">
@@ -76,16 +76,40 @@ function BlogManage({ blogs }) {
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
-      <section className="mt-5 section-bg">
+      <section className="section-bg">
         <div className="container">
-          <div className="row">
+          <div className="row  row-gap-3">
             <div className="col-xl-9 col-lg-9 col-md-12 col-12">
               <BlogList blogs={blogs} itemsPerPage={6} />
             </div>
             <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12">
-              <div className="sticky">Hahahah</div>
+              <div className="sticky">
+                <div className="blog-manage__footer">
+                  <div className="d-flex flex-column">
+                    <h5 className="footer-item_title">Liên hệ</h5>
+                    <div className="footer-item_block">
+                      <div className="item-block_text">
+                        <span>HoYoLAB hoyolab@hoyoverse.com</span>
+                        <span>Genshin Impact genshin_cs@hoyoverse.com</span>
+                        <span>Tears of Themis totcs_glb@hoyoverse.com</span>
+                        <span>Honkai: Star Rail hsrcs_en@hoyoverse.com </span>
+                        <span>
+                          Content Creators contentcreator@hoyoverse.com
+                        </span>
+                        <span>MixiViVu info@mixivivu.com</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-column">
+                    <h5 className="footer-item_title">Bản quyền</h5>
+                    <div className="item-block_text">
+                      <p>Copyright © X.A.D. All Rights Reserved.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import parse from "html-react-parser";
@@ -20,13 +20,14 @@ function truncateDescription(description, maxLength) {
 }
 
 function BlogItem({ blog }) {
+  const location = useLocation();
   const dispatch = useDispatch();
   const [modalIsOpen, setIsOpen] = useState(false);
   const { userInfo } = useSelector((state) => state.auth);
-  const { action } = useAction(likeBlog, "/blog");
+  const { action } = useAction(likeBlog, location.pathname);
   const { isLoading, action: actionDeleteBlog } = useAction(
     deleteBlog,
-    "/blog"
+    location.pathname
   );
 
   const liked = userInfo && blog.likes.includes(userInfo._id);
