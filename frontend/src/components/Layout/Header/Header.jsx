@@ -97,6 +97,7 @@ function Header() {
                   <ul className="dropdown-menu dropdown-menu-end mt-3">
                     <DropdownItem title="Quản lý tài khoản" to="/user/detail" />
                     <DropdownItem title="Quản lý bài viết" to="/blog/manage" />
+                    <DropdownItem title="Lịch sử đặt tour" to="/my-tour" />
                     <DropdownItem divider />
                     <li>
                       <button className="dropdown-item" onClick={handleLogOut}>

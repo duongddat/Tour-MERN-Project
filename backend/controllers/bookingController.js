@@ -90,7 +90,11 @@ exports.paidTour = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllBookingOfUser = catchAsync(async (req, res, next) => {
-  const booking = await Booking.find({ user: req.params.userId });
+  const id = req.user.id;
+  const booking = await Booking.find({ user: id }).sort({
+    createAd: -1,
+    bookAt: -1,
+  });
 
   res.status(200).json({
     status: "success",

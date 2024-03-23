@@ -10,9 +10,9 @@ router.route("/success").get(bookingController.paidTour);
 router.use(authController.protect);
 
 router.post("/checkout-session/:tourID", bookingController.getCheckoutSession);
-router.route("/:userId").get(bookingController.getAllBookingOfUser);
+router.route("/my-tour").get(bookingController.getAllBookingOfUser);
 
-router.use(authController.restrictTo("admin", "lead-guide"));
+router.use(authController.restrictTo("admin"));
 
 router.route("/").get(bookingController.getAllBooking);
 router

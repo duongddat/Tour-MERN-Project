@@ -1,5 +1,5 @@
-.swiper-pagination {
-  bottom: var(--swiper-pagination-bottom, -5px) !important;
+.swiper-pagination-horizontal {
+  bottom: -5px !important;
 }
 
 .swiper-pagination-bullet-active {

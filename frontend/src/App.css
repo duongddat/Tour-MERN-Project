@@ -158,6 +158,22 @@ ul {
 .btn-text:hover {
   opacity: 0.65;
 }
+.table-title {
+  padding-top: 15px;
+  font-size: 18px;
+  font-weight: 500;
+}
+.table-link {
+  color: var(--primary-color);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+}
+table tbody th,
+table tbody td {
+  font-size: 16px;
+  white-space: nowrap;
+}
 /*Boostrap Custom */
 .dropdowm {
   position: relative;
