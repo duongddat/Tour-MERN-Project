@@ -3,6 +3,7 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 import RootPage from "../pages/RootPage.jsx";
 import RootAuthPage from "../pages/RootAuthPage.jsx";
 import RootUserPage from "../pages/RootUserPage.jsx";
+import RootAdminPage from "../pages/RootAdminPage.jsx";
 import HomePage from "../pages/HomePage/HomePage.jsx";
 import TourPage from "../pages/ToursPage/TourPage.jsx";
 import DetailPage from "../pages/DetailTourPage/DetailTourPage.jsx";
@@ -23,6 +24,8 @@ import UserUpdateInfo from "../pages/UserDetailPage/UserUpdateInfor.jsx";
 import UserChangePassword from "../pages/UserDetailPage/UserChangePassword.jsx";
 import SuccessCheckout from "../components/Booking/SuccessCheckout.jsx";
 import ErrorPage from "../pages/ErrorPage/ErrorPage.jsx";
+
+import HomeAdminPage from "../pages/Admin/HomePage.jsx";
 
 import { loader as loadData } from "../utils/loadHomeData.js";
 import { loader as loadTourData } from "../utils/loadTourData.js";
@@ -160,6 +163,12 @@ const router = createBrowserRouter([
         <ResetPassword />
       </RootAuthPage>
     ),
+  },
+  {
+    path: "/admin",
+    errorElement: <ErrorPage />,
+    element: <RootAdminPage />,
+    children: [{ index: true, element: <HomeAdminPage /> }],
   },
 ]);
 
