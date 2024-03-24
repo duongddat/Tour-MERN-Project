@@ -107,12 +107,12 @@ function SideBarAdmin() {
           >
             <li className="sidebar-item">
               <Link className="sidebar-link">
-                <text className="sidebar-dropdown__item">Doanh thu</text>
+                <div className="sidebar-dropdown__item">Doanh thu</div>
               </Link>
             </li>
             <li className="sidebar-item">
               <Link className="sidebar-link">
-                <text className="sidebar-dropdown__item">Thống kế tour</text>
+                <div className="sidebar-dropdown__item">Thống kế tour</div>
               </Link>
             </li>
           </ul>

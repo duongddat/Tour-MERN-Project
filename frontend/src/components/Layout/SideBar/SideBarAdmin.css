@@ -1,12 +1,9 @@
-.wrapper-admin {
-  display: flex;
-}
 .main-admin {
   min-height: 100vh;
   width: 100%;
   overflow: hidden;
   transition: all 0.35s ease-in-out;
-  background-color: #fafbfe;
+  position: relative;
 }
 #sidebar-admin {
   width: 70px;
@@ -114,4 +111,10 @@ a.sidebar-link:hover,
 #sidebar-admin .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
   transform: rotate(45deg);
   transition: all 0.2s ease-out;
+}
+.layout-admin__footer {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
 }
