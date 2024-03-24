@@ -41,14 +41,14 @@
   font-weight: 800;
 }
 #sidebar-admin:not(.expand) .sidebar-logo,
-#sidebar-admin:not(.expand) a.sidebar-link span {
+#sidebar-admin:not(.expand) .sidebar-link span {
   display: none;
 }
 .sidebar-nav {
   padding: 2rem 0;
   flex: 1 1 auto;
 }
-a.sidebar-link {
+.sidebar-link {
   padding: 0.625rem 1.625rem;
   color: #fff;
   display: flex;
@@ -63,7 +63,7 @@ a.sidebar-link {
   font-size: 1.2rem;
   margin-right: 0.75rem;
 }
-a.sidebar-link:hover,
+.sidebar-link:hover,
 .active-admin {
   background-color: rgba(255, 255, 255, 0.075);
   border-left: 5px solid var(--secondary-color) !important;
@@ -72,7 +72,7 @@ a.sidebar-link:hover,
   position: relative;
 }
 .sidebar-dropdown .sidebar-item {
-  border-bottom: 1px solid var(--secondary-color);
+  border-bottom: 1px solid #6593f1;
 }
 .sidebar-dropdown__item {
   padding-left: 20%;

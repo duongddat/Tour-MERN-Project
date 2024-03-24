@@ -1,9 +1,14 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 
 import "./SideBarAdmin.css";
+import { logout } from "../../../store/auth-slice";
+import { setMessage } from "../../../store/message-slice";
 
 function SideBarAdmin() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const sideRef = useRef();
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
@@ -42,6 +47,13 @@ function SideBarAdmin() {
     sideBarElement.classList.toggle("expand");
   }
 
+  function handleLogOut() {
+    navigate("/login");
+    dispatch(logout());
+    localStorage.removeItem("token");
+    dispatch(setMessage({ type: "success", message: "Đăng xuất thành công!" }));
+  }
+
   return (
     <aside ref={sideRef} id="sidebar-admin" className="expand">
       <div className="d-flex align-items-center">
@@ -49,48 +61,79 @@ function SideBarAdmin() {
           <i className="ri-layout-grid-fill"></i>
         </button>
         <div className="sidebar-logo">
-          <Link>HoYoViVu</Link>
+          <Link to="/admin">HoYoViVu</Link>
         </div>
       </div>
       <ul className="sidebar-nav">
         <li className="sidebar-item">
-          <NavLink className="sidebar-link active-admin">
+          <NavLink
+            to="/admin"
+            end
+            className={({ isActive }) =>
+              `sidebar-link ${isActive ? "active-admin" : ""}`
+            }
+          >
             <i className="ri-home-line"></i>
             <span>Trang chủ</span>
           </NavLink>
         </li>
         <li className="sidebar-item">
-          <NavLink className="sidebar-link">
+          <NavLink
+            to="/admin/tours"
+            className={({ isActive }) =>
+              `sidebar-link ${isActive ? "active-admin" : ""}`
+            }
+          >
             <i className="ri-btc-line"></i>
             <span>Tour</span>
           </NavLink>
         </li>
         <li className="sidebar-item">
-          <NavLink className="sidebar-link">
+          <NavLink
+            to="/admin/countries"
+            className={({ isActive }) =>
+              `sidebar-link ${isActive ? "active-admin" : ""}`
+            }
+          >
             <i className="ri-compass-line"></i>
             <span>Quốc gia</span>
           </NavLink>
         </li>
         <li className="sidebar-item">
-          <NavLink className="sidebar-link">
+          <NavLink
+            to="/admin/blogs"
+            className={({ isActive }) =>
+              `sidebar-link ${isActive ? "active-admin" : ""}`
+            }
+          >
             <i className="ri-blogger-fill"></i>
             <span>Bài viết</span>
           </NavLink>
         </li>
         <li className="sidebar-item">
-          <NavLink className="sidebar-link">
+          <NavLink
+            to="/admin/reviews"
+            className={({ isActive }) =>
+              `sidebar-link ${isActive ? "active-admin" : ""}`
+            }
+          >
             <i className="ri-chat-thread-line"></i>
             <span>Bình luận</span>
           </NavLink>
         </li>
         <li className="sidebar-item">
-          <NavLink className="sidebar-link">
+          <NavLink
+            to="/admin/users"
+            className={({ isActive }) =>
+              `sidebar-link ${isActive ? "active-admin" : ""}`
+            }
+          >
             <i className="ri-user-3-line"></i>
             <span>Người dùng</span>
           </NavLink>
         </li>
         <li className="sidebar-item">
-          <Link
+          <div
             className="sidebar-link has-dropdown collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#auth"
@@ -99,30 +142,35 @@ function SideBarAdmin() {
           >
             <i className="ri-pie-chart-2-line"></i>
             <span>Thống kê</span>
-          </Link>
+          </div>
           <ul
             id="auth"
             className="sidebar-dropdown accordion-collapse list-unstyled collapse"
             data-bs-parent="#sidebar"
           >
             <li className="sidebar-item">
-              <Link className="sidebar-link">
+              <NavLink
+                to="/admin/revenue"
+                className={({ isActive }) =>
+                  `sidebar-link ${isActive ? "active-admin" : ""}`
+                }
+              >
                 <div className="sidebar-dropdown__item">Doanh thu</div>
-              </Link>
+              </NavLink>
             </li>
             <li className="sidebar-item">
-              <Link className="sidebar-link">
+              <NavLink className="sidebar-link">
                 <div className="sidebar-dropdown__item">Thống kế tour</div>
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </li>
       </ul>
       <div className="sidebar-footer">
-        <Link className="sidebar-link">
+        <div className="sidebar-link" onClick={handleLogOut}>
           <i className="ri-logout-box-line"></i>
           <span>Log out</span>
-        </Link>
+        </div>
       </div>
     </aside>
   );

@@ -1,4 +1,4 @@
-.text-loading {
+.loading-page__text {
   position: relative;
   font-size: 3.8rem;
   font-weight: 800;
@@ -6,7 +6,7 @@
   -webkit-text-stroke: 0.3vw #383d52;
   margin-right: 20px;
 }
-.text-loading::before {
+.loading-page__text::before {
   content: attr(data-text);
   position: absolute;
   top: 0;
@@ -32,7 +32,7 @@
   }
 }
 
-.img-loading {
+.loading-page__img {
   width: 80px;
   height: 80px;
 }

@@ -5,10 +5,10 @@ function Loading() {
   return (
     <div className="wrapper-loading h-100vh d-flex justify-content-center align-items-center">
       <div className="d-flex justify-content-center align-items-center flex-wrap">
-        <h3 className="text-loading" data-text="HoYoViVu">
+        <h3 className="loading-page__text" data-text="HoYoViVu">
           HoYoViVu
         </h3>
-        <img className="img-loading" src={loadingGif} alt="loading gif" />
+        <img className="loading-page__img" src={loadingGif} alt="loading gif" />
       </div>
     </div>
   );

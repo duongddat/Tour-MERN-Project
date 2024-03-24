@@ -25,7 +25,13 @@ import UserChangePassword from "../pages/UserDetailPage/UserChangePassword.jsx";
 import SuccessCheckout from "../components/Booking/SuccessCheckout.jsx";
 import ErrorPage from "../pages/ErrorPage/ErrorPage.jsx";
 
-import HomeAdminPage from "../pages/Admin/HomePage.jsx";
+import HomeAdminPage from "../pages/Admin/Home/HomePage.jsx";
+import ManageTourPage from "../pages/Admin/Tour/ManageTourPage.jsx";
+import ManageCountryPage from "../pages/Admin/Country/ManageCountryPage.jsx";
+import ManageBlogPage from "../pages/Admin/Blog/ManageBlogPage.jsx";
+import ManageReviewPage from "../pages/Admin/Review/ManageReviewPage.jsx";
+import ManageUserPage from "../pages/Admin/User/ManageUserPage.jsx";
+import Revenue from "../pages/Admin/Statistical/Revenue.jsx";
 
 import { loader as loadData } from "../utils/loadHomeData.js";
 import { loader as loadTourData } from "../utils/loadTourData.js";
@@ -168,7 +174,15 @@ const router = createBrowserRouter([
     path: "/admin",
     errorElement: <ErrorPage />,
     element: <RootAdminPage />,
-    children: [{ index: true, element: <HomeAdminPage /> }],
+    children: [
+      { index: true, element: <HomeAdminPage /> },
+      { path: "tours", element: <ManageTourPage /> },
+      { path: "countries", element: <ManageCountryPage /> },
+      { path: "blogs", element: <ManageBlogPage /> },
+      { path: "reviews", element: <ManageReviewPage /> },
+      { path: "users", element: <ManageUserPage /> },
+      { path: "revenue", element: <Revenue /> },
+    ],
   },
 ]);
 

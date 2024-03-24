@@ -95,6 +95,13 @@ function Header() {
                     <span>{userInfo.name}</span>
                   </button>
                   <ul className="dropdown-menu dropdown-menu-end mt-3">
+                    {(userInfo.role === "admin" ||
+                      userInfo.role === "guide") && (
+                      <>
+                        <DropdownItem title="Trang quản trị" to="/admin" />
+                        <DropdownItem divider />
+                      </>
+                    )}
                     <DropdownItem title="Quản lý tài khoản" to="/user/detail" />
                     <DropdownItem title="Quản lý bài viết" to="/blog/manage" />
                     <DropdownItem title="Lịch sử đặt tour" to="/my-tour" />
