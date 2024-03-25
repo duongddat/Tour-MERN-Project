@@ -127,3 +127,19 @@
   height: 100%;
   object-fit: cover;
 }
+
+.form-item__wrapper {
+  position: relative;
+  border: 1px solid #e5e6e7;
+  border-radius: 8px;
+  padding: 30px 20px;
+  height: 100%;
+}
+.form-item__label {
+  position: absolute;
+  top: -12px;
+  background-color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+}

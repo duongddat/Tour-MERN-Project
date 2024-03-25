@@ -20,7 +20,7 @@ function App() {
     }
   }, [data, dispatch]);
 
-  if (isLoading && !isDataLoaded) {
+  if (isLoading || !isDataLoaded) {
     return <Loading />;
   }
 

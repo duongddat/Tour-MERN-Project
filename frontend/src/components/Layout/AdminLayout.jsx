@@ -22,7 +22,7 @@ function AdminLayout({ children }) {
             </div>
           </div>
           <div className="button h-100">
-            <Link to="/">
+            <Link to="/" className="fw-bold">
               <span>HoYoViVu client</span>{" "}
               <i className="ri-arrow-right-line"></i>
             </Link>
