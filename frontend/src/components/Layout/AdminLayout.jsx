@@ -1,24 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import SideBarAdmin from "./SideBar/SideBarAdmin";
-import { setMessage } from "../../store/message-slice";
 import "./Layout.css";
 
 function AdminLayout({ children }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    if (userInfo.role !== "admin" && userInfo.role !== "guide") {
-      navigate("/");
-      dispatch(
-        setMessage({ type: "error", message: "Bạn không có quyền truy cập!" })
-      );
-    }
-  }, [userInfo, dispatch, navigate]);
 
   return (
     <div className="d-flex section-bg section-bg-color">

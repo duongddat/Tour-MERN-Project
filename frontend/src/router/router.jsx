@@ -33,6 +33,8 @@ import ManageReviewPage from "../pages/Admin/Review/ManageReviewPage.jsx";
 import ManageUserPage from "../pages/Admin/User/ManageUserPage.jsx";
 import Revenue from "../pages/Admin/Statistical/Revenue.jsx";
 
+import ProtectedRoute from "./ProtectedRoute.jsx";
+
 import { loader as loadData } from "../utils/loadHomeData.js";
 import { loader as loadTourData } from "../utils/loadTourData.js";
 import { loader as loadTourDetailData } from "../utils/loadTourDetailData.js";
@@ -173,7 +175,11 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     errorElement: <ErrorPage />,
-    element: <RootAdminPage />,
+    element: (
+      <ProtectedRoute>
+        <RootAdminPage />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <HomeAdminPage /> },
       { path: "tours", element: <ManageTourPage /> },

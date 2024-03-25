@@ -8,10 +8,10 @@ import AdminLayout from "../components/Layout/AdminLayout";
 import { clearMessage } from "../store/message-slice";
 
 function RootAdminPage() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const prevRouteRef = useRef();
   const { message, type } = useSelector((state) => state.message);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const splitLocation = location.pathname.split("/");
