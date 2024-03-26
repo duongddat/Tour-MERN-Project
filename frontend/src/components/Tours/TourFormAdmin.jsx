@@ -1,11 +1,21 @@
 import { useRef, useState } from "react";
 import { Form } from "react-router-dom";
+import Select from "react-select";
+
+import TourLocationFormAdmin from "./TourLocationFormAdmin";
 
 function TourFormAdmin() {
   const inputPhotoRef = useRef();
   const inputImageCoverRef = useRef();
   const [selectedImg, setSelectedImg] = useState();
   const [selectedImages, setSelectedImages] = useState([]);
+  const [locations, setLocations] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
 
   function handleImageCoverClick() {
     inputImageCoverRef.current.click();
@@ -43,8 +53,23 @@ function TourFormAdmin() {
     setSelectedImages(selectedImages.filter((e) => e !== image));
   }
 
+  function handleAddLocation(newLocation) {
+    setLocations([...locations, newLocation]);
+  }
+
+  function handleLocationDelete(index) {
+    const updatedLocations = [...locations];
+    updatedLocations.splice(index, 1);
+    setLocations(updatedLocations);
+  }
+
+  function handleSumbitForm(event) {
+    event.preventDefault();
+    console.log("Form Cha");
+  }
+
   return (
-    <Form className="mb-5">
+    <Form onSubmit={handleSumbitForm} className="mb-5">
       <div className="form-item-container">
         <div className="mb-4">
           <label htmlFor="title" className="form-label">
@@ -58,48 +83,42 @@ function TourFormAdmin() {
             placeholder="Tên tour du lịch"
           />
         </div>
-        <div className="row">
+        <div className="row mb-4">
           <div className="col-lg-4 col-md-4 col-12">
-            <div className="mb-4">
-              <label htmlFor="price" className="form-label">
-                Giá:
-              </label>
-              <input
-                type="number"
-                id="price"
-                name="price"
-                className="form-control"
-                placeholder="Giá tour du lịch"
-              />
-            </div>
+            <label htmlFor="price" className="form-label">
+              Giá:
+            </label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              className="form-control"
+              placeholder="Giá tour du lịch"
+            />
           </div>
           <div className="col-lg-4 col-md-4 col-12">
-            <div className="mb-4">
-              <label htmlFor="duration" className="form-label">
-                Thời lượng:
-              </label>
-              <input
-                type="number"
-                id="duration"
-                name="duration"
-                className="form-control"
-                placeholder="Thời lượng tour du lịch"
-              />
-            </div>
+            <label htmlFor="duration" className="form-label">
+              Thời lượng:
+            </label>
+            <input
+              type="number"
+              id="duration"
+              name="duration"
+              className="form-control"
+              placeholder="Thời lượng tour du lịch"
+            />
           </div>
           <div className="col-lg-4 col-md-4 col-12">
-            <div className="mb-4">
-              <label htmlFor="maxGroupSize" className="form-label">
-                Số lượng:
-              </label>
-              <input
-                type="number"
-                id="maxGroupSize"
-                name="maxGroupSize"
-                className="form-control"
-                placeholder="Số lượng khách"
-              />
-            </div>
+            <label htmlFor="maxGroupSize" className="form-label">
+              Số lượng:
+            </label>
+            <input
+              type="number"
+              id="maxGroupSize"
+              name="maxGroupSize"
+              className="form-control"
+              placeholder="Số lượng khách"
+            />
           </div>
         </div>
         <div className="mb-4">
@@ -178,171 +197,126 @@ function TourFormAdmin() {
               ))}
           </div>
         </div>
-        <div className="row">
+        <div className="mb-4">
+          <label htmlFor="description" className="form-label">
+            Mô tả:
+          </label>
+          <textarea
+            rows={6}
+            id="description"
+            name="description"
+            className="form-control"
+            placeholder="Mô tả du lịch"
+          />
+        </div>
+        <div className="row mb-5">
           <div className="col-lg-6 col-md-6 col-12">
-            <div className="mb-5">
-              <label htmlFor="title" className="form-label">
-                Quốc gia:
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                className="form-control"
-                placeholder="Tên tour du lịch"
-              />
-            </div>
+            <label htmlFor="country" className="form-label">
+              Quốc gia:
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              className="form-control"
+              placeholder="Tên tour du lịch"
+            />
           </div>
           <div className="col-lg-6 col-md-6 col-12">
-            <div className="mb-5">
-              <label htmlFor="title" className="form-label">
-                Hướng dẫn viên:
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                className="form-control"
-                placeholder="Tên tour du lịch"
-              />
-            </div>
+            <label htmlFor="guide" className="form-label">
+              Hướng dẫn viên:
+            </label>
+            <Select
+              defaultValue={selectedOption}
+              onChange={setSelectedOption}
+              options={options}
+              placeholder="Chọn hướng dẫn viên"
+              isMulti
+            />
           </div>
         </div>
-        <div className="mb-5">
-          <div className="form-item__wrapper">
-            <div className="form-item__label">Vị trí bắt đầu:</div>
-            <div className="row">
-              <div className="col-lg-2 col-md-6 col-12">
-                <div className="mb-4">
-                  <label htmlFor="startLong" className="form-label">
-                    Kinh độ:
-                  </label>
-                  <input
-                    type="text"
-                    id="startLong"
-                    name="startLong"
-                    className="form-control"
-                    placeholder="Kinh độ"
-                  />
-                </div>
-              </div>
-              <div className="col-lg-2 col-md-6 col-12">
-                <div className="mb-4">
-                  <label htmlFor="startLat" className="form-label">
-                    Vĩ độ:
-                  </label>
-                  <input
-                    type="text"
-                    id="startLat"
-                    name="startLat"
-                    className="form-control"
-                    placeholder="Vĩ độ"
-                  />
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6 col-12">
-                <div className="mb-4">
-                  <label htmlFor="startAddress" className="form-label">
-                    Địa điểm:
-                  </label>
-                  <input
-                    type="text"
-                    id="startAddress"
-                    name="startAddress"
-                    className="form-control"
-                    placeholder="Địa điểm bắt đầu"
-                  />
-                </div>
-              </div>
-              <div className="col-lg-4 col-md-6 col-12">
-                <div className="mb-4">
-                  <label htmlFor="startDescription" className="form-label">
-                    Mô tả:
-                  </label>
-                  <input
-                    type="text"
-                    id="startDescription"
-                    name="startDescription"
-                    className="form-control"
-                    placeholder="Mô tả điểm bắt đầu"
-                  />
-                </div>
+        <div className="form-item__wrapper mb-5">
+          <div className="form-item__label">Vị trí bắt đầu:</div>
+          <div className="row">
+            <div className="col-lg-2 col-md-6 col-12">
+              <label htmlFor="startLong" className="form-label">
+                Kinh độ:
+              </label>
+              <input
+                type="text"
+                id="startLong"
+                name="startLong"
+                className="form-control"
+                placeholder="Kinh độ"
+              />
+            </div>
+            <div className="col-lg-2 col-md-6 col-12">
+              <label htmlFor="startLat" className="form-label">
+                Vĩ độ:
+              </label>
+              <input
+                type="text"
+                id="startLat"
+                name="startLat"
+                className="form-control"
+                placeholder="Vĩ độ"
+              />
+            </div>
+            <div className="col-lg-4 col-md-6 col-12">
+              <label htmlFor="startAddress" className="form-label">
+                Địa điểm:
+              </label>
+              <input
+                type="text"
+                id="startAddress"
+                name="startAddress"
+                className="form-control"
+                placeholder="Địa điểm bắt đầu"
+              />
+            </div>
+            <div className="col-lg-4 col-md-6 col-12">
+              <div className="mb-4">
+                <label htmlFor="startDescription" className="form-label">
+                  Mô tả:
+                </label>
+                <input
+                  type="text"
+                  id="startDescription"
+                  name="startDescription"
+                  className="form-control"
+                  placeholder="Mô tả điểm bắt đầu"
+                />
               </div>
             </div>
           </div>
         </div>
         <div className="row">
           <div className="col-lg-6 col-md-12 col-12">
-            <div className="form-item__wrapper">
-              <div className="form-item__label">Điểm du lịch:</div>
-              <div className="row mb-2">
-                <div className="col-lg-6 col-md-6 col-12">
-                  <div className="mb-4">
-                    <label htmlFor="startLong" className="form-label">
-                      Kinh độ:
-                    </label>
-                    <input
-                      type="text"
-                      id="startLong"
-                      name="startLong"
-                      className="form-control"
-                      placeholder="Kinh độ"
-                    />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-12">
-                  <div className="mb-4">
-                    <label htmlFor="startLat" className="form-label">
-                      Vĩ độ:
-                    </label>
-                    <input
-                      type="text"
-                      id="startLat"
-                      name="startLat"
-                      className="form-control"
-                      placeholder="Vĩ độ"
-                    />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-12">
-                  <div className="mb-4">
-                    <label htmlFor="startAddress" className="form-label">
-                      Ngày:
-                    </label>
-                    <input
-                      type="text"
-                      id="startAddress"
-                      name="startAddress"
-                      className="form-control"
-                      placeholder="Địa điểm bắt đầu"
-                    />
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-12">
-                  <div className="mb-4">
-                    <label htmlFor="startDescription" className="form-label">
-                      Mô tả:
-                    </label>
-                    <input
-                      type="text"
-                      id="startDescription"
-                      name="startDescription"
-                      className="form-control"
-                      placeholder="Mô tả điểm bắt đầu"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="w-100 text-center">
-                <button type="submit" className="button btn-submit">
-                  Thêm vào danh sách
-                </button>
-              </div>
-            </div>
+            <TourLocationFormAdmin onSubmit={handleAddLocation} />
           </div>
           <div className="col-lg-6 col-md-12 col-12">
             <div className="form-item__wrapper">
               <div className="form-item__label">Danh sách điểm du lịch:</div>
+              <div className="location-list">
+                {locations.map((location, index) => (
+                  <div key={index} className="location-item">
+                    <div className="location-item__info">
+                      <p>
+                        {`Ngày ${location.locationDay}: ${location.locationDescription}`}
+                      </p>
+                      <span>
+                        {`Vị trị [${location.locationLat}:${location.locationLong}]`}
+                      </span>
+                    </div>
+                    <div
+                      className="button-form__icon"
+                      onClick={() => handleLocationDelete(index)}
+                    >
+                      <i className="ri-close-line"></i>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

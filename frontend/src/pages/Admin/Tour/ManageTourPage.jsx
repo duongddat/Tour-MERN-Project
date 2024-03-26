@@ -69,7 +69,7 @@ function ManageTourPage() {
       <div className="tour-content">
         <div className="d-flex justify-content-between align-items-center flex-wrap mt-3">
           <h5 className="table-title">Danh sách tour</h5>
-          <Link className="button d-flex gap-1 fw-bold">
+          <Link to="/admin/tours/add" className="button d-flex gap-1 fw-bold">
             <i className="ri-add-circle-line"></i>
             <span>Thêm mới tour</span>
           </Link>
