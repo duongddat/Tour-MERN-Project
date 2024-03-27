@@ -28,6 +28,8 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage.jsx";
 import HomeAdminPage from "../pages/Admin/Home/HomePage.jsx";
 import ManageTourPage from "../pages/Admin/Tour/ManageTourPage.jsx";
 import AddTourAdminPage from "../pages/Admin/Tour/AddTourPage.jsx";
+import EditTourAdminPage from "../pages/Admin/Tour/EditTourPage.jsx";
+import DetailTourAdminPage from "../pages/Admin/Tour/DetailTourPage.jsx";
 import ManageCountryPage from "../pages/Admin/Country/ManageCountryPage.jsx";
 import ManageBlogPage from "../pages/Admin/Blog/ManageBlogPage.jsx";
 import ManageReviewPage from "../pages/Admin/Review/ManageReviewPage.jsx";
@@ -47,8 +49,11 @@ import { loader as loadBlogEdit } from "../utils/loadBlogEdit.js";
 import { loader as loadBlogDetail } from "../utils/loadBlogDetail.js";
 import { loader as loadBlogManage } from "../utils/loadBlogManage.js";
 import { loader as loadMyTour } from "../utils/loadMyTour.js";
+
 import { loader as loadTourAdmin } from "../utils/loadTourAdmin.js";
 import { loader as loadTourCreatAdmin } from "../utils/loadTourCreateAdmin.js";
+import { loader as loadTourEditAdmin } from "../utils/loadTourEditAdmin.js";
+import { loader as loadTourDetailAdmin } from "../utils/loadTourDetailAdmin.js";
 
 const router = createBrowserRouter([
   {
@@ -193,6 +198,16 @@ const router = createBrowserRouter([
             path: "add",
             element: <AddTourAdminPage />,
             loader: loadTourCreatAdmin,
+          },
+          {
+            path: ":idTour/edit",
+            element: <EditTourAdminPage />,
+            loader: loadTourEditAdmin,
+          },
+          {
+            path: ":idTour/detail",
+            element: <DetailTourAdminPage />,
+            loader: loadTourDetailAdmin,
           },
         ],
       },

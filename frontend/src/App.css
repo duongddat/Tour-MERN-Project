@@ -125,6 +125,10 @@ ul {
   color: red;
 }
 
+.text-default {
+  color: var(--text-color) !important;
+}
+
 .modal-container {
   position: relative;
 }

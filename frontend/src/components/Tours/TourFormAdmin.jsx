@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form } from "react-router-dom";
 import Select from "react-select";
 
@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { setMessage } from "../../store/message-slice";
 import Spin from "../../components/common/Spin";
 
-function TourFormAdmin({ countries, guides, action, isLoading }) {
+function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
   const dispatch = useDispatch();
   const inputPhotoRef = useRef();
   const inputImageCoverRef = useRef();
@@ -17,6 +17,30 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
   const [locations, setLocations] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedOptionCountry, setSelectedOptionCountry] = useState(null);
+
+  useEffect(() => {
+    if (tour != null) {
+      const formattedLocations = tour.locations.map((location) => ({
+        locationLong: location.coordinates[0].toString(),
+        locationLat: location.coordinates[1].toString(),
+        locationDay: location.day.toString(),
+        locationDescription: location.description,
+      }));
+
+      const covertedOptionGuides = convertToSelectOptions(
+        tour.guides,
+        "_id",
+        "name"
+      );
+
+      setLocations(formattedLocations);
+      setSelectedOptionCountry({
+        value: tour.country._id,
+        label: tour.country.name,
+      });
+      setSelectedOption(covertedOptionGuides);
+    }
+  }, [tour]);
 
   const options = convertToSelectOptions(guides, "_id", "name");
   const optionsCountry = convertToSelectOptions(countries, "_id", "name");
@@ -51,6 +75,7 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
 
   function handleRemoveImageCover() {
     setSelectedImg(null);
+    inputImageCoverRef.current.value = "";
   }
 
   function handleRemoveImage(image) {
@@ -96,7 +121,7 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
       description,
     } = event.target;
 
-    if (!selectedImg) {
+    if (!selectedImg && tour === null) {
       dispatch(
         setMessage({
           type: "error",
@@ -120,10 +145,12 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
     }
 
     const startLocation = {
-      coordinates: [startLat * 1, startLong * 1],
+      coordinates: [startLat.value * 1, startLong.value * 1],
       address: startAddress.value,
       description: startDescription.value,
     };
+
+    console.log(startLocation);
 
     const formData = new FormData();
     formData.append("title", title.value);
@@ -136,7 +163,7 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
 
     // Thêm imageCover vào formData
     const imageCover = event.target.imageCover.files[0];
-    if (imageCover.name !== null) {
+    if (imageCover && imageCover.name !== null) {
       formData.append("imageCover", imageCover);
     }
 
@@ -164,7 +191,14 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
       formData.append("locations", JSON.stringify(locationsArray));
     }
 
-    action(formData);
+    const data = { formData: formData };
+    console.log(data);
+
+    if (tour != null) {
+      data.idTour = tour._id;
+    }
+
+    action(data);
   }
 
   return (
@@ -180,6 +214,7 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
             name="title"
             className="form-control"
             placeholder="Tên tour du lịch"
+            defaultValue={tour != null ? tour.title : ""}
             required
           />
         </div>
@@ -194,6 +229,7 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
               name="price"
               className="form-control"
               placeholder="Giá tour du lịch"
+              defaultValue={tour != null ? tour.price : ""}
               required
             />
           </div>
@@ -207,6 +243,7 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
               name="duration"
               className="form-control"
               placeholder="Thời lượng tour du lịch"
+              defaultValue={tour != null ? tour.duration : ""}
               required
             />
           </div>
@@ -220,6 +257,7 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
               name="maxGroupSize"
               className="form-control"
               placeholder="Số lượng khách"
+              defaultValue={tour != null ? tour.maxGroupSize : ""}
               required
             />
           </div>
@@ -263,6 +301,18 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
             )}
           </div>
         </div>
+        {tour != null && (
+          <div className="mb-4">
+            <label className="form-label text-default">Ảnh bìa hiện tại:</label>
+            <div className="form-img-upload__img">
+              <img
+                src={`http://localhost:8080/img/tour/${tour.imageCover}`}
+                alt="image upload"
+                className="upload-img"
+              />
+            </div>
+          </div>
+        )}
         <div className="mb-4">
           <label className="form-label">Ảnh thumbnail:</label>
           <div className="form-img-upload_tip">
@@ -302,6 +352,30 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
               ))}
           </div>
         </div>
+        {tour != null && (
+          <div className="mb-4">
+            <label className="form-label text-default">
+              Ảnh thumbnail hiện tại:
+            </label>
+            {tour.images.length > 0 ? (
+              <div className="form-img-upload__imgs">
+                {tour.images.map((image, index) => (
+                  <div key={index} className="form-img-upload__img">
+                    <img
+                      src={`http://localhost:8080/img/tour/${image}`}
+                      alt="image upload"
+                      className="upload-img"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-default sm">
+                ~Chưa có ảnh nào!!!~
+              </p>
+            )}
+          </div>
+        )}
         <div className="mb-4">
           <label htmlFor="description" className="form-label">
             Mô tả (<span className="text-red">*</span>):
@@ -312,6 +386,7 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
             name="description"
             className="form-control"
             placeholder="Mô tả du lịch"
+            defaultValue={tour != null ? tour.description : ""}
             required
           />
         </div>
@@ -321,6 +396,7 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
               Quốc gia (<span className="text-red">*</span>):
             </label>
             <Select
+              value={selectedOptionCountry}
               defaultValue={selectedOptionCountry}
               onChange={setSelectedOptionCountry}
               options={optionsCountry}
@@ -333,6 +409,7 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
               Hướng dẫn viên:
             </label>
             <Select
+              value={selectedOption}
               defaultValue={selectedOption}
               onChange={setSelectedOption}
               options={options}
@@ -356,6 +433,11 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
                 name="startLong"
                 className="form-control"
                 placeholder="Kinh độ"
+                defaultValue={
+                  tour != null && tour.startLocation.coordinates != null
+                    ? tour.startLocation.coordinates[1]
+                    : ""
+                }
                 required
               />
             </div>
@@ -369,6 +451,11 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
                 name="startLat"
                 className="form-control"
                 placeholder="Vĩ độ"
+                defaultValue={
+                  tour != null && tour.startLocation.coordinates != null
+                    ? tour.startLocation.coordinates[0]
+                    : ""
+                }
                 required
               />
             </div>
@@ -382,6 +469,11 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
                 name="startAddress"
                 className="form-control"
                 placeholder="Địa điểm bắt đầu"
+                defaultValue={
+                  tour != null && tour.startLocation.address != null
+                    ? tour.startLocation.address
+                    : ""
+                }
                 required
               />
             </div>
@@ -396,6 +488,11 @@ function TourFormAdmin({ countries, guides, action, isLoading }) {
                   name="startDescription"
                   className="form-control"
                   placeholder="Mô tả điểm bắt đầu"
+                  defaultValue={
+                    tour != null && tour.startLocation.description != null
+                      ? tour.startLocation.description
+                      : ""
+                  }
                   required
                 />
               </div>

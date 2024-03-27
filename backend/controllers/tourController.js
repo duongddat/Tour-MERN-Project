@@ -202,13 +202,18 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
 });
 
 exports.createTour = catchAsync(async (req, res, next) => {
+  let startLocation = req.body.startLocation;
   let locations = req.body.locations;
 
   if (typeof locations === "string") {
     locations = JSON.parse(locations);
   }
 
-  const newTour = await Tour.create({ ...req.body, locations });
+  if (typeof startLocation === "string") {
+    startLocation = JSON.parse(startLocation);
+  }
+
+  const newTour = await Tour.create({ ...req.body, startLocation, locations });
   res.status(200).json({
     status: "success",
     message: "Successfully created",
@@ -221,10 +226,25 @@ exports.createTour = catchAsync(async (req, res, next) => {
 exports.updateTour = catchAsync(async (req, res, next) => {
   const id = req.params.id;
 
-  const tour = await Tour.findByIdAndUpdate(id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  let startLocation = req.body.startLocation;
+  let locations = req.body.locations;
+
+  if (typeof locations === "string") {
+    locations = JSON.parse(locations);
+  }
+
+  if (typeof startLocation === "string") {
+    startLocation = JSON.parse(startLocation);
+  }
+
+  const tour = await Tour.findByIdAndUpdate(
+    id,
+    { ...req.body, startLocation, locations },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   if (!tour) {
     return next(new AppError("No tour found with that ID", 404));
