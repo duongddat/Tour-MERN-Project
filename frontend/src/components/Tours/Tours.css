@@ -152,7 +152,7 @@
 .location-item {
   padding: 6px 10px;
   border: 3px solid #ccc;
-  border-radius: 30px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   column-gap: 10px;
@@ -191,4 +191,7 @@
 }
 .button-form__icon {
   cursor: pointer;
+}
+.button-form__icon:hover {
+  color: red;
 }

@@ -71,7 +71,7 @@ function TourLocationFormAdmin({ onSubmit }) {
       <div className="row row-gap-3 mb-4">
         <div className="col-lg-6 col-md-6 col-12">
           <label htmlFor="locationLong" className="form-label">
-            Kinh độ:
+            Kinh độ (<span className="text-red">*</span>):
           </label>
           <input
             type="number"
@@ -85,7 +85,7 @@ function TourLocationFormAdmin({ onSubmit }) {
         </div>
         <div className="col-lg-6 col-md-6 col-12">
           <label htmlFor="locationLat" className="form-label">
-            Vĩ độ:
+            Vĩ độ (<span className="text-red">*</span>):
           </label>
           <input
             type="number"
@@ -99,7 +99,7 @@ function TourLocationFormAdmin({ onSubmit }) {
         </div>
         <div className="col-lg-6 col-md-6 col-12">
           <label htmlFor="locationDay" className="form-label">
-            Ngày:
+            Ngày (<span className="text-red">*</span>):
           </label>
           <input
             type="number"
@@ -113,7 +113,7 @@ function TourLocationFormAdmin({ onSubmit }) {
         </div>
         <div className="col-lg-6 col-md-6 col-12">
           <label htmlFor="locationDescription" className="form-label">
-            Mô tả:
+            Mô tả (<span className="text-red">*</span>):
           </label>
           <input
             type="text"

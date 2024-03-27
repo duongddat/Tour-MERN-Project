@@ -121,6 +121,10 @@ ul {
   background-color: #bc0202 !important;
 }
 
+.text-red {
+  color: red;
+}
+
 .modal-container {
   position: relative;
 }

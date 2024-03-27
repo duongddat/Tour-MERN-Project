@@ -65,6 +65,19 @@ exports.getUser = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getGuide = catchAsync(async (req, res, next) => {
+  const users = await User.find({ role: { $in: ["guide", "admin"] } });
+
+  res.status(200).json({
+    status: "success",
+    message: "Successfully retrieved",
+    lenght: users.length,
+    data: {
+      users,
+    },
+  });
+});
+
 exports.createUser = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
 

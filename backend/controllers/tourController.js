@@ -202,8 +202,13 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
 });
 
 exports.createTour = catchAsync(async (req, res, next) => {
-  const newTour = await Tour.create(req.body);
+  let locations = req.body.locations;
 
+  if (typeof locations === "string") {
+    locations = JSON.parse(locations);
+  }
+
+  const newTour = await Tour.create({ ...req.body, locations });
   res.status(200).json({
     status: "success",
     message: "Successfully created",

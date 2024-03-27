@@ -32,7 +32,7 @@ const tourSchema = new mongoose.Schema(
     images: [String],
     description: {
       type: String,
-      required: true,
+      required: [true, "A tour must have a description"],
     },
     price: {
       type: Number,
@@ -68,7 +68,6 @@ const tourSchema = new mongoose.Schema(
           enum: ["Point"],
         },
         coordinates: [Number],
-        address: String,
         description: String,
         day: Number,
       },

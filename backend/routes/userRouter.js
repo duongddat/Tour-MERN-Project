@@ -18,6 +18,8 @@ router.patch(
 //Admin Manager User
 router.use(authController.restrictTo("admin"));
 
+router.get("/list-guide", userController.getGuide);
+
 router
   .route("/")
   .get(userController.getAllUsers)

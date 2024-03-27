@@ -48,6 +48,7 @@ import { loader as loadBlogDetail } from "../utils/loadBlogDetail.js";
 import { loader as loadBlogManage } from "../utils/loadBlogManage.js";
 import { loader as loadMyTour } from "../utils/loadMyTour.js";
 import { loader as loadTourAdmin } from "../utils/loadTourAdmin.js";
+import { loader as loadTourCreatAdmin } from "../utils/loadTourCreateAdmin.js";
 
 const router = createBrowserRouter([
   {
@@ -188,7 +189,11 @@ const router = createBrowserRouter([
         path: "tours",
         children: [
           { index: true, element: <ManageTourPage />, loader: loadTourAdmin },
-          { path: "add", element: <AddTourAdminPage /> },
+          {
+            path: "add",
+            element: <AddTourAdminPage />,
+            loader: loadTourCreatAdmin,
+          },
         ],
       },
       { path: "countries", element: <ManageCountryPage /> },
