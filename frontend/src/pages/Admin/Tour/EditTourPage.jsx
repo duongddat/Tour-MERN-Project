@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import TourFormAdmin from "../../../components/Tours/TourFormAdmin.jsx";
 import headingBorderImg from "../../../assets/img/heading-border.webp";
 import { useAction } from "../../../hooks/useAction.js";
-import { editTourAdmin } from "../../../utils/adminHttps.js";
+import { editTourAdmin } from "../../../utils/Admin/adminHttps.js";
 
 function EditTourPage() {
   const [tourData, setTourData] = useState();

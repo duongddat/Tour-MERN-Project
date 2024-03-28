@@ -161,7 +161,6 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
     formData.append("startLocation", JSON.stringify(startLocation));
 
     //Thêm priceDiscount vào formData
-
     if (
       priceDiscount.value &&
       (priceDiscount.value * 1 >= price.value * 1 ||
@@ -178,7 +177,7 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
         ? parseFloat(priceDiscount.value)
         : null;
 
-    if (priceDiscountValue >= 0) {
+    if (priceDiscountValue) {
       console.log("hhahaha");
       formData.append("priceDiscount", priceDiscount.value * 1);
     }

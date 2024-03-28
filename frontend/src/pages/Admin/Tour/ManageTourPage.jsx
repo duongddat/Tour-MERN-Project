@@ -6,7 +6,7 @@ import TableData from "../../../components/Table/TableData";
 import { currencyFormatter } from "../../../helper/formattingPrice";
 import ShowModal from "../../../components/common/ShowModal";
 import { useAction } from "../../../hooks/useAction";
-import { deleteTourAdmin } from "../../../utils/adminHttps";
+import { deleteTourAdmin } from "../../../utils/Admin/adminHttps";
 import Spin from "../../../components/common/Spin";
 
 function ManageTourPage() {

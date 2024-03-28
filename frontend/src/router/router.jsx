@@ -31,6 +31,9 @@ import AddTourAdminPage from "../pages/Admin/Tour/AddTourPage.jsx";
 import EditTourAdminPage from "../pages/Admin/Tour/EditTourPage.jsx";
 import DetailTourAdminPage from "../pages/Admin/Tour/DetailTourPage.jsx";
 import ManageCountryPage from "../pages/Admin/Country/ManageCountryPage.jsx";
+import AddCountryAdminPage from "../pages/Admin/Country/AddCountryPage.jsx";
+import EditCountryAdminPage from "../pages/Admin/Country/EditCountryPage.jsx";
+import DetailCountryAdminPage from "../pages/Admin/Country/DetailCountryPage.jsx";
 import ManageBlogPage from "../pages/Admin/Blog/ManageBlogPage.jsx";
 import ManageReviewPage from "../pages/Admin/Review/ManageReviewPage.jsx";
 import ManageUserPage from "../pages/Admin/User/ManageUserPage.jsx";
@@ -50,10 +53,11 @@ import { loader as loadBlogDetail } from "../utils/loadBlogDetail.js";
 import { loader as loadBlogManage } from "../utils/loadBlogManage.js";
 import { loader as loadMyTour } from "../utils/loadMyTour.js";
 
-import { loader as loadTourAdmin } from "../utils/loadTourAdmin.js";
-import { loader as loadTourCreatAdmin } from "../utils/loadTourCreateAdmin.js";
-import { loader as loadTourEditAdmin } from "../utils/loadTourEditAdmin.js";
-import { loader as loadTourDetailAdmin } from "../utils/loadTourDetailAdmin.js";
+import { loader as loadTourAdmin } from "../utils/Admin/loadTourAdmin.js";
+import { loader as loadTourCreatAdmin } from "../utils/Admin/loadTourCreateAdmin.js";
+import { loader as loadTourEditAdmin } from "../utils/Admin/loadTourEditAdmin.js";
+import { loader as loadTourDetailAdmin } from "../utils/Admin/loadTourDetailAdmin.js";
+import { loader as loadCountryAdmin } from "../utils/Admin/loadCountryAdmin.js";
 
 const router = createBrowserRouter([
   {
@@ -211,7 +215,22 @@ const router = createBrowserRouter([
           },
         ],
       },
-      { path: "countries", element: <ManageCountryPage /> },
+      {
+        path: "countries",
+        children: [
+          {
+            index: true,
+            element: <ManageCountryPage />,
+            loader: loadCountryAdmin,
+          },
+          {
+            path: "add",
+            element: <AddCountryAdminPage />,
+          },
+          { path: ":idCountry/edit", element: <EditCountryAdminPage /> },
+          { path: ":idCountry/delete", element: <DetailCountryAdminPage /> },
+        ],
+      },
       { path: "blogs", element: <ManageBlogPage /> },
       { path: "reviews", element: <ManageReviewPage /> },
       { path: "users", element: <ManageUserPage /> },
