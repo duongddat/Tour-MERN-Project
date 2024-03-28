@@ -12,7 +12,6 @@ async function loaderCountries() {
     );
   } else {
     const resData = await response.json();
-    console.log(resData);
     return resData.data.countries;
   }
 }

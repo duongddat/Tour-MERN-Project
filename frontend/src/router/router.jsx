@@ -58,6 +58,7 @@ import { loader as loadTourCreatAdmin } from "../utils/Admin/loadTourCreateAdmin
 import { loader as loadTourEditAdmin } from "../utils/Admin/loadTourEditAdmin.js";
 import { loader as loadTourDetailAdmin } from "../utils/Admin/loadTourDetailAdmin.js";
 import { loader as loadCountryAdmin } from "../utils/Admin/loadCountryAdmin.js";
+import { loader as loadCountryDetailAdmin } from "../utils/Admin/loadCountryDetailAdmin.js";
 
 const router = createBrowserRouter([
   {
@@ -227,8 +228,16 @@ const router = createBrowserRouter([
             path: "add",
             element: <AddCountryAdminPage />,
           },
-          { path: ":idCountry/edit", element: <EditCountryAdminPage /> },
-          { path: ":idCountry/delete", element: <DetailCountryAdminPage /> },
+          {
+            path: ":idCountry/edit",
+            element: <EditCountryAdminPage />,
+            loader: loadCountryDetailAdmin,
+          },
+          {
+            path: ":idCountry/detail",
+            element: <DetailCountryAdminPage />,
+            loader: loadCountryDetailAdmin,
+          },
         ],
       },
       { path: "blogs", element: <ManageBlogPage /> },

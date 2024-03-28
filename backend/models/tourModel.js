@@ -113,6 +113,14 @@ tourSchema.pre("save", function (next) {
 });
 
 //QUERY MIDDLEWARE
+tourSchema.pre("findOneAndUpdate", function (next) {
+  const update = this.getUpdate();
+  if (update.name) {
+    update.slug = slugify(update.title, { lower: true });
+  }
+  next();
+});
+
 tourSchema.pre(/^find/, function (next) {
   this.populate({
     path: "guides",

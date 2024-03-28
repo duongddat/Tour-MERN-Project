@@ -22,6 +22,6 @@ export async function loader({ request, params }) {
   const id = params.idCountry;
 
   return defer({
-    tour: await loadCountryDetail(id),
+    country: await loadCountryDetail(id),
   });
 }

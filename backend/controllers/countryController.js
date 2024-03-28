@@ -38,7 +38,7 @@ exports.createCountry = catchAsync(async (req, res, next) => {
   res.status(201).json({
     status: "success",
     data: {
-      data: newCountry,
+      country: newCountry,
     },
   });
 });

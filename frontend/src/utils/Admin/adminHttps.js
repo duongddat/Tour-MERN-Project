@@ -92,12 +92,13 @@ export async function createCountryAdmin(data) {
     );
   }
 
-  const response = await fetch(`http://localhost:8080/countries`, {
+  const response = await fetch("http://localhost:8080/countries", {
     method: "POST",
     headers: {
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: formData,
+    body: JSON.stringify(formData),
   });
 
   const resData = await response.json();
@@ -123,9 +124,10 @@ export async function editCountryAdmin(data) {
   const response = await fetch(`http://localhost:8080/countries/${idCountry}`, {
     method: "PATCH",
     headers: {
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: formData,
+    body: JSON.stringify(formData),
   });
 
   const resData = await response.json();

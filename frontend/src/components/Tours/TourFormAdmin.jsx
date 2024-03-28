@@ -214,7 +214,7 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
 
     const data = { formData: formData };
 
-    if (tour != null) {
+    if (tour !== null) {
       data.idTour = tour._id;
     }
 
