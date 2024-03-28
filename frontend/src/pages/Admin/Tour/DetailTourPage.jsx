@@ -69,7 +69,7 @@ function DetailTourPage() {
                     />
                   </div>
                   <div className="row row-gap-4 mb-4">
-                    <div className="col-lg-4 col-md-4 col-12">
+                    <div className="col-lg-3 col-md-4 col-12">
                       <label htmlFor="price" className="form-label">
                         Giá (<span className="text-red">*</span>):
                       </label>
@@ -82,7 +82,24 @@ function DetailTourPage() {
                         disabled
                       />
                     </div>
-                    <div className="col-lg-4 col-md-4 col-12">
+                    <div className="col-lg-3 col-md-4 col-12">
+                      <label htmlFor="price" className="form-label">
+                        Giá (<span className="text-red">*</span>):
+                      </label>
+                      <input
+                        type="text"
+                        id="price"
+                        name="price"
+                        className="form-control"
+                        defaultValue={
+                          tour != null && tour.priceDiscount
+                            ? currencyFormatter.format(tour.priceDiscount)
+                            : ""
+                        }
+                        disabled
+                      />
+                    </div>
+                    <div className="col-lg-3 col-md-4 col-12">
                       <label htmlFor="duration" className="form-label">
                         Thời lượng (<span className="text-red">*</span>):
                       </label>
@@ -96,7 +113,7 @@ function DetailTourPage() {
                         disabled
                       />
                     </div>
-                    <div className="col-lg-4 col-md-4 col-12">
+                    <div className="col-lg-3 col-md-4 col-12">
                       <label htmlFor="maxGroupSize" className="form-label">
                         Số lượng (<span className="text-red">*</span>):
                       </label>

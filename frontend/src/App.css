@@ -241,7 +241,6 @@ table tbody td {
   border: 1px solid #eaecf0;
   background: #fff;
   box-shadow: var(--shadow-sm);
-  overflow: hidden;
 }
 .card:hover {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

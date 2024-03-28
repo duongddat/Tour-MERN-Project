@@ -15,7 +15,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   //Current booked tour
   const tour = await Tour.findById(req.params.tourID);
 
-  const totalPrice = guestSize * 1 * tour.price;
+  const totalPrice = guestSize * 1 * (tour.priceDiscount || tour.price);
   const parsedDate = moment(bookAt, "DD/MM/YYYY").toDate();
 
   //Save booking tour

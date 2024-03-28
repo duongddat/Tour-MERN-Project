@@ -12,6 +12,8 @@
   object-fit: cover;
   height: 100%;
   width: 100%;
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
 }
 
 .card__ratings {
@@ -32,6 +34,52 @@
   height: 12px;
 }
 
+.ribbon {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  height: 150px;
+  width: 150px;
+  overflow: hidden;
+}
+
+.ribbon::before,
+.ribbon::after {
+  content: "";
+  position: absolute;
+  display: block;
+  border: 6px solid #b41818;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  z-index: -1;
+}
+
+.ribbon::before {
+  top: 0px;
+  left: 41px;
+}
+
+.ribbon::after {
+  bottom: 41px;
+  right: 0;
+}
+
+.ribbon span {
+  position: absolute;
+  background-color: red;
+  width: 180px;
+  padding: 5px 0;
+  color: #fff;
+  text-align: center;
+  top: 30px;
+  right: -45px;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 700;
+  transform: rotate(45deg);
+  z-index: 2;
+}
+
 .heading-tertirary {
   color: #fff;
   text-transform: uppercase;
@@ -39,7 +87,7 @@
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  width: 80%;
+  width: 84%;
   z-index: 1;
 }
 .heading-tertirary span {
@@ -93,6 +141,14 @@
   border-top: 1px solid #f1f1f1;
   font-size: 0.8rem;
   margin-top: auto;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.card__footer-price {
+  display: flex;
+  align-items: center;
 }
 .card__footer-value {
   font-weight: 700;
@@ -101,8 +157,13 @@
 .card__footer-text {
   color: #999;
 }
-
-.card-message {
+.card__footer-priceDiscount {
+  text-decoration: line-through;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+.card__footer .card-message {
   width: 100%;
   height: fit-content;
   padding: 54px 24px;

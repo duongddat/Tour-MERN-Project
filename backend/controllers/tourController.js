@@ -204,6 +204,17 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
 exports.createTour = catchAsync(async (req, res, next) => {
   let startLocation = req.body.startLocation;
   let locations = req.body.locations;
+  const price = req.body.price;
+  const priceDiscount = req.body.priceDiscount;
+
+  if (priceDiscount && (priceDiscount < 0 || priceDiscount >= price)) {
+    return next(
+      new AppError(
+        "Price Discount should be non-negative and below regular price!",
+        400
+      )
+    );
+  }
 
   if (typeof locations === "string") {
     locations = JSON.parse(locations);
@@ -228,6 +239,17 @@ exports.updateTour = catchAsync(async (req, res, next) => {
 
   let startLocation = req.body.startLocation;
   let locations = req.body.locations;
+  const price = req.body.price;
+  const priceDiscount = req.body.priceDiscount;
+
+  if (priceDiscount && (priceDiscount <= 0 || priceDiscount >= price)) {
+    return next(
+      new AppError(
+        "Price Discount should be non-negative and below regular price!",
+        400
+      )
+    );
+  }
 
   if (typeof locations === "string") {
     locations = JSON.parse(locations);
@@ -248,6 +270,11 @@ exports.updateTour = catchAsync(async (req, res, next) => {
 
   if (!tour) {
     return next(new AppError("No tour found with that ID", 404));
+  }
+
+  if (priceDiscount === undefined || priceDiscount === null) {
+    tour.priceDiscount = undefined;
+    await tour.save();
   }
 
   res.status(200).json({

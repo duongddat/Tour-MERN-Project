@@ -14,7 +14,7 @@ function Booking({ tour }) {
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState(null);
 
-  const totalPrice = tour.price * (amount || 1);
+  const totalPrice = (tour.priceDiscount || tour.price) * (amount || 1);
 
   function handleChangeAmount(event) {
     setAmount(event.target.value);
@@ -106,7 +106,9 @@ function Booking({ tour }) {
     <div className="tour-content booking sticky">
       <div className="booking__top d-flex align-items-center jusstify-content-between flex-wrap">
         <h5 className="flex-grow-1">
-          {currencyFormatter.format(tour.price)}
+          {tour.priceDiscount
+            ? currencyFormatter.format(tour.priceDiscount)
+            : currencyFormatter.format(tour.price)}
           <span>/khách</span>
         </h5>
         <span className="item__ratings d-flex justify-content-center align-items-center">

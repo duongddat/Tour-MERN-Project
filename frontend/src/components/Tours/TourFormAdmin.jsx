@@ -116,6 +116,7 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
       startDescription,
       title,
       price,
+      priceDiscount,
       duration,
       maxGroupSize,
       description,
@@ -150,8 +151,6 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
       description: startDescription.value,
     };
 
-    console.log(startLocation);
-
     const formData = new FormData();
     formData.append("title", title.value);
     formData.append("price", price.value);
@@ -160,6 +159,29 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
     formData.append("description", description.value);
     formData.append("country", selectedOptionCountry.value);
     formData.append("startLocation", JSON.stringify(startLocation));
+
+    //Thêm priceDiscount vào formData
+
+    if (
+      priceDiscount.value &&
+      (priceDiscount.value * 1 >= price.value * 1 ||
+        priceDiscount.value * 1 <= 0)
+    ) {
+      dispatch(
+        setMessage({ type: "error", message: "Giảm giá không hợp lệ!" })
+      );
+      return;
+    }
+
+    const priceDiscountValue =
+      priceDiscount.value.trim() !== ""
+        ? parseFloat(priceDiscount.value)
+        : null;
+
+    if (priceDiscountValue >= 0) {
+      console.log("hhahaha");
+      formData.append("priceDiscount", priceDiscount.value * 1);
+    }
 
     // Thêm imageCover vào formData
     const imageCover = event.target.imageCover.files[0];
@@ -192,7 +214,6 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
     }
 
     const data = { formData: formData };
-    console.log(data);
 
     if (tour != null) {
       data.idTour = tour._id;
@@ -219,7 +240,7 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
           />
         </div>
         <div className="row row-gap-4 mb-4">
-          <div className="col-lg-4 col-md-4 col-12">
+          <div className="col-lg-3 col-md-4 col-12">
             <label htmlFor="price" className="form-label">
               Giá (<span className="text-red">*</span>):
             </label>
@@ -233,7 +254,22 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
               required
             />
           </div>
-          <div className="col-lg-4 col-md-4 col-12">
+          <div className="col-lg-3 col-md-4 col-12">
+            <label htmlFor="priceDiscount" className="form-label">
+              Giám giá:
+            </label>
+            <input
+              type="number"
+              id="priceDiscount"
+              name="priceDiscount"
+              className="form-control"
+              placeholder="Giảm giá tour du lịch"
+              defaultValue={
+                tour != null && tour.priceDiscount ? tour.priceDiscount : ""
+              }
+            />
+          </div>
+          <div className="col-lg-3 col-md-4 col-12">
             <label htmlFor="duration" className="form-label">
               Thời lượng (<span className="text-red">*</span>):
             </label>
@@ -247,7 +283,7 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
               required
             />
           </div>
-          <div className="col-lg-4 col-md-4 col-12">
+          <div className="col-lg-3 col-md-4 col-12">
             <label htmlFor="maxGroupSize" className="form-label">
               Số lượng (<span className="text-red">*</span>):
             </label>

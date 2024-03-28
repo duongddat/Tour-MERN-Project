@@ -16,9 +16,24 @@
   margin-bottom: 0px;
 }
 
+.tour-wrapper__price {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 15px;
+  column-gap: 10px;
+}
+
 .tour-price {
   font-weight: 700;
   color: red;
+}
+.tour-price__old {
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: line-through;
+  color: var(--text-color);
 }
 
 .img-tour__cover {

@@ -28,9 +28,19 @@ function TourDetail({ tour }) {
                 </div>
               </div>
             </div>
-            <h4 className="tour-price tour-title">
-              {currencyFormatter.format(tour.price)}/khách
-            </h4>
+            <div className="tour-wrapper__price">
+              <span className="tour-price tour-title">
+                {tour.priceDiscount
+                  ? currencyFormatter.format(tour.priceDiscount)
+                  : currencyFormatter.format(tour.price)}
+                /khách
+              </span>
+              {tour.priceDiscount && (
+                <span className="tour-price__old">
+                  {currencyFormatter.format(tour.price)}
+                </span>
+              )}
+            </div>
           </div>
           <div className="mt-2">
             <img src={headingBorderImg} alt="Heading Border Image" />

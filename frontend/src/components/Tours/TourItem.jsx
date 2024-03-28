@@ -23,6 +23,11 @@ function TourItem({ tour }) {
           </svg>
           <label className="xs">{`${tour.ratingsAverage} ratings (${tour.ratingsQuantity})`}</label>
         </div>
+        {tour.priceDiscount && (
+          <div className="ribbon">
+            <span>Giảm giá</span>
+          </div>
+        )}
         <h3 className="heading-tertirary">
           <span>{tour.title}</span>
         </h3>
@@ -75,11 +80,20 @@ function TourItem({ tour }) {
         </div>
       </div>
       <div className="card__footer d-flex justify-content-between align-items-center">
-        <div>
-          <span className="card__footer-value">
-            {currencyFormatter.format(tour.price)}
-          </span>
-          <span className="card__footer-text"> / khách</span>
+        <div className="d-flex flex-column">
+          <div className="card__footer-price">
+            <span className="card__footer-value">
+              {tour.priceDiscount
+                ? currencyFormatter.format(tour.priceDiscount)
+                : currencyFormatter.format(tour.price)}
+            </span>
+            <span className="card__footer-text"> / khách</span>
+          </div>
+          {tour.priceDiscount && (
+            <span className="card__footer-priceDiscount">
+              {currencyFormatter.format(tour.price)}
+            </span>
+          )}
         </div>
         <Link className="button text-center" to={`/tours/detail/${tour.slug}`}>
           Xem chi tiết
