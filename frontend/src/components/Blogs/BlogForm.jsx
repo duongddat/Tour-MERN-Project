@@ -1,15 +1,28 @@
-import { Suspense, useRef, useState } from "react";
-import { Await, Form } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Form } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Select from "react-select";
 
 import "./Blog.css";
 import Spin from "../common/Spin";
+import { convertToSelectOptions } from "../../helper/setValueOption";
 
 function BlogForm({ countries, isLoading, action, blog = null }) {
   const inputPhotoRef = useRef();
   const [selectedImages, setSelectedImages] = useState([]);
   const [description, setDescription] = useState(blog ? blog.description : "");
+  const [selectedOption, setSelectedOption] = useState(null);
+  const optionsCountry = convertToSelectOptions(countries, "_id", "name");
+
+  useEffect(() => {
+    if (blog !== null) {
+      setSelectedOption({
+        value: blog.country._id,
+        label: blog.country.name,
+      });
+    }
+  }, [blog]);
 
   function handleImageClick() {
     inputPhotoRef.current.click();
@@ -38,7 +51,7 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
 
     const formData = new FormData();
     formData.append("title", event.target.title.value);
-    formData.append("country", event.target.country.value);
+    formData.append("country", selectedOption.value);
     formData.append("description", description);
 
     if (selectedImages.length > 0) {
@@ -74,30 +87,16 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
         </div>
         <div className="mb-4">
           <label htmlFor="country" className="form-label">
-            Quốc gia
+            Chủ đề
           </label>
-          <Suspense
-            fallback={
-              <p style={{ textAlign: "center" }}>Loading Countries...</p>
-            }
-          >
-            <Await resolve={countries}>
-              {(loadedCountry) => (
-                <select
-                  id="country"
-                  name="country"
-                  className="form-select form-md"
-                  defaultValue={blog && blog.country.name}
-                >
-                  {loadedCountry.map((c) => (
-                    <option key={c._id} value={c._id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </Await>
-          </Suspense>
+          <Select
+            value={selectedOption}
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={optionsCountry}
+            placeholder="Chọn chủ đề"
+            required
+          />
         </div>
         <div className="mb-4">
           <label className="form-label">Hình ảnh</label>
@@ -167,13 +166,16 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
             onChange={setDescription}
           />
         </div>
-        <div className="mb-4 w-100 text-center">
+        <div className="my-5 w-100 d-flex justify-content-center align-items-center flex-wrap gap-3">
+          <button type="reset" className="button btn-submit btn-red">
+            Khôi phục
+          </button>
           <button
             type="submit"
             className="button btn-submit"
             disabled={isLoading}
           >
-            {isLoading ? <Spin text="Loading..." /> : "Đăng bài"}
+            {isLoading ? <Spin text={"Loading..."} /> : "Đăng bài"}
           </button>
         </div>
       </div>

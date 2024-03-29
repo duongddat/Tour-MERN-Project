@@ -35,6 +35,9 @@ import AddCountryAdminPage from "../pages/Admin/Country/AddCountryPage.jsx";
 import EditCountryAdminPage from "../pages/Admin/Country/EditCountryPage.jsx";
 import DetailCountryAdminPage from "../pages/Admin/Country/DetailCountryPage.jsx";
 import ManageBlogPage from "../pages/Admin/Blog/ManageBlogPage.jsx";
+import AddBlogAdminPage from "../pages/Admin/Blog/AddBlogPage.jsx";
+import EditBlogAdminPage from "../pages/Admin/Blog/EditBlogPage.jsx";
+import DetailBlogAdminPage from "../pages/Admin/Blog/DetailBlogPage.jsx";
 import ManageReviewPage from "../pages/Admin/Review/ManageReviewPage.jsx";
 import ManageUserPage from "../pages/Admin/User/ManageUserPage.jsx";
 import Revenue from "../pages/Admin/Statistical/Revenue.jsx";
@@ -240,7 +243,27 @@ const router = createBrowserRouter([
           },
         ],
       },
-      { path: "blogs", element: <ManageBlogPage /> },
+      {
+        path: "blogs",
+        children: [
+          { index: true, element: <ManageBlogPage />, loader: loadBlogData },
+          {
+            path: "add",
+            element: <AddBlogAdminPage />,
+            loader: loadBlogCreate,
+          },
+          {
+            path: ":idBlog/edit",
+            element: <EditBlogAdminPage />,
+            loader: loadBlogEdit,
+          },
+          {
+            path: ":idBlog/detail",
+            element: <DetailBlogAdminPage />,
+            loader: loadBlogDetail,
+          },
+        ],
+      },
       { path: "reviews", element: <ManageReviewPage /> },
       { path: "users", element: <ManageUserPage /> },
       { path: "revenue", element: <Revenue /> },

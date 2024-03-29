@@ -90,8 +90,7 @@
 }
 
 .blog-header__title {
-  height: 60px;
-  line-height: 60px;
+  padding: 20px 0;
   border-bottom: 1px solid #f1f4f9;
   display: flex;
   align-items: center;

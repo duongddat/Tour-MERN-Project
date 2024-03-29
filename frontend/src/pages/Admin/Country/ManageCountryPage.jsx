@@ -11,15 +11,15 @@ import { deleteCountryAdmin } from "../../../utils/Admin/adminHttps";
 function ManageCountryPage() {
   const { countries } = useLoaderData();
   const [modalIsOpen, setIsOpen] = useState(false);
-  const { isLoading, action: actionDeleteTour } = useAction(
+  const { isLoading, action: actionDeleteCountry } = useAction(
     deleteCountryAdmin,
     "/admin/countries"
   );
-  const idTourRef = useRef();
+  const idRef = useRef();
 
   function openModal(id) {
     setIsOpen(true);
-    idTourRef.current = id;
+    idRef.current = id;
   }
 
   function closeModal() {
@@ -27,7 +27,7 @@ function ManageCountryPage() {
   }
 
   async function handleDeleteBlog() {
-    await actionDeleteTour(idTourRef.current);
+    await actionDeleteCountry(idRef.current);
 
     if (!isLoading) {
       closeModal();
@@ -90,9 +90,7 @@ function ManageCountryPage() {
           fallback={<p style={{ textAlign: "center" }}>Loading Countries...</p>}
         >
           <Await resolve={countries}>
-            {(loadedCountry) => (
-              <TableData columns={columns} data={loadedCountry} />
-            )}
+            {(loadedData) => <TableData columns={columns} data={loadedData} />}
           </Await>
         </Suspense>
         <p className="mt-5 text-center text-footer-font">That all</p>

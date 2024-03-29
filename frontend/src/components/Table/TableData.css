@@ -18,6 +18,29 @@
   border-radius: 10px;
   object-fit: cover;
 }
+.table-item__2t {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.table-item__special {
+  padding: 2px 5px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: #fff;
+}
+.role-admin {
+  background-color: red;
+}
+.role-guide {
+  background-color: orange;
+}
+.role-user {
+  background-color: var(--primary-color);
+}
 .table-action {
   display: flex;
   gap: 10px;
