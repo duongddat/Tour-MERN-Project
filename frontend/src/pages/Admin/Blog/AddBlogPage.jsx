@@ -2,19 +2,16 @@ import { Link, useLoaderData } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import headingBorderImg from "../../../assets/img/heading-border.webp";
-import { createCountryAdmin } from "../../../utils/Admin/adminHttps";
 import { useAction } from "../../../hooks/useAction.js";
 import BlogForm from "../../../components/Blogs/BlogForm.jsx";
+import { createBlog } from "../../../utils/https.js";
 
 function AddBlogPage() {
   const { countries } = useLoaderData();
   const [loading, setLoading] = useState(false);
   const [countriesData, setCountriesData] = useState([]);
 
-  const { isLoading, action } = useAction(
-    createCountryAdmin,
-    "/admin/countries"
-  );
+  const { isLoading, action } = useAction(createBlog, "/admin/blogs");
 
   useEffect(() => {
     async function getData() {
@@ -35,7 +32,7 @@ function AddBlogPage() {
       <div className="tour-content">
         <div className="d-flex justify-content-between align-items-center flex-wrap mt-3">
           <h5 className="table-title">Thêm mới bài viết</h5>
-          <Link to="/admin/countries" className="button d-flex gap-1 fw-bold">
+          <Link to="/admin/blogs" className="button d-flex gap-1 fw-bold">
             <i className="ri-file-list-3-line"></i>
             <span>Danh sách bài viết</span>
           </Link>

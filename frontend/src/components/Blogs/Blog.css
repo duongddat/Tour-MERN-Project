@@ -1,5 +1,6 @@
 .card-border {
   border-radius: 12px;
+  overflow: hidden;
 }
 
 .blog-image {

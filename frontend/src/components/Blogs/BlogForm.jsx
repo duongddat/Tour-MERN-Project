@@ -7,8 +7,11 @@ import Select from "react-select";
 import "./Blog.css";
 import Spin from "../common/Spin";
 import { convertToSelectOptions } from "../../helper/setValueOption";
+import { useDispatch } from "react-redux";
+import { setMessage } from "../../store/message-slice";
 
 function BlogForm({ countries, isLoading, action, blog = null }) {
+  const dispatch = useDispatch();
   const inputPhotoRef = useRef();
   const [selectedImages, setSelectedImages] = useState([]);
   const [description, setDescription] = useState(blog ? blog.description : "");
@@ -46,8 +49,23 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
     setSelectedImages(selectedImages.filter((e) => e !== image));
   }
 
+  function handleReset() {
+    setSelectedImages([]);
+    setDescription("");
+  }
+
   function handleSumbitForm(event) {
     event.preventDefault();
+
+    if (blog === null && selectedImages.length === 0) {
+      dispatch(
+        setMessage({
+          type: "error",
+          message: "Vui lòng chọn ảnh cho bài viết!",
+        })
+      );
+      return;
+    }
 
     const formData = new FormData();
     formData.append("title", event.target.title.value);
@@ -167,7 +185,11 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
           />
         </div>
         <div className="my-5 w-100 d-flex justify-content-center align-items-center flex-wrap gap-3">
-          <button type="reset" className="button btn-submit btn-red">
+          <button
+            type="reset"
+            className="button btn-submit btn-red"
+            onClick={handleReset}
+          >
             Khôi phục
           </button>
           <button
