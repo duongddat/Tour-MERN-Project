@@ -229,3 +229,86 @@ export async function deleteBlog(blogId) {
 
   return response;
 }
+
+//===========================Review Page==============================
+//1. Create Review
+export async function createReview(data) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to use this route." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(`http://localhost:8080/reviews`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  const resData = await response.json();
+
+  return resData;
+}
+//2. Edit Review
+export async function editReview(data) {
+  const { review, rating, tourId, reviewId } = data;
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to review." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(`http://localhost:8080/reviews/${reviewId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      tourId,
+      review,
+      rating,
+    }),
+  });
+
+  const resData = await response.json();
+
+  return resData;
+}
+
+//3.Delete Review
+export async function deleteReview(data) {
+  const { reviewId } = data;
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to delete review." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(`http://localhost:8080/reviews/${reviewId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+
+  return response;
+}

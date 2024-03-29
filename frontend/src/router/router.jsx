@@ -39,6 +39,9 @@ import AddBlogAdminPage from "../pages/Admin/Blog/AddBlogPage.jsx";
 import EditBlogAdminPage from "../pages/Admin/Blog/EditBlogPage.jsx";
 import DetailBlogAdminPage from "../pages/Admin/Blog/DetailBlogPage.jsx";
 import ManageReviewPage from "../pages/Admin/Review/ManageReviewPage.jsx";
+import AddReviewAdminPage from "../pages/Admin/Review/AddReviewPage.jsx";
+import EditReviewAdminPage from "../pages/Admin/Review/EditReviewPage.jsx";
+import DetailReviewAdminPage from "../pages/Admin/Review/DetailReviewPage.jsx";
 import ManageUserPage from "../pages/Admin/User/ManageUserPage.jsx";
 import Revenue from "../pages/Admin/Statistical/Revenue.jsx";
 
@@ -62,6 +65,9 @@ import { loader as loadTourEditAdmin } from "../utils/Admin/loadTourEditAdmin.js
 import { loader as loadTourDetailAdmin } from "../utils/Admin/loadTourDetailAdmin.js";
 import { loader as loadCountryAdmin } from "../utils/Admin/loadCountryAdmin.js";
 import { loader as loadCountryDetailAdmin } from "../utils/Admin/loadCountryDetailAdmin.js";
+import { loader as loadReviewAdmin } from "../utils/Admin/loadReviewAdmin.js";
+import { loader as loadReviewEditAdmin } from "../utils/Admin/loadReviewEditAdmin.js";
+import { loader as loadReviewDetailAdmin } from "../utils/Admin/loadReviewDetailAdmin.js";
 
 const router = createBrowserRouter([
   {
@@ -264,7 +270,31 @@ const router = createBrowserRouter([
           },
         ],
       },
-      { path: "reviews", element: <ManageReviewPage /> },
+      {
+        path: "reviews",
+        children: [
+          {
+            index: true,
+            element: <ManageReviewPage />,
+            loader: loadReviewAdmin,
+          },
+          {
+            path: "add",
+            element: <AddReviewAdminPage />,
+            loader: loadTourAdmin,
+          },
+          {
+            path: ":idReview/edit",
+            element: <EditReviewAdminPage />,
+            loader: loadReviewEditAdmin,
+          },
+          {
+            path: ":idReview/detail",
+            element: <DetailReviewAdminPage />,
+            loader: loadReviewDetailAdmin,
+          },
+        ],
+      },
       { path: "users", element: <ManageUserPage /> },
       { path: "revenue", element: <Revenue /> },
     ],

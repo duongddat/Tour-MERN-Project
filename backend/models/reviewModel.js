@@ -38,6 +38,9 @@ reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 // QUERY MIDDLEWARE
 reviewSchema.pre(/^find/, function (next) {
   this.populate({
+    path: "tour",
+    select: "_id title",
+  }).populate({
     path: "user",
     select: "_id name photo role",
   });
