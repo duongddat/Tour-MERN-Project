@@ -12,7 +12,7 @@ async function loaderReview(id) {
     );
   }
 
-  const response = await fetch("http://localhost:8080/reviews" + id, {
+  const response = await fetch(`http://localhost:8080/reviews/${id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -28,7 +28,7 @@ async function loaderReview(id) {
     );
   } else {
     const resData = await response.json();
-    return resData.data.users;
+    return resData.data.review;
   }
 }
 

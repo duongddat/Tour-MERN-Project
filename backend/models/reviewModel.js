@@ -74,7 +74,6 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
     });
   }
 };
-
 reviewSchema.post("save", function () {
   //this points to current review
   this.constructor.calcAverageRatings(this.tour);
@@ -82,13 +81,12 @@ reviewSchema.post("save", function () {
 
 reviewSchema.pre(/^findOneAnd/, async function (next) {
   this.r = await this.clone().findOne(); // clone to fix findOne() exist by mongoose@6.
-  // console.log(this.r);
   next();
 });
 
 reviewSchema.post(/^findOneAnd/, async function () {
   //await this.findOne(); does NOT work here, query has already executed
-  await this.r.constructor.calcAverageRatings(this.r.tour);
+  await this.r.constructor.calcAverageRatings(this.r.tour._id);
 });
 
 const Review = mongoose.model("Review", reviewSchema);

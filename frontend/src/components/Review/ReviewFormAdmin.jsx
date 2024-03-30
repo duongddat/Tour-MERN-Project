@@ -1,6 +1,6 @@
 import { Form } from "react-router-dom";
 import Select from "react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Spin from "../common/Spin";
 import { convertToSelectOptions } from "../../helper/setValueOption";
@@ -19,19 +19,36 @@ function ReviewFormAdmin({ action, isLoading, tours, review = null }) {
 
   const optionsTour = convertToSelectOptions(tours, "_id", "title");
 
+  useEffect(() => {
+    if (review !== null) {
+      setSelectedOption({
+        value: review.rating,
+        label: review.rating + " sao",
+      });
+
+      setSelectedOptionTour({
+        value: review.tour._id,
+        label: review.tour.title,
+      });
+    }
+  }, [review]);
+
   function handleSubmitForm(event) {
     event.preventDefault();
 
-    const fd = new FormData(event.target);
-    const formData = Object.fromEntries(fd.entries());
+    const formData = {
+      review: event.target.review.value,
+      rating: selectedOption.value,
+      tour: selectedOptionTour.value,
+    };
 
     const data = { formData };
 
     if (review !== null) {
-      data.idreview = review._id;
+      console.log(review._id);
+      data.idReview = review._id;
     }
 
-    console.log(data);
     action(data);
   }
 
@@ -53,8 +70,8 @@ function ReviewFormAdmin({ action, isLoading, tours, review = null }) {
           />
         </div>
         <div className="mb-4">
-          <div className="row gap-4">
-            <div className="col-lg-2 col-md-4 col-12">
+          <div className="row row-gap-4">
+            <div className="col-lg-3 col-md-6 col-12">
               <label htmlFor="name" className="form-label">
                 Đánh giá (<span className="text-red">*</span>):
               </label>
@@ -67,7 +84,7 @@ function ReviewFormAdmin({ action, isLoading, tours, review = null }) {
                 required
               />
             </div>
-            <div className="col-lg-10 col-md-8 col-12">
+            <div className="col-lg-9 col-md-6 col-12">
               <label htmlFor="name" className="form-label">
                 Tour (<span className="text-red">*</span>):
               </label>

@@ -2,16 +2,6 @@
 import { defer, json } from "react-router-dom";
 
 async function loadTours() {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    throw json(
-      { message: "Please login to use this route." },
-      {
-        status: 400,
-      }
-    );
-  }
-
   const response = await fetch("http://localhost:8080/tours/");
 
   if (!response.ok) {
@@ -38,7 +28,7 @@ async function loaderReview(id) {
     );
   }
 
-  const response = await fetch("http://localhost:8080/reviews" + id, {
+  const response = await fetch(`http://localhost:8080/reviews/${id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -54,7 +44,8 @@ async function loaderReview(id) {
     );
   } else {
     const resData = await response.json();
-    return resData.data.users;
+    console.log(resData);
+    return resData.data.review;
   }
 }
 

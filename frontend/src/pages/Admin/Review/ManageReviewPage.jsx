@@ -1,5 +1,6 @@
 import { Await, Link, useLoaderData } from "react-router-dom";
 import { Suspense, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 import headingBorderImg from "../../../assets/img/heading-border.webp";
 import TableData from "../../../components/Table/TableData";
@@ -7,7 +8,6 @@ import ShowModal from "../../../components/common/ShowModal";
 import Spin from "../../../components/common/Spin";
 import { useAction } from "../../../hooks/useAction";
 import { deleteReview } from "../../../utils/Admin/adminHttps";
-import { useSelector } from "react-redux";
 
 function ManageReviewPage() {
   const { reviews } = useLoaderData();
@@ -29,6 +29,7 @@ function ManageReviewPage() {
   }
 
   async function handleDeleteReview() {
+    console.log("hahahaah");
     await actionDeleteReview(idRef.current);
 
     if (!isLoading) {

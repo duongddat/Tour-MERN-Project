@@ -92,7 +92,7 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
       <div className="form-item-container">
         <div className="mb-4">
           <label htmlFor="title" className="form-label">
-            Tiêu đề
+            Tiêu đề (<span className="text-red">*</span>):
           </label>
           <input
             type="text"
@@ -105,7 +105,7 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
         </div>
         <div className="mb-4">
           <label htmlFor="country" className="form-label">
-            Chủ đề
+            Chủ đề (<span className="text-red">*</span>)
           </label>
           <Select
             value={selectedOption}
@@ -117,7 +117,9 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
           />
         </div>
         <div className="mb-4">
-          <label className="form-label">Hình ảnh</label>
+          <label className="form-label">
+            Hình ảnh (<span className="text-red">*</span>):
+          </label>
           <div className="form-img-upload_tip">
             {
               "Có thể tải lên các file ảnh (định dạng jpg, png, jpeg, gif, webp)"
@@ -175,7 +177,7 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
         )}
         <div className="mb-4">
           <label htmlFor="description" className="form-label">
-            Bài bình luận
+            Bài viết (<span className="text-red">*</span>):
           </label>
           <ReactQuill
             theme="snow"

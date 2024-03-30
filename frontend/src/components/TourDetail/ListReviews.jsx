@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useCallback, useState } from "react";
+import { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { formatVietnameseDate } from "../../helper/formattingDate";
@@ -12,33 +12,35 @@ import "./ReviewTour.css";
 function ListReviews({ reviews, onEdit, tourId }) {
   const location = useLocation();
   const { userInfo } = useSelector((state) => state.auth);
+  const idRef = useRef();
   const [modalIsOpen, setIsOpen] = useState(false);
   const { isLoading, action: actionDeleteReview } = useAction(
     deleteReview,
     location.pathname
   );
 
-  function openModal() {
+  function openModal(id) {
+    idRef.current = id;
     setIsOpen(true);
+    console.log(id);
   }
 
   function closeModal() {
     setIsOpen(false);
   }
 
-  const handleDeleteReview = useCallback(
-    async function handleDeleteReview(reviewId) {
-      await actionDeleteReview({
-        reviewId,
-        tourId,
-      });
+  async function handleDeleteReview() {
+    const reviewId = idRef.current;
 
-      if (isLoading) {
-        closeModal();
-      }
-    },
-    [actionDeleteReview, tourId, isLoading]
-  );
+    await actionDeleteReview({
+      reviewId,
+      tourId,
+    });
+
+    if (!isLoading) {
+      closeModal();
+    }
+  }
 
   return (
     <div className="mb-5 user__reviews">
@@ -82,42 +84,37 @@ function ListReviews({ reviews, onEdit, tourId }) {
                       onClick={() => onEdit(review)}
                     ></i>
                   )}
-                  <i className="ri-delete-bin-line" onClick={openModal}></i>
-                  <ShowModal isOpen={modalIsOpen} onClose={closeModal}>
-                    <div className="p-3 modal-container">
-                      <div className="modal-close">
-                        <i
-                          className="ri-close-circle-fill"
-                          onClick={closeModal}
-                        ></i>
-                      </div>
-                      <div className="modal-title">
-                        <h5 className="sm p-2">
-                          Bạn có chắc xoá bài bình luận?
-                        </h5>
-                      </div>
-                      <div className="d-flex justify-content-center align-items-center column-gap-3 mt-4">
-                        <button
-                          onClick={() => handleDeleteReview(review._id)}
-                          className="button text-white"
-                          disabled={isLoading}
-                        >
-                          {isLoading ? <Spin text="Loading..." /> : "Đồng ý"}
-                        </button>
-                        <button
-                          onClick={closeModal}
-                          className="button btn-red text-white"
-                        >
-                          Đóng
-                        </button>
-                      </div>
-                    </div>
-                  </ShowModal>
+                  <i
+                    className="ri-delete-bin-line"
+                    onClick={() => openModal(review._id)}
+                  ></i>
                 </div>
               )}
           </div>
         </div>
       ))}
+      <ShowModal isOpen={modalIsOpen} onClose={closeModal}>
+        <div className="p-3 modal-container">
+          <div className="modal-close">
+            <i className="ri-close-circle-fill" onClick={closeModal}></i>
+          </div>
+          <div className="modal-title">
+            <h5 className="sm p-2">Bạn có chắc xoá bài bình luận?</h5>
+          </div>
+          <div className="d-flex justify-content-center align-items-center column-gap-3 mt-4">
+            <button
+              onClick={() => handleDeleteReview()}
+              className="button text-white"
+              disabled={isLoading}
+            >
+              {isLoading ? <Spin text="Loading..." /> : "Đồng ý"}
+            </button>
+            <button onClick={closeModal} className="button btn-red text-white">
+              Đóng
+            </button>
+          </div>
+        </div>
+      </ShowModal>
     </div>
   );
 }

@@ -6,7 +6,6 @@ const Country = require("../models/countryModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const AIPFeatures = require("../utils/apiFeatures");
-const { query } = require("express");
 
 //=====================CONFIGURE IMG FILE=============================
 const multerStorage = multer.memoryStorage();

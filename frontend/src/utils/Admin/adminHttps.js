@@ -233,6 +233,7 @@ export async function deleteBlog(blogId) {
 //===========================Review Page==============================
 //1. Create Review
 export async function createReview(data) {
+  const { formData } = data;
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -250,7 +251,7 @@ export async function createReview(data) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(formData),
   });
 
   const resData = await response.json();
@@ -259,7 +260,7 @@ export async function createReview(data) {
 }
 //2. Edit Review
 export async function editReview(data) {
-  const { review, rating, tourId, reviewId } = data;
+  const { formData, idReview } = data;
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -271,17 +272,13 @@ export async function editReview(data) {
     );
   }
 
-  const response = await fetch(`http://localhost:8080/reviews/${reviewId}`, {
+  const response = await fetch(`http://localhost:8080/reviews/${idReview}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({
-      tourId,
-      review,
-      rating,
-    }),
+    body: JSON.stringify(formData),
   });
 
   const resData = await response.json();
@@ -290,8 +287,7 @@ export async function editReview(data) {
 }
 
 //3.Delete Review
-export async function deleteReview(data) {
-  const { reviewId } = data;
+export async function deleteReview(reviewId) {
   const token = localStorage.getItem("token");
 
   if (!token) {
