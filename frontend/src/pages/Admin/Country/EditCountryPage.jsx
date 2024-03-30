@@ -1,10 +1,10 @@
 import { Await, Link, useLoaderData } from "react-router-dom";
+import { Suspense } from "react";
 
 import headingBorderImg from "../../../assets/img/heading-border.webp";
 import CountryForm from "../../../components/Country/CountryFormAdmin";
 import { useAction } from "../../../hooks/useAction";
 import { editCountryAdmin } from "../../../utils/Admin/adminHttps";
-import { Suspense } from "react";
 
 function EditCountryPage() {
   const { country } = useLoaderData();

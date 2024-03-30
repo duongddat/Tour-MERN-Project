@@ -43,6 +43,9 @@ import AddReviewAdminPage from "../pages/Admin/Review/AddReviewPage.jsx";
 import EditReviewAdminPage from "../pages/Admin/Review/EditReviewPage.jsx";
 import DetailReviewAdminPage from "../pages/Admin/Review/DetailReviewPage.jsx";
 import ManageUserPage from "../pages/Admin/User/ManageUserPage.jsx";
+import AddUserAdminPage from "../pages/Admin/User/AddUserPage.jsx";
+import EditUserAdminPage from "../pages/Admin/User/EditUserPage.jsx";
+import DetailUserAdminPage from "../pages/Admin/User/DetailUserPage.jsx";
 import Revenue from "../pages/Admin/Statistical/Revenue.jsx";
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
@@ -68,6 +71,8 @@ import { loader as loadCountryDetailAdmin } from "../utils/Admin/loadCountryDeta
 import { loader as loadReviewAdmin } from "../utils/Admin/loadReviewAdmin.js";
 import { loader as loadReviewEditAdmin } from "../utils/Admin/loadReviewEditAdmin.js";
 import { loader as loadReviewDetailAdmin } from "../utils/Admin/loadReviewDetailAdmin.js";
+import { loader as loadUserAdmin } from "../utils/Admin/loadUserAdmin.js";
+import { loader as loadUserDetailAdmin } from "../utils/Admin/loadUserDetailAdmin.js";
 
 const router = createBrowserRouter([
   {
@@ -295,7 +300,23 @@ const router = createBrowserRouter([
           },
         ],
       },
-      { path: "users", element: <ManageUserPage /> },
+      {
+        path: "users",
+        children: [
+          { index: true, element: <ManageUserPage />, loader: loadUserAdmin },
+          { path: "add", element: <AddUserAdminPage /> },
+          {
+            path: ":idUser/edit",
+            element: <EditUserAdminPage />,
+            loader: loadUserDetailAdmin,
+          },
+          {
+            path: ":idUser/detail",
+            element: <DetailUserAdminPage />,
+            loader: loadUserDetailAdmin,
+          },
+        ],
+      },
       { path: "revenue", element: <Revenue /> },
     ],
   },

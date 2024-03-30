@@ -79,6 +79,8 @@ exports.getGuide = catchAsync(async (req, res, next) => {
 });
 
 exports.createUser = catchAsync(async (req, res, next) => {
+  if (req.file) req.body.photo = req.file.filename;
+
   const newUser = await User.create(req.body);
 
   res.status(201).json({
@@ -90,6 +92,8 @@ exports.createUser = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
+  if (req.file) req.body.photo = req.file.filename;
+
   const id = req.params.id;
   const user = await User.findByIdAndUpdate(id, req.body, {
     new: true,

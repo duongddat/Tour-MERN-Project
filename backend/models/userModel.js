@@ -36,9 +36,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please confirm your password"],
       validate: {
-        //This only works on CREATE and SAVE!!!
+        //This only works on CREATE and SAVE!!! (this.update)
         validator: function (el) {
-          return el === this.password;
+          if (this.isNew || this._update.password) {
+            return el === this.password;
+          }
+          return true;
         },
         message: "Passwords are not the same",
       },
@@ -67,6 +70,15 @@ userSchema.pre("save", function (next) {
   if (!this.isModified("password") || this.isNew) return next();
 
   this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
+userSchema.pre("findOneAndUpdate", async function (next) {
+  // Check if the password field is being modified
+  if (this._update.password) {
+    this._update.password = await bcrypt.hash(this._update.password, 12);
+    this._update.passwordConfirm = undefined;
+  }
   next();
 });
 

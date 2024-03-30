@@ -4,6 +4,8 @@
   background: #fff;
   box-shadow: var(--shadow-sm);
   padding: 15px 35px;
+  min-height: 100px;
+  transition: all 0.25s ease-in-out;
 }
 
 .tour__header {

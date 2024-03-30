@@ -23,12 +23,20 @@ router.get("/list-guide", userController.getGuide);
 router
   .route("/")
   .get(userController.getAllUsers)
-  .post(userController.createUser);
+  .post(
+    userController.uploadUserPhoto,
+    userController.resizeUserPhoto,
+    userController.createUser
+  );
 
 router
   .route("/:id")
   .get(userController.getUser)
-  .patch(userController.updateUser)
+  .patch(
+    userController.uploadUserPhoto,
+    userController.resizeUserPhoto,
+    userController.updateUser
+  )
   .delete(userController.deleteUser);
 
 module.exports = router;

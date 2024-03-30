@@ -1,6 +1,5 @@
 import { Await, Link, useLoaderData } from "react-router-dom";
 import { Suspense, useEffect, useState } from "react";
-import "react-quill/dist/quill.snow.css";
 import Select from "react-select";
 
 import headingBorderImg from "../../../assets/img/heading-border.webp";

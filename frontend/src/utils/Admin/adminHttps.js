@@ -308,3 +308,76 @@ export async function deleteReview(reviewId) {
 
   return response;
 }
+//========================User Page=========================
+//1.Create User
+export async function createUserAdmin(data) {
+  const { formData } = data;
+  const token = localStorage.getItem("token");
+  if (!token) {
+    throw json(
+      { message: "Please login to user this route." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch("http://localhost:8080/users", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  const resData = await response.json();
+
+  return resData;
+}
+//2. Edit User
+export async function editUserAdmin(data) {
+  const { formData, idUser } = data;
+  const token = localStorage.getItem("token");
+  if (!token) {
+    throw json(
+      { message: "Please login to use this route." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(`http://localhost:8080/users/${idUser}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  const resData = await response.json();
+
+  return resData;
+}
+//3. Delete User
+export async function deleteUserAdmin(idUser) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to use this route." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(`http://localhost:8080/users/${idUser}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+
+  return response;
+}

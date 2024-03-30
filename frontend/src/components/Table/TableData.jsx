@@ -8,7 +8,7 @@ function TableData({ columns, data }) {
       data={data}
       pagination
       fixedHeader
-      fixedHeaderScrollHeight="500px"
+      fixedHeaderScrollHeight="800px"
       //   selectableRows
     ></DataTable>
   );
