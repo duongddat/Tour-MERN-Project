@@ -1,5 +1,5 @@
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 
 import "./SideBarAdmin.css";
@@ -9,7 +9,10 @@ import { setMessage } from "../../../store/message-slice";
 function SideBarAdmin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.auth);
+
   const sideRef = useRef();
+
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -77,28 +80,43 @@ function SideBarAdmin() {
             <span>Trang chủ</span>
           </NavLink>
         </li>
-        <li className="sidebar-item">
-          <NavLink
-            to="/admin/tours"
-            className={({ isActive }) =>
-              `sidebar-link ${isActive ? "active-admin" : ""}`
-            }
-          >
-            <i className="ri-btc-line"></i>
-            <span>Tour</span>
-          </NavLink>
-        </li>
-        <li className="sidebar-item">
-          <NavLink
-            to="/admin/countries"
-            className={({ isActive }) =>
-              `sidebar-link ${isActive ? "active-admin" : ""}`
-            }
-          >
-            <i className="ri-compass-line"></i>
-            <span>Quốc gia</span>
-          </NavLink>
-        </li>
+        {userInfo.role === "admin" && (
+          <>
+            <li className="sidebar-item">
+              <NavLink
+                to="/admin/tours"
+                className={({ isActive }) =>
+                  `sidebar-link ${isActive ? "active-admin" : ""}`
+                }
+              >
+                <i className="ri-btc-line"></i>
+                <span>Tour</span>
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/admin/countries"
+                className={({ isActive }) =>
+                  `sidebar-link ${isActive ? "active-admin" : ""}`
+                }
+              >
+                <i className="ri-compass-line"></i>
+                <span>Quốc gia</span>
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/admin/users"
+                className={({ isActive }) =>
+                  `sidebar-link ${isActive ? "active-admin" : ""}`
+                }
+              >
+                <i className="ri-user-3-line"></i>
+                <span>Người dùng</span>
+              </NavLink>
+            </li>
+          </>
+        )}
         <li className="sidebar-item">
           <NavLink
             to="/admin/blogs"
@@ -122,17 +140,6 @@ function SideBarAdmin() {
           </NavLink>
         </li>
         <li className="sidebar-item">
-          <NavLink
-            to="/admin/users"
-            className={({ isActive }) =>
-              `sidebar-link ${isActive ? "active-admin" : ""}`
-            }
-          >
-            <i className="ri-user-3-line"></i>
-            <span>Người dùng</span>
-          </NavLink>
-        </li>
-        <li className="sidebar-item">
           <div
             className="sidebar-link has-dropdown collapsed"
             data-bs-toggle="collapse"
@@ -148,16 +155,18 @@ function SideBarAdmin() {
             className="sidebar-dropdown accordion-collapse list-unstyled collapse"
             data-bs-parent="#sidebar"
           >
-            <li className="sidebar-item">
-              <NavLink
-                to="/admin/revenue"
-                className={({ isActive }) =>
-                  `sidebar-link ${isActive ? "active-admin" : ""}`
-                }
-              >
-                <div className="sidebar-dropdown__item">Doanh thu</div>
-              </NavLink>
-            </li>
+            {userInfo.role === "admin" && (
+              <li className="sidebar-item">
+                <NavLink
+                  to="/admin/revenue"
+                  className={({ isActive }) =>
+                    `sidebar-link ${isActive ? "active-admin" : ""}`
+                  }
+                >
+                  <div className="sidebar-dropdown__item">Doanh thu</div>
+                </NavLink>
+              </li>
+            )}
             <li className="sidebar-item">
               <NavLink className="sidebar-link">
                 <div className="sidebar-dropdown__item">Thống kế tour</div>

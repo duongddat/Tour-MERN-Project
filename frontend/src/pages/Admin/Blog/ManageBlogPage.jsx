@@ -86,12 +86,15 @@ function ManageBlogPage() {
               <i className="ri-pencil-fill"></i>
             </Link>
           )}
-          <div
-            className="action-btn action-btn__delete"
-            onClick={() => openModal(row._id)}
-          >
-            <i className="ri-delete-bin-2-line"></i>
-          </div>
+          {(userInfo.role === "admin" ||
+            (userInfo.role === "guide" && row.user.role !== "admin")) && (
+            <div
+              className="action-btn action-btn__delete"
+              onClick={() => openModal(row._id)}
+            >
+              <i className="ri-delete-bin-2-line"></i>
+            </div>
+          )}
         </div>
       ),
     },

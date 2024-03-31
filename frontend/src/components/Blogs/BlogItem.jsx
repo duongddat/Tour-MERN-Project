@@ -115,7 +115,9 @@ function BlogItem({ blog }) {
               <div className="d-flex gap-2">
                 {userInfo &&
                   (userInfo._id === blog.user._id ||
-                    userInfo.role === "admin") && (
+                    userInfo.role === "admin" ||
+                    (userInfo.role === "guide" &&
+                      blog.user.role !== "admin")) && (
                     <>
                       {userInfo._id === blog.user._id && (
                         <Link

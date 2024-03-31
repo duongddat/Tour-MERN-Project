@@ -76,7 +76,9 @@ function ListReviews({ reviews, onEdit, tourId }) {
             <span>{review.review}</span>
             {userInfo &&
               (userInfo._id === review.user._id ||
-                userInfo.role === "admin") && (
+                userInfo.role === "admin" ||
+                (userInfo.role === "guide" &&
+                  review.user.role !== "admin")) && (
                 <div className="user-review_tool d-flex column-gap-2">
                   {userInfo._id === review.user._id && (
                     <i
