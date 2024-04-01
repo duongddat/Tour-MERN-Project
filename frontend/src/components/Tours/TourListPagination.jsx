@@ -26,7 +26,7 @@ function TourListPagination({ tours, classes, itemsPerPage }) {
           </div>
         ))}
       {currentItems.length === 0 && (
-        <div className="card card-message d-flex">
+        <div className="card card-message">
           <div className="message-img">
             <img src={NoData} alt="Message image" />
           </div>
@@ -38,7 +38,9 @@ function TourListPagination({ tours, classes, itemsPerPage }) {
           </div>
         </div>
       )}
-      <Pagination pageCount={pageCount} onPageClick={handlePageClick} />
+      {currentItems.length > 0 && (
+        <Pagination pageCount={pageCount} onPageClick={handlePageClick} />
+      )}
     </div>
   );
 }

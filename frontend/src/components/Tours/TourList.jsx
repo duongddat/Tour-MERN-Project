@@ -13,7 +13,7 @@ function TourList({ tours, classes }) {
           </div>
         ))}
       {tours.length === 0 && (
-        <div className="card card-message d-flex">
+        <div className="card card-message m-4 d-flex justify-content-center">
           <div className="message-img">
             <img src={NoData} alt="Message image" />
           </div>

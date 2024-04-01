@@ -13,6 +13,7 @@ const countryRouter = require("./routes/countryRouter");
 const reviewRouter = require("./routes/reviewRouter");
 const bookingRouter = require("./routes/bookingRouter");
 const postRouter = require("./routes/postRouter");
+const statisticalRouter = require("./routes/statisticalRouter");
 
 dotenv.config({ path: "./.env" });
 const app = express();
@@ -50,6 +51,7 @@ app.use("/users", userRouter);
 app.use("/auth", authRouter);
 app.use("/booking", bookingRouter);
 app.use("/posts", postRouter);
+app.use("/statis", statisticalRouter);
 
 app.use(globalErrorHandler);
 //SEVER

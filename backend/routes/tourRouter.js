@@ -11,6 +11,7 @@ router.use("/:tourId/reviews", reviewRouter);
 router.route("/country/:slug").get(tourController.getTourByCountry);
 router.route("/monthy-statistic/:year").get(tourController.getMonthStatistic);
 router.route("/detail/:slug").get(tourController.getTourBySlug);
+router.route("/tour-of-country").get(tourController.countToursByCountry);
 router.route("/search").get(tourController.getTourBySearch);
 
 router

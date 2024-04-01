@@ -343,3 +343,45 @@ exports.getMonthStatistic = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.countToursByCountry = catchAsync(async (req, res, next) => {
+  // Lấy danh sách tất cả các quốc gia cùng với số lượng tour tương ứng
+  const countriesWithTours = await Country.aggregate([
+    {
+      $lookup: {
+        from: "tours",
+        localField: "_id",
+        foreignField: "country",
+        as: "tours",
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        country: "$name",
+        count: { $size: "$tours" },
+      },
+    },
+  ]);
+
+  // Tính tổng số lượng tour hiện tại
+  const totalTours = countriesWithTours.reduce(
+    (total, country) => total + country.count,
+    0
+  );
+
+  // Tính phần trăm số lượng tour của mỗi quốc gia trong số tour hiện tại
+  const toursByCountryWithPercentage = countriesWithTours.map((country) => ({
+    country: country.country,
+    count: country.count,
+    percentage: ((country.count || 0) / totalTours) * 100,
+  }));
+
+  // Gửi kết quả về client
+  res
+    .status(200)
+    .json({
+      status: "success",
+      data: { statistic: toursByCountryWithPercentage },
+    });
+});
