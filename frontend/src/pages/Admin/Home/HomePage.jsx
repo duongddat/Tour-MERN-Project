@@ -1,83 +1,178 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Await, Link, useLoaderData } from "react-router-dom";
+import { defaults } from "chart.js/auto";
+import { Doughnut } from "react-chartjs-2";
 
 import headingBorderImg from "../../../assets/img/heading-border.webp";
 import { formatVietnameseDate } from "../../../helper/formattingDate";
+import "../Admin.css";
+import { Suspense } from "react";
+
+defaults.maintainAspectRatio = false;
+defaults.responsive = true;
+
+defaults.plugins.title.display = true;
+defaults.plugins.title.align = "start";
+defaults.plugins.title.font.size = 20;
+defaults.plugins.title.padding = 20;
+defaults.plugins.title.color = "black";
+
+const generateRandomColor = (alpha) => {
+  return `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
+    Math.random() * 256
+  )}, ${Math.floor(Math.random() * 256)}, ${alpha})`;
+};
+
+const generateColors = (count, alpha) => {
+  const colors = [];
+  for (let i = 0; i < count; i++) {
+    colors.push(generateRandomColor(alpha));
+  }
+  return colors;
+};
 
 function HomePage() {
+  const { chart } = useLoaderData();
   const { userInfo } = useSelector((state) => state.auth);
 
   return (
     <section>
-      <div className="row">
-        <div className="col-lg-8 col-md-6 col-12">
-          <div className="row row-gap-4">
-            <div className="col-12">
-              <div className="tour-content">
-                <div className="user-detail-content">
-                  <h5 className="user-detail__title">Thông tin người dùng</h5>
-                  <div className="mb-2">
-                    <img src={headingBorderImg} alt="Heading Border Image" />
+      <div className="row row-gap-4">
+        <div className="col-xl-8 col-lg-6 col-md-12 col-12">
+          <div className="col-12">
+            <div className="tour-content">
+              <div className="user-detail-content">
+                <h5 className="user-detail__title fs-4 fw-bold">
+                  Thông tin người dùng
+                </h5>
+                <div className="mb-2">
+                  <img src={headingBorderImg} alt="Heading Border Image" />
+                </div>
+                <div className="user-detail__info">
+                  <div className="user-detail__header">
+                    <img
+                      src={`http://localhost:8080/img/user/${userInfo.photo}`}
+                      alt={userInfo.name}
+                      className="user-detail__img"
+                    />
+                    <Link
+                      className="user-detail__update button"
+                      to={`/admin/users/${userInfo._id}/edit`}
+                    >
+                      <i className="ri-pencil-fill"></i>
+                      <span className="mx-2 d-none d-sm-inline">
+                        Cập nhật thông tin
+                      </span>
+                    </Link>
                   </div>
-                  <div className="user-detail__info">
-                    <div className="user-detail__header">
-                      <img
-                        src={`http://localhost:8080/img/user/${userInfo.photo}`}
-                        alt={userInfo.name}
-                        className="user-detail__img"
-                      />
-                      <Link
-                        className="user-detail__update button"
-                        to={`/admin/users/${userInfo._id}/edit`}
-                      >
-                        <i className="ri-pencil-fill"></i>
-                        <span className="mx-2 d-none d-sm-inline">
-                          Cập nhật thông tin
-                        </span>
-                      </Link>
+                  <div className="user-detail__body">
+                    <div className="user-detail__flied">
+                      <i className="ri-id-card-fill"></i>
+                      <strong>Tên người dùng:</strong>
+                      <span>{userInfo.name}</span>
                     </div>
-                    <div className="user-detail__body">
-                      <div className="user-detail__flied">
-                        <i className="ri-id-card-fill"></i>
-                        <strong>Tên người dùng:</strong>
-                        <span>{userInfo.name}</span>
-                      </div>
-                      <div className="user-detail__flied">
-                        <i className="ri-mail-fill"></i>
-                        <strong>Email:</strong>
-                        <span>{userInfo.email}</span>
-                      </div>
-                      <div className="user-detail__flied">
-                        <i className="ri-information-fill"></i>
-                        <strong>Chức vụ:</strong>
-                        <span>{userInfo.role}</span>
-                      </div>
-                      <div className="user-detail__flied">
-                        <i className="ri-calendar-event-line"></i>
-                        <strong>Ngày tạo:</strong>
-                        <span>{formatVietnameseDate(userInfo.createdAt)}</span>
-                      </div>
+                    <div className="user-detail__flied">
+                      <i className="ri-mail-fill"></i>
+                      <strong>Email:</strong>
+                      <span>{userInfo.email}</span>
+                    </div>
+                    <div className="user-detail__flied">
+                      <i className="ri-information-fill"></i>
+                      <strong>Chức vụ:</strong>
+                      <span>{userInfo.role}</span>
+                    </div>
+                    <div className="user-detail__flied">
+                      <i className="ri-calendar-event-line"></i>
+                      <strong>Ngày tạo:</strong>
+                      <span>{formatVietnameseDate(userInfo.createdAt)}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-lg-3 col-md-4 col-12">
-              <div className="tour-content"></div>
+          </div>
+        </div>
+        <div className="col-xl-4 col-lg-6 col-md-12 col-12">
+          <div className="tour-content h-100 sticky">
+            <Suspense
+              fallback={
+                <p style={{ textAlign: "center" }}>Loading Reviews...</p>
+              }
+            >
+              <Await resolve={chart}>
+                {(loadedChart) => {
+                  if (loadedChart) {
+                    const chartData = loadedChart.map(
+                      (data) => data.percentage
+                    );
+                    const chartLabels = loadedChart.map((data) => data.country);
+                    const backgroundColors = generateColors(
+                      chartData.length,
+                      0.8
+                    );
+                    const borderColors = backgroundColors;
+
+                    return (
+                      <Doughnut
+                        data={{
+                          datasets: [
+                            {
+                              label: "Count",
+                              data: chartData,
+                              backgroundColor: backgroundColors,
+                              borderColor: borderColors,
+                            },
+                          ],
+                          labels: chartLabels,
+                        }}
+                        options={{
+                          plugins: {
+                            title: {
+                              text: "Phân bố tour",
+                            },
+                          },
+                        }}
+                      />
+                    );
+                  } else {
+                    <p className="text-center">Some thing went wrong!</p>;
+                  }
+                }}
+              </Await>
+            </Suspense>
+          </div>
+        </div>
+        <div className="col-xl-3 col-lg-4 col-md-6 col-12">
+          <div className="tour-content">
+            <div className="static-title d-flex justify-content-between align-items-center">
+              <span>Tour</span>
+              <div className="filter-icon">
+                <i className="ri-more-2-line"></i>
+              </div>
             </div>
-            <div className="col-lg-3 col-md-4 col-12">
-              <div className="tour-content"></div>
-            </div>
-            <div className="col-lg-3 col-md-4 col-12">
-              <div className="tour-content"></div>
-            </div>
-            <div className="col-lg-3 col-md-4 col-12">
-              <div className="tour-content"></div>
+            <div className="d-flex align-items-center mb-3">
+              <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                <i className="ri-btc-line"></i>
+              </div>
+              <div className="ps-3">
+                <div className="d-flex gap-2 align-items-end">
+                  <h6 className="info-card">10</h6>
+                  <span>/today</span>
+                </div>
+                <span className="text-success small pt-1 fw-bold">100</span>
+                <span className="text-muted small pt-2 ps-1">được tạo</span>
+              </div>
             </div>
           </div>
         </div>
-        <div className="col-lg-4 col-md-6 col-12">
-          <div className="tour-content h-100"></div>
+        <div className="col-xl-3 col-lg-4 col-md-6 col-12">
+          <div className="tour-content"></div>
+        </div>
+        <div className="col-xl-3 col-lg-4 col-md-6 col-12">
+          <div className="tour-content"></div>
+        </div>
+        <div className="col-xl-3 col-lg-4 col-md-6 col-12">
+          <div className="tour-content"></div>
         </div>
       </div>
     </section>

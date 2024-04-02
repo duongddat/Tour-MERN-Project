@@ -1,32 +1,51 @@
 const moment = require("moment");
 
 const catchAsync = require("../utils/catchAsync");
-const Country = require("../models/countryModel");
+const Review = require("../models/reviewModel");
 const Tour = require("../models/tourModel");
 const Post = require("../models/postModel");
 const User = require("../models/userModel");
 const Booking = require("../models/bookingModel");
 const AppError = require("../utils/appError");
 
-// Controller function to get the count of new records for each model
 exports.getNewRecordsCount = catchAsync(async (req, res, next) => {
   const today = moment().startOf("day");
   const tomorrow = moment(today).endOf("day");
 
   // Query for counting new records for each model
-  const counts = await Promise.all([
-    Country.countDocuments({ createdAt: { $gte: today, $lt: tomorrow } }),
+  const newCounts = await Promise.all([
     Tour.countDocuments({ createdAt: { $gte: today, $lt: tomorrow } }),
     Post.countDocuments({ createdAt: { $gte: today, $lt: tomorrow } }),
     User.countDocuments({ createdAt: { $gte: today, $lt: tomorrow } }),
+    Review.countDocuments({ createdAt: { $gte: today, $lt: tomorrow } }),
+  ]);
+
+  // Query for counting total records for each model
+  const totalCounts = await Promise.all([
+    Tour.countDocuments({}),
+    Post.countDocuments({}),
+    User.countDocuments({}),
+    Review.countDocuments({}),
   ]);
 
   // Prepare response data
   const result = {
-    Country: counts[0],
-    Tour: counts[1],
-    Post: counts[2],
-    User: counts[3],
+    Tour: {
+      new: newCounts[0],
+      total: totalCounts[0],
+    },
+    Post: {
+      new: newCounts[1],
+      total: totalCounts[1],
+    },
+    User: {
+      new: newCounts[2],
+      total: totalCounts[2],
+    },
+    Review: {
+      new: newCounts[3],
+      total: totalCounts[3],
+    },
   };
 
   // Send response
@@ -43,9 +62,6 @@ exports.getRecordsOfMonth = catchAsync(async (req, res, next) => {
 
   let model;
   switch (type) {
-    case "country":
-      model = Country;
-      break;
     case "tour":
       model = Tour;
       break;

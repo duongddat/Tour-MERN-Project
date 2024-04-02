@@ -1,4 +1,5 @@
 import Modal from "react-modal";
+import "./common.css";
 
 function ShowModal({ children, isOpen, onClose }) {
   const customStyles = {

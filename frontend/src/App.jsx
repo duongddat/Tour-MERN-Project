@@ -17,8 +17,10 @@ function App() {
     if (data) {
       dispatch(setCredentials(data));
       setIsDataLoaded(true);
+    } else if (!isLoading) {
+      setIsDataLoaded(true);
     }
-  }, [data, dispatch]);
+  }, [data, isLoading, dispatch]);
 
   if (isLoading || !isDataLoaded) {
     return <Loading />;
