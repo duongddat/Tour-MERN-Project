@@ -39,7 +39,9 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
           currency: "usd",
           product_data: {
             name: tour.title,
-            description: `Ngày khởi hành: ${bookAt} -:- Số lượng người: ${guestSize} x ${tour.price} đồng`,
+            description: `Ngày khởi hành: ${bookAt} -:- Số lượng người: ${guestSize} x ${
+              tour.priceDiscount || tour.price
+            } đồng`,
             images: [
               "https://upload-os-bbs.hoyolab.com/upload/2023/03/24/4dca08bc4e21bb299398af982531bb79_405534880414408859.png?x-oss-process=image%2Fresize%2Cs_500%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_80",
             ],

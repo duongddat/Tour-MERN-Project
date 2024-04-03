@@ -7,6 +7,7 @@ const Post = require("../models/postModel");
 const User = require("../models/userModel");
 const Booking = require("../models/bookingModel");
 const AppError = require("../utils/appError");
+const mongoose = require("mongoose");
 
 exports.getNewRecordsCount = catchAsync(async (req, res, next) => {
   const today = moment().startOf("day");
@@ -71,6 +72,9 @@ exports.getRecordsOfMonth = catchAsync(async (req, res, next) => {
     case "user":
       model = User;
       break;
+    case "review":
+      model = Review;
+      break;
     default:
       return next(new AppError("Invalid type parameter", 400));
   }
@@ -99,6 +103,8 @@ exports.getRecordsOfMonth = catchAsync(async (req, res, next) => {
     data: { statistics: result },
   });
 });
+
+exports.bookingsByGuide = catchAsync(async (req, res, next) => {});
 
 exports.revenueStatistics = catchAsync(async (req, res, next) => {
   const { year } = req.query;
@@ -145,6 +151,11 @@ exports.revenueStatistics = catchAsync(async (req, res, next) => {
         month: "$_id",
         totalRevenue: 1,
         totalBookings: 1,
+      },
+    },
+    {
+      $sort: {
+        month: 1, // Sắp xếp theo chiều tăng dần của tháng
       },
     },
   ]);

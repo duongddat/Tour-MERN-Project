@@ -42,7 +42,7 @@ bookingSchema.pre(/^find/, function (next) {
     select: "_id name",
   }).populate({
     path: "tour",
-    select: "title slug",
+    select: "title slug guides",
   });
 
   next();

@@ -330,7 +330,7 @@ exports.getMonthStatistic = catchAsync(async (req, res, next) => {
       },
     },
     {
-      $sort: { numTourCreate: -1 },
+      $sort: { numTourCreate: 1 },
     },
     {
       $limit: 12,
@@ -378,10 +378,8 @@ exports.countToursByCountry = catchAsync(async (req, res, next) => {
   }));
 
   // Gửi kết quả về client
-  res
-    .status(200)
-    .json({
-      status: "success",
-      data: { statistic: toursByCountryWithPercentage },
-    });
+  res.status(200).json({
+    status: "success",
+    data: { statistic: toursByCountryWithPercentage },
+  });
 });

@@ -32,11 +32,142 @@ const generateColors = (count, alpha) => {
 };
 
 function HomePage() {
-  const { chart } = useLoaderData();
+  const { chart, record } = useLoaderData();
   const { userInfo } = useSelector((state) => state.auth);
 
   return (
     <section>
+      <div className="row row-gap-4 mb-3">
+        <Suspense
+          fallback={<p style={{ textAlign: "center" }}>Loading Record...</p>}
+        >
+          <Await resolve={record}>
+            {(loadedRecord) => {
+              console.log(loadedRecord.Tour.new);
+              return (
+                <>
+                  <div className="col-xl-3 col-lg-4 col-md-6 col-12">
+                    <div className="tour-content">
+                      <div className="static-title">
+                        <h6 className="d-flex align-items-center">
+                          Tour
+                          <span>| today</span>
+                        </h6>
+                      </div>
+                      <div className="d-flex align-items-center mb-3">
+                        <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i className="ri-btc-line"></i>
+                        </div>
+                        <div className="ps-3">
+                          <div className="d-flex gap-2 align-items-end">
+                            <h6 className="info-card">
+                              {loadedRecord.Tour.new}
+                            </h6>
+                            <span>tạo mới</span>
+                          </div>
+                          <span className="text-success small pt-1 fw-bold">
+                            {loadedRecord.Tour.total}
+                          </span>
+                          <span className="text-muted small pt-2 ps-1">
+                            hiện có
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-xl-3 col-lg-4 col-md-6 col-12">
+                    <div className="tour-content">
+                      <div className="static-title">
+                        <h6 className="d-flex align-items-center">
+                          Bài viết
+                          <span>| today</span>
+                        </h6>
+                      </div>
+                      <div className="d-flex align-items-center mb-3">
+                        <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i className="ri-blogger-fill"></i>
+                        </div>
+                        <div className="ps-3">
+                          <div className="d-flex gap-2 align-items-end">
+                            <h6 className="info-card">
+                              {loadedRecord.Post.new}
+                            </h6>
+                            <span>tạo mới</span>
+                          </div>
+                          <span className="text-success small pt-1 fw-bold">
+                            {loadedRecord.Post.total}
+                          </span>
+                          <span className="text-muted small pt-2 ps-1">
+                            hiện có
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-xl-3 col-lg-4 col-md-6 col-12">
+                    <div className="tour-content">
+                      <div className="static-title">
+                        <h6 className="d-flex align-items-center">
+                          Bình luận
+                          <span>| today</span>
+                        </h6>
+                      </div>
+                      <div className="d-flex align-items-center mb-3">
+                        <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i className="ri-chat-thread-line"></i>
+                        </div>
+                        <div className="ps-3">
+                          <div className="d-flex gap-2 align-items-end">
+                            <h6 className="info-card">
+                              {loadedRecord.Review.new}
+                            </h6>
+                            <span>tạo mới</span>
+                          </div>
+                          <span className="text-success small pt-1 fw-bold">
+                            {loadedRecord.Review.total}
+                          </span>
+                          <span className="text-muted small pt-2 ps-1">
+                            hiện có
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-xl-3 col-lg-4 col-md-6 col-12">
+                    <div className="tour-content">
+                      <div className="static-title">
+                        <h6 className="d-flex align-items-center">
+                          Người dùng
+                          <span>| today</span>
+                        </h6>
+                      </div>
+                      <div className="d-flex align-items-center mb-3">
+                        <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i className="ri-user-3-line"></i>
+                        </div>
+                        <div className="ps-3">
+                          <div className="d-flex gap-2 align-items-end">
+                            <h6 className="info-card">
+                              {loadedRecord.User.new}
+                            </h6>
+                            <span>tạo mới</span>
+                          </div>
+                          <span className="text-success small pt-1 fw-bold">
+                            {loadedRecord.User.total}
+                          </span>
+                          <span className="text-muted small pt-2 ps-1">
+                            hiện có
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            }}
+          </Await>
+        </Suspense>
+      </div>
       <div className="row row-gap-4">
         <div className="col-xl-8 col-lg-6 col-md-12 col-12">
           <div className="col-12">
@@ -141,38 +272,6 @@ function HomePage() {
               </Await>
             </Suspense>
           </div>
-        </div>
-        <div className="col-xl-3 col-lg-4 col-md-6 col-12">
-          <div className="tour-content">
-            <div className="static-title d-flex justify-content-between align-items-center">
-              <span>Tour</span>
-              <div className="filter-icon">
-                <i className="ri-more-2-line"></i>
-              </div>
-            </div>
-            <div className="d-flex align-items-center mb-3">
-              <div className="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                <i className="ri-btc-line"></i>
-              </div>
-              <div className="ps-3">
-                <div className="d-flex gap-2 align-items-end">
-                  <h6 className="info-card">10</h6>
-                  <span>/today</span>
-                </div>
-                <span className="text-success small pt-1 fw-bold">100</span>
-                <span className="text-muted small pt-2 ps-1">được tạo</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-xl-3 col-lg-4 col-md-6 col-12">
-          <div className="tour-content"></div>
-        </div>
-        <div className="col-xl-3 col-lg-4 col-md-6 col-12">
-          <div className="tour-content"></div>
-        </div>
-        <div className="col-xl-3 col-lg-4 col-md-6 col-12">
-          <div className="tour-content"></div>
         </div>
       </div>
     </section>
