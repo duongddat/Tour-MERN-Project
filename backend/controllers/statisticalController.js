@@ -104,7 +104,100 @@ exports.getRecordsOfMonth = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.bookingsByGuide = catchAsync(async (req, res, next) => {});
+exports.bookingsByGuide = catchAsync(async (req, res, next) => {
+  const bookingOfGuide = await Booking.aggregate([
+    {
+      $lookup: {
+        from: "tours",
+        localField: "tour",
+        foreignField: "_id",
+        as: "tourInfo",
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "userInfo",
+      },
+    },
+    {
+      $match: {
+        "tourInfo.guides": req.user._id,
+      },
+    },
+  ]);
+  res.status(200).json({
+    status: "success",
+    data: { statistics: bookingOfGuide },
+  });
+});
+
+exports.bookingGuideStatistics = catchAsync(async (req, res, next) => {
+  const currentYear = new Date().getFullYear(); // Lấy năm hiện tại
+
+  const pipeline = [
+    {
+      $lookup: {
+        from: "tours",
+        localField: "tour",
+        foreignField: "_id",
+        as: "tourInfo",
+      },
+    },
+    {
+      $match: {
+        "tourInfo.guides": req.user._id,
+        createdAt: {
+          $gte: new Date(currentYear, 0, 1),
+          $lt: new Date(currentYear + 1, 0, 1),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: { $month: "$createdAt" },
+        totalBookings: { $sum: 1 },
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        totalBookings: 1,
+      },
+    },
+    {
+      $sort: { _id: 1 },
+    },
+  ];
+
+  const monthlyBookingStatistics = await Booking.aggregate(pipeline);
+
+  res.status(200).json({
+    status: "success",
+    data: { monthlyBookingStatistics },
+  });
+});
+
+exports.getYearsWithRevenue = catchAsync(async (req, res, next) => {
+  const yearsWithRevenue = await Booking.aggregate([
+    {
+      $group: {
+        _id: { $year: "$bookAt" },
+        totalRevenue: { $sum: "$price" },
+      },
+    },
+    {
+      $sort: { _id: 1 },
+    },
+  ]);
+
+  res.status(200).json({
+    status: "success",
+    data: { statistics: yearsWithRevenue },
+  });
+});
 
 exports.revenueStatistics = catchAsync(async (req, res, next) => {
   const { year } = req.query;

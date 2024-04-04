@@ -74,6 +74,7 @@ import { loader as loadReviewEditAdmin } from "../utils/Admin/loadReviewEditAdmi
 import { loader as loadReviewDetailAdmin } from "../utils/Admin/loadReviewDetailAdmin.js";
 import { loader as loadUserAdmin } from "../utils/Admin/loadUserAdmin.js";
 import { loader as loadUserDetailAdmin } from "../utils/Admin/loadUserDetailAdmin.js";
+import { loader as loadRevenue } from "../utils/Admin/loadRevenue.js";
 
 const router = createBrowserRouter([
   {
@@ -318,7 +319,13 @@ const router = createBrowserRouter([
           },
         ],
       },
-      { path: "revenue", element: <Revenue /> },
+      {
+        path: "revenue",
+        children: [
+          { index: true, element: <Revenue />, loader: loadRevenue },
+          { path: "booking" },
+        ],
+      },
     ],
   },
 ]);

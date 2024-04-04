@@ -15,7 +15,7 @@ function RootAdminPage() {
 
   useEffect(() => {
     const splitLocation = location.pathname.split("/");
-    const currentRoute = splitLocation[1];
+    const currentRoute = splitLocation[2];
 
     if (prevRouteRef.current !== currentRoute) {
       window.scrollTo({

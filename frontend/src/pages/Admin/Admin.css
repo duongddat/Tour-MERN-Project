@@ -1,3 +1,7 @@
+.section-mediumn {
+  padding: 20px 0 30px 0;
+}
+
 .static-title {
   padding: 5px 0 10px 0;
 }
@@ -34,4 +38,18 @@
   font-weight: 700;
   margin: 0;
   padding: 0;
+}
+
+.revenueCard {
+  position: relative;
+  height: 76vh;
+}
+
+.btn-revenue {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  top: 25px;
+  right: 35px;
 }

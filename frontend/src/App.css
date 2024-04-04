@@ -171,6 +171,9 @@ table tbody td {
   padding: 6px 12px;
   border-radius: 8px !important;
 }
+.css-t3ipsp-control {
+  padding: 6px 12px;
+}
 /*Boostrap Custom */
 .dropdowm {
   position: relative;

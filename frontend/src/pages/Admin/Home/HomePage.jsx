@@ -43,7 +43,6 @@ function HomePage() {
         >
           <Await resolve={record}>
             {(loadedRecord) => {
-              console.log(loadedRecord.Tour.new);
               return (
                 <>
                   <div className="col-xl-3 col-lg-4 col-md-6 col-12">
