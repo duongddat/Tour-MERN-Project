@@ -47,6 +47,9 @@ import AddUserAdminPage from "../pages/Admin/User/AddUserPage.jsx";
 import EditUserAdminPage from "../pages/Admin/User/EditUserPage.jsx";
 import DetailUserAdminPage from "../pages/Admin/User/DetailUserPage.jsx";
 import Revenue from "../pages/Admin/Statistical/Revenue.jsx";
+import Schedule from "../pages/Admin/Statistical/Schedule.jsx";
+import ManageBooking from "../pages/Admin/Booking/ManageBooking.jsx";
+import DetailBooking from "../pages/Admin/Booking/BookingDetail.jsx";
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
 
@@ -75,6 +78,9 @@ import { loader as loadReviewDetailAdmin } from "../utils/Admin/loadReviewDetail
 import { loader as loadUserAdmin } from "../utils/Admin/loadUserAdmin.js";
 import { loader as loadUserDetailAdmin } from "../utils/Admin/loadUserDetailAdmin.js";
 import { loader as loadRevenue } from "../utils/Admin/loadRevenue.js";
+import { loader as loadSchedule } from "../utils/Admin/loadSchedule.js";
+import { loader as loadBooking } from "../utils/Admin/loadBookingAdmin.js";
+import { loader as loadBookingDetailAdmin } from "../utils/Admin/loadBookingDetail.js";
 
 const router = createBrowserRouter([
   {
@@ -278,6 +284,17 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: "booking",
+        children: [
+          { index: true, element: <ManageBooking />, loader: loadBooking },
+          {
+            path: ":idBooking/detail",
+            element: <DetailBooking />,
+            loader: loadBookingDetailAdmin,
+          },
+        ],
+      },
+      {
         path: "reviews",
         children: [
           {
@@ -321,11 +338,10 @@ const router = createBrowserRouter([
       },
       {
         path: "revenue",
-        children: [
-          { index: true, element: <Revenue />, loader: loadRevenue },
-          { path: "booking" },
-        ],
+        element: <Revenue />,
+        loader: loadRevenue,
       },
+      { path: "schedule", element: <Schedule />, loader: loadSchedule },
     ],
   },
 ]);

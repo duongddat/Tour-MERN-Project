@@ -38,8 +38,8 @@ function SuccessCheckout() {
               </h3>
 
               <div className="footer-thank__you">
-                <Link className="btn button text-white" to="/">
-                  Xem tour của bạn
+                <Link className="btn button text-white" to="/my-tour">
+                  Xem tour đã đặt của bạn
                 </Link>
               </div>
             </div>

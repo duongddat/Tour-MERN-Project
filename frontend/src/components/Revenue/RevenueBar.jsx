@@ -8,7 +8,7 @@ defaults.plugins.title.align = "start";
 defaults.plugins.title.font.size = 20;
 defaults.plugins.title.color = "black";
 
-function RevenueBar({ label, data, backgroundColor, title }) {
+function RevenueBar({ label, data, backgroundColor, title, text }) {
   return (
     <Bar
       data={{
@@ -25,7 +25,7 @@ function RevenueBar({ label, data, backgroundColor, title }) {
       options={{
         plugins: {
           title: {
-            text: title,
+            text: text,
           },
         },
         aspectRatio: 2,

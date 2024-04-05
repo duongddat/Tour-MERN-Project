@@ -381,3 +381,25 @@ export async function deleteUserAdmin(idUser) {
 
   return response;
 }
+//============================Booking Page=============================
+export async function deleteBookingAdmin(idBooking) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to use this route." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(`http://localhost:8080/booking/${idBooking}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+
+  return response;
+}

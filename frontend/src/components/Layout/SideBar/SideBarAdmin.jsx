@@ -115,6 +115,17 @@ function SideBarAdmin() {
                 <span>Người dùng</span>
               </NavLink>
             </li>
+            <li className="sidebar-item">
+              <NavLink
+                to="/admin/booking"
+                className={({ isActive }) =>
+                  `sidebar-link ${isActive ? "active-admin" : ""}`
+                }
+              >
+                <i className="ri-coins-line"></i>
+                <span>Booking</span>
+              </NavLink>
+            </li>
           </>
         )}
         <li className="sidebar-item">
@@ -168,8 +179,13 @@ function SideBarAdmin() {
               </li>
             )}
             <li className="sidebar-item">
-              <NavLink className="sidebar-link">
-                <div className="sidebar-dropdown__item">Thống kế tour</div>
+              <NavLink
+                to="/admin/schedule"
+                className={({ isActive }) =>
+                  `sidebar-link ${isActive ? "active-admin" : ""}`
+                }
+              >
+                <div className="sidebar-dropdown__item">Lịch trình</div>
               </NavLink>
             </li>
           </ul>

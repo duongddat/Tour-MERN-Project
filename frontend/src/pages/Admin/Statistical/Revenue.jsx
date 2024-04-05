@@ -2,29 +2,7 @@ import { Suspense, useState } from "react";
 import { Await, useLoaderData } from "react-router-dom";
 import RevenueBar from "../../../components/Revenue/RevenueBar";
 import RevenueSelect from "../../../components/Revenue/RevenueSelect";
-
-function getMonthName(monthNumber) {
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  if (monthNumber >= 1 && monthNumber <= 12) {
-    return monthNames[monthNumber - 1];
-  } else {
-    return "Invalid month number";
-  }
-}
+import { getMonthName } from "../../../helper/getMonthName";
 
 function Revenue() {
   const { revenue, year } = useLoaderData();
@@ -79,7 +57,8 @@ function Revenue() {
                     label={labels}
                     data={totalRevenue}
                     backgroundColor={["rgba(43, 63, 229, 0.8)"]}
-                    title="Thống kê doanh thu"
+                    title="Doanh thu"
+                    text="Thống kê doanh thu"
                   />
                 )}
                 {statistics.char === "count" && (
@@ -87,7 +66,8 @@ function Revenue() {
                     label={labels}
                     data={totalBookings}
                     backgroundColor={["rgba(253, 135, 135, 0.8)"]}
-                    title="Thống kê số tour đã đặt"
+                    title="Tour"
+                    text="Thống kê số tour đã đặt"
                   />
                 )}
               </div>
