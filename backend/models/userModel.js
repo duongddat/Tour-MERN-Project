@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema(
       validate: {
         //This only works on CREATE and SAVE!!! (this.update)
         validator: function (el) {
-          if (this.isNew || this._update.password) {
+          if (this.isModified("password")) {
             return el === this.password;
           }
           return true;
