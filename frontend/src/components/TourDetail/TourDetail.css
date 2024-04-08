@@ -79,6 +79,7 @@
 .overview-box__icon {
   height: 1.2rem;
   width: 1.2rem;
+  font-size: 1.2rem;
   fill: var(--primary-color);
 }
 .overview-box__label {

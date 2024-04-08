@@ -258,6 +258,9 @@ table tbody td {
 .gap-16 {
   gap: 16px;
 }
+.gap-15 {
+  gap: 15px;
+}
 
 .text-loading {
   display: flex;

@@ -4,6 +4,7 @@ import { currencyFormatter } from "../../helper/formattingPrice";
 import "./TourDetail.css";
 import MapBox from "./MapBox.jsx";
 import ReviewTour from "./ReviewTour.jsx";
+import MapBoxStart from "./MapBoxStart.jsx";
 
 function TourDetail({ tour }) {
   const paragraphs = tour.description.split("\n");
@@ -131,6 +132,69 @@ function TourDetail({ tour }) {
               )}
             </div>
           </div>
+          {tour.startLocation && (
+            <div className="overview-box__group mb-5">
+              <h5 className="heading-secondary">Thông tin khởi hành</h5>
+              <div className="mb-3">
+                <img src={headingBorderImg} alt="Heading Border Image" />
+              </div>
+              <div className="row row-gap-4">
+                <div className="col-lg-6 col-md-6 col-12">
+                  <div className="overview-box__detail">
+                    <svg
+                      className="overview-box__icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM16.0043 12.8777C15.6589 12.3533 15.4097 11.9746 14.4622 12.1248C12.6717 12.409 12.4732 12.7224 12.3877 13.2375L12.3636 13.3943L12.3393 13.5597C12.2416 14.2428 12.2453 14.5012 12.5589 14.8308C13.8241 16.1582 14.582 17.115 14.8116 17.6746C14.9237 17.9484 15.2119 18.7751 15.0136 19.5927C16.2372 19.1066 17.3156 18.3332 18.1653 17.3559C18.2755 16.9821 18.3551 16.5166 18.3551 15.9518V15.8472C18.3551 14.9247 18.3551 14.504 17.7031 14.1314C17.428 13.9751 17.2227 13.881 17.0582 13.8064C16.691 13.6394 16.4479 13.5297 16.1198 13.0499C16.0807 12.9928 16.0425 12.9358 16.0043 12.8777ZM12 3.83333C9.68259 3.83333 7.59062 4.79858 6.1042 6.34896C6.28116 6.47186 6.43537 6.64453 6.54129 6.88256C6.74529 7.34029 6.74529 7.8112 6.74529 8.22764C6.74488 8.55621 6.74442 8.8672 6.84992 9.09302C6.99443 9.40134 7.6164 9.53227 8.16548 9.64736C8.36166 9.68867 8.56395 9.73083 8.74797 9.78176C9.25405 9.92233 9.64554 10.3765 9.95938 10.7412C10.0896 10.8931 10.2819 11.1163 10.3783 11.1717C10.4286 11.1356 10.59 10.9608 10.6699 10.6735C10.7307 10.4547 10.7134 10.2597 10.6239 10.1543C10.0648 9.49445 10.0952 8.2232 10.268 7.75495C10.5402 7.01606 11.3905 7.07058 12.012 7.11097C12.2438 7.12589 12.4626 7.14023 12.6257 7.11976C13.2482 7.04166 13.4396 6.09538 13.575 5.91C13.8671 5.50981 14.7607 4.9071 15.3158 4.53454C14.3025 4.08382 13.1805 3.83333 12 3.83333Z"></path>
+                    </svg>
+                    <span className="overview-box__label">Địa điểm:</span>
+                    <span className="overview-box__text md">
+                      {tour.startLocation.address}
+                    </span>
+                  </div>
+                  <div className="overview-box__detail flex-wrap">
+                    <div className="d-flex align-items-center gap-15">
+                      <div>
+                        <svg
+                          className="overview-box__icon"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M17.0839 15.812C19.6827 13.0691 19.6379 8.73845 16.9497 6.05025C14.2161 3.31658 9.78392 3.31658 7.05025 6.05025C4.36205 8.73845 4.31734 13.0691 6.91612 15.812C7.97763 14.1228 9.8577 13 12 13C14.1423 13 16.0224 14.1228 17.0839 15.812ZM12 23.7279L5.63604 17.364C2.12132 13.8492 2.12132 8.15076 5.63604 4.63604C9.15076 1.12132 14.8492 1.12132 18.364 4.63604C21.8787 8.15076 21.8787 13.8492 18.364 17.364L12 23.7279ZM12 12C10.3431 12 9 10.6569 9 9C9 7.34315 10.3431 6 12 6C13.6569 6 15 7.34315 15 9C15 10.6569 13.6569 12 12 12Z"></path>
+                        </svg>
+                      </div>
+                      <span className="overview-box__label">
+                        Tập trung đón khách:
+                      </span>
+                    </div>
+                    <span className="overview-box__text md">
+                      {tour.startLocation.description}
+                    </span>
+                  </div>
+                </div>
+                <div className="col-lg-6 col-md-6 col-12">
+                  <div className="overview-box__detail mb-2">
+                    <svg
+                      className="overview-box__icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M16.9497 11.9497C18.7347 10.1648 19.3542 7.65558 18.8081 5.36796L21.303 4.2987C21.5569 4.18992 21.8508 4.30749 21.9596 4.56131C21.9862 4.62355 22 4.69056 22 4.75827V19L15 22L9 19L2.69696 21.7013C2.44314 21.8101 2.14921 21.6925 2.04043 21.4387C2.01375 21.3765 2 21.3094 2 21.2417V7L5.12892 5.65904C4.70023 7.86632 5.34067 10.2402 7.05025 11.9497L12 16.8995L16.9497 11.9497ZM15.5355 10.5355L12 14.0711L8.46447 10.5355C6.51184 8.58291 6.51184 5.41709 8.46447 3.46447C10.4171 1.51184 13.5829 1.51184 15.5355 3.46447C17.4882 5.41709 17.4882 8.58291 15.5355 10.5355Z"></path>
+                    </svg>
+                    <div className="overview-box__label">
+                      Bản đồ điểm khởi hành:
+                    </div>
+                  </div>
+
+                  <MapBoxStart startLocation={tour.startLocation} />
+                </div>
+              </div>
+            </div>
+          )}
           <div className="description-box">
             <h4 className="heading-secondary">Thông tin về {tour.title}</h4>
             <div className="mb-3">
@@ -163,7 +227,9 @@ function TourDetail({ tour }) {
           <div className="mb-3">
             <img src={headingBorderImg} alt="Heading Border Image" />
           </div>
-          {tour.locations.length > 0 && <MapBox locations={tour.locations} />}
+          {tour.locations.length > 0 && (
+            <MapBox locations={tour.locations} heightMap={400} />
+          )}
           {tour.locations.length === 0 && (
             <div className="text-center md text-message">
               Đang cập nhật địa điểm...
