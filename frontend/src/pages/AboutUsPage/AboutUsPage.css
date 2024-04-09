@@ -1,0 +1,159 @@
+@property --rotate {
+  initial-value: 0deg;
+  inherits: false;
+  syntax: "<angle>";
+}
+
+.banner {
+  margin-top: 0;
+  background-image: url("./assets/img/banner-bg.png");
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.banner .tagline {
+  border-radius: 30px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 8px 10px;
+  background: linear-gradient(
+    90.21deg,
+    rgba(82, 135, 250, 0.5) -5.91%,
+    rgba(57, 35, 155, 0.5) 111.58%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.text-relative {
+  position: relative;
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--primary-color);
+}
+.text-relative .curve {
+  position: absolute;
+  bottom: -5px;
+  right: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+}
+.banner h1 {
+  font-size: 65px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1;
+  margin-bottom: 20px;
+  display: block;
+}
+.banner p {
+  letter-spacing: 0.8px;
+  line-height: 1.5em;
+  width: 96%;
+}
+.banner button {
+  color: #fff;
+  font-weight: 700;
+  margin-top: 60px;
+  letter-spacing: 0.8px;
+  display: flex;
+  margin: auto;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+.banner button svg {
+  font-size: 25px;
+  margin-left: 10px;
+  transition: 0.3s ease-in-out;
+  line-height: 1;
+}
+.banner button:hover svg {
+  margin-left: 15px;
+}
+.about-img img {
+  height: 300px;
+  width: 300px;
+  z-index: 5;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+.about-img {
+  position: relative;
+  height: max-content;
+  height: 100%;
+  width: 100%;
+}
+.about-img::before {
+  position: absolute;
+  content: "";
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  right: 15%;
+  top: 0%;
+  background-image: linear-gradient(var(--rotate), #9a3bba, #e1e7ff);
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  animation: animation1 3s linear infinite;
+}
+.about-img::after {
+  position: absolute;
+  content: "";
+  height: 300px;
+  width: 300px;
+  border-radius: 50%;
+  left: 0;
+  bottom: -20%;
+  background-image: linear-gradient(var(--rotate), #657ef8, #e1e7ff);
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  animation: animation2 3s linear infinite;
+}
+
+@keyframes animation1 {
+  50% {
+    right: 7%;
+    top: 20%;
+  }
+  75% {
+    right: 20%;
+    top: 15%;
+  }
+}
+
+@keyframes animation2 {
+  50% {
+    left: 15%;
+    bottom: 0%;
+  }
+}
+.text-about {
+  font-size: 16px;
+  color: #3d535f;
+  text-align: justify;
+}
+.text-wrap {
+  color: var(--primary-color);
+  text-transform: capitalize;
+}
+.txt-rotate > .wrap {
+  border-right: 0.08em solid #666;
+}

@@ -55,7 +55,6 @@
   font-size: 16px;
   text-align: justify;
   color: var(--text-color);
-  margin-right: 20px;
 }
 .description__text::before {
   content: "";
