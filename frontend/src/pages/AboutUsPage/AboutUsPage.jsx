@@ -79,26 +79,72 @@ function AboutUsPage() {
           <div className="row row-gap-5 mt-5 mb-5">
             <div className="col-xl-3 col-lg-4 col-md-6 col-12">
               <div className="card-about__info card__bg">
-                <div className="icon"></div>
-                <div className="content"></div>
+                <div className="icon">
+                  <i className="ri-rocket-2-fill"></i>
+                </div>
+                <div className="content">
+                  <h2>Dễ dàng thanh toán</h2>
+                  <p>
+                    Thực hiện thanh toán một cách thuận tiện chỉ trong vài bước
+                    đơn giản. Không chỉ giúp tiết kiệm thời gian, chúng tôi còn
+                    đảm bảo tính bảo mật tuyệt đối cho thông tin thanh toán của
+                    bạn. Bạn có thể yên tâm rằng mọi giao dịch được xử lý một
+                    cách an toàn và minh bạch.
+                  </p>
+                </div>
               </div>
             </div>
             <div className="col-xl-3 col-lg-4 col-md-6 col-12">
               <div className="card-about__info card-first__bg">
-                <div className="icon"></div>
-                <div className="content"></div>
+                <div className="icon">
+                  <i className="ri-global-fill"></i>
+                </div>
+                <div className="content">
+                  <h2>Rất quyền năng</h2>
+                  <p>
+                    Tại <strong>HoYoViVu</strong>, chúng tôi không chỉ cung cấp
+                    những tour du lịch phong phú và đa dạng, mà còn mang đến
+                    trải nghiệm du lịch độc đáo và đẳng cấp thông qua các tour
+                    được tổ chức bởi các chuyên gia hàng đầu trong ngành du
+                    lịch. Bạn sẽ được hưởng một dịch vụ chăm sóc khách hàng tận
+                    tâm và chuyên nghiệp từ khi đặt tour cho đến khi kết thúc
+                    chuyến đi.
+                  </p>
+                </div>
               </div>
             </div>
             <div className="col-xl-3 col-lg-4 col-md-6 col-12">
               <div className="card-about__info card-second__bg">
-                <div className="icon"></div>
-                <div className="content"></div>
+                <div className="icon">
+                  <i className="ri-hand-coin-fill"></i>
+                </div>
+                <div className="content">
+                  <h2>Chăm sóc khách hành</h2>
+                  <p>
+                    Tại <strong>HoYoViVu</strong>, chúng tôi luôn đặt lợi ích và
+                    sự thoải mái của khách hàng lên hàng đầu. Với đội ngũ nhân
+                    viên chăm sóc khách hàng chuyên nghiệp và tận tâm, mỗi yêu
+                    cầu và nhu cầu của bạn sẽ được đáp ứng một cách nhanh chóng
+                    và chu đáo.
+                  </p>
+                </div>
               </div>
             </div>
             <div className="col-xl-3 col-lg-4 col-md-6 col-12">
               <div className="card-about__info card-third__bg">
-                <div className="icon"></div>
-                <div className="content"></div>
+                <div className="icon">
+                  <i className="ri-gift-fill"></i>
+                </div>
+                <div className="content">
+                  <h2>Chính sách ưu đãi</h2>
+                  <p>
+                    Có cơ hội nhận được các ưu đãi hấp dẫn như giảm giá đặc biệt
+                    cho đặt tour sớm, các gói quà tặng giá trị và nhiều hơn nữa.
+                    Chúng tôi cũng cung cấp các chính sách hoàn tiền linh hoạt
+                    và các ưu đãi đặc biệt dành cho khách hàng thân thiết. Khám
+                    phá thế giới một cách tiết kiệm và thú vị hơn bao giờ hết!
+                  </p>
+                </div>
               </div>
             </div>
           </div>

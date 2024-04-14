@@ -200,6 +200,7 @@
 
 .card-about__info .icon {
   position: relative;
+  top: 5px;
   width: 120px;
   height: 100px;
   background: #fff;
@@ -209,14 +210,33 @@
   z-index: 5;
 }
 
-.card-about__info .icon::before {
-  content: "";
+.card-about__info .icon i {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  font-size: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+}
+.content {
   position: absolute;
-  top: 0;
-  left: 1px;
-  height: 50px;
-  width: 50px;
-  background: transparent;
-  border-top-right-radius: 5px;
-  box-shadow: -15px -15px 0 15px transparent;
+  width: 100%;
+  padding: 30px;
+  padding-top: 130px;
+  text-align: center;
+}
+
+.content h2 {
+  font-size: 1.75em;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.content p {
+  color: #fff;
+  line-height: 1.5em;
+  font-size: 14px;
 }
