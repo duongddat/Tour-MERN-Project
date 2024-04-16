@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.1",
+    "aos": "^2.3.4",
     "bootstrap": "^5.3.3",
     "chartjs": "^0.3.24",
     "html-react-parser": "^5.1.9",

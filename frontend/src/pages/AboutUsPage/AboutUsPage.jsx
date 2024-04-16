@@ -1,18 +1,28 @@
 import { Typewriter } from "react-simple-typewriter";
+import { useEffect } from "react";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 import AboutGif from "../../assets/img/about.gif";
 import CurveImg from "../../assets/img/curve.png";
 import AboutSocail from "../../assets/img/about-travel.png";
-import "./AboutUsPage.css";
 import Subtitle from "../../shared/Subtitle";
+import "./AboutUsPage.css";
 
 function AboutUsPage() {
+  useEffect(() => {
+    Aos.init({ duration: 1500 });
+  }, []);
+
   return (
     <>
       <section className="banner section-bg">
         <div className="container mt-5 mb-5">
           <div className="row align-items-center row-gap-5">
-            <div className="col-xl-7 col-lg-7 col-md-6 col-12">
+            <div
+              className="col-xl-7 col-lg-7 col-md-6 col-12"
+              data-aos="fade-down"
+            >
               <span className="tagline">Travel with us,</span>{" "}
               <span className="text-relative">
                 HoYoViVu
@@ -57,7 +67,10 @@ function AboutUsPage() {
                 </svg>
               </button>
             </div>
-            <div className="col-xl-5 col-lg-5 col-md-6 col-12 h-100">
+            <div
+              className="col-xl-5 col-lg-5 col-md-6 col-12 h-100"
+              data-aos="fade-up"
+            >
               <div className="d-flex justify-content-center about-img">
                 <img src={AboutGif} alt="Header About Image" />
               </div>
@@ -67,7 +80,7 @@ function AboutUsPage() {
       </section>
       <section className="section-bg mt-5">
         <div className="container">
-          <div className="text-end">
+          <div className="text-end" data-aos="fade-right">
             <div className="d-flex">
               <div className="flex-grow-1"></div>
               <Subtitle subtitle="Service!" />
@@ -77,7 +90,7 @@ function AboutUsPage() {
               <br /> HoYoViVu
             </h4>
           </div>
-          <div className="row row-gap-5 mt-5 mb-5">
+          <div className="row row-gap-5 mt-5 mb-5" data-aos="fade-up">
             <div className="col-xl-3 col-lg-4 col-md-6 col-12">
               <div className="card-about__info card__bg">
                 <div className="icon">
@@ -153,14 +166,14 @@ function AboutUsPage() {
       </section>
       <section className="section-bg pb-5">
         <div className="container">
-          <div className="text-start">
+          <div className="text-start" data-aos="fade-right">
             <Subtitle subtitle="Our social!" />
             <h4 className="header__title">
               Cập nhật thông tin với trang thông tin.
               <br /> HoYoViVu
             </h4>
           </div>
-          <div className="row align-items-center">
+          <div className="row align-items-center" data-aos="fade-down">
             <div className="col-lg-6 col-md-6 col-12">
               <p className="text-about">
                 Hãy tham gia cùng chúng tôi xây dựng mạng xã hội để không bỏ lỡ
@@ -217,7 +230,7 @@ function AboutUsPage() {
         </div>
       </section>
       <section className="section-bg pt-5 pb-5">
-        <div className="text-center mb-5">
+        <div className="text-center mb-5" data-aos="flip-left">
           <div className="d-flex justify-content-center mb-2">
             <Subtitle subtitle="Community Support" />
           </div>
@@ -225,7 +238,7 @@ function AboutUsPage() {
             Đồng hành và hỗ trợ bạn mỗi bước trên hành trình khám phá của mình.
           </h4>
         </div>
-        <div className="container container-medium">
+        <div className="container container-medium" data-aos="flip-left">
           <div className="list-avatars">
             <img
               className="avatar"
@@ -234,29 +247,29 @@ function AboutUsPage() {
             />
             <img
               className="avatar"
-              src="https://th.bing.com/th/id/OIP.XWua3DEYQ4JUm4RNAmMFlQHaFw?w=252&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+              src="https://th.bing.com/th/id/OIP.Kt7YMRY3bvp5nqYx5GdU8QAAAA?w=178&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
               alt=""
             />
             <img
               className="avatar"
-              src="https://th.bing.com/th/id/OIP.XWua3DEYQ4JUm4RNAmMFlQHaFw?w=252&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+              src="https://upload-os-bbs.hoyolab.com/upload/2023/08/04/921bce1dc71298dfa276e8c0d62832c6_605766907701501849.png"
               alt=""
             />
             <img
               className="avatar"
-              src="https://th.bing.com/th/id/OIP.XWua3DEYQ4JUm4RNAmMFlQHaFw?w=252&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+              src="https://picfiles.alphacoders.com/588/thumb-1920-588886.png"
               alt=""
             />
             <img
               className="avatar"
-              src="https://th.bing.com/th/id/OIP.XWua3DEYQ4JUm4RNAmMFlQHaFw?w=252&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+              src="https://upload-os-bbs.hoyolab.com/upload/2022/07/29/df4e97e5d0ec3a1d99e93744be626546_260853733117766352.png"
               alt=""
             />
           </div>
         </div>
       </section>
       <section className="section-bg">
-        <div className="text-center mb-5">
+        <div className="text-center mb-5" data-aos="zoom-in-up">
           <div className="d-flex justify-content-center mb-2">
             <Subtitle subtitle="Give us feedback" />
           </div>
@@ -265,7 +278,7 @@ function AboutUsPage() {
             HoYoViVu
           </h4>
         </div>
-        <div className="container container-medium">
+        <div className="container container-medium" data-aos="flip-down">
           <div className="tour-content bg-transparent">
             <div className="form-item-container pt-5 pb-2">
               <div className="mb-4">
