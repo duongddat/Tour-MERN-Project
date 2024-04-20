@@ -1,7 +1,7 @@
 import Subtitle from "../../shared/Subtitle";
 import { Await, Link, useLoaderData, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Suspense } from "react";
+import { Suspense, useRef } from "react";
 
 import headingBorderImg from "../../assets/img/heading-border.webp";
 import BlogList from "../../components/Blogs/BlogList";
@@ -13,6 +13,9 @@ function BlogPage() {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
   const { blogs } = useLoaderData();
+
+  const listRef = useRef(null);
+
   function handleCheckUser() {
     if (!userInfo) {
       dispatch(
@@ -25,6 +28,11 @@ function BlogPage() {
     }
 
     navigate("/blog/manage");
+  }
+
+  function handleScrollTopList() {
+    const topPosition = listRef.current.offsetTop;
+    window.scrollTo({ top: topPosition - 100, behavior: "smooth" });
   }
 
   return (
@@ -49,14 +57,18 @@ function BlogPage() {
             <img src={headingBorderImg} alt="Heading Border Image" />
           </div>
         </div>
-        <div className="row row-gap-5 mt-5">
+        <div className="row row-gap-5 mt-5" ref={listRef}>
           <div className="col-xl-9 col-lg-9 col-md-12 col-12">
             <Suspense
               fallback={<p style={{ textAlign: "center" }}>Loading Blog...</p>}
             >
               <Await resolve={blogs}>
                 {(loadedBlog) => (
-                  <BlogList blogs={loadedBlog} itemsPerPage={6} />
+                  <BlogList
+                    blogs={loadedBlog}
+                    itemsPerPage={6}
+                    onScroll={handleScrollTopList}
+                  />
                 )}
               </Await>
             </Suspense>

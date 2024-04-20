@@ -17,7 +17,10 @@ const RootPage = () => {
     const splitLocation = location.pathname.split("/");
     const currentRoute = splitLocation[1];
 
-    if (prevRouteRef.current !== currentRoute) {
+    if (
+      prevRouteRef.current !== currentRoute ||
+      splitLocation[2] === "detail"
+    ) {
       window.scrollTo({
         top: 0,
         behavior: "smooth",

@@ -33,7 +33,7 @@ function MapBoxStart({ startLocation }) {
           offset={-10}
           focusAfterOpen={false}
         >
-          <span>{startLocation.description}</span>
+          <span>{startLocation.address}</span>
         </Popup>
       </Map>
     </div>

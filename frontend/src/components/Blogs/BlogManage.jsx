@@ -4,15 +4,22 @@ import { Link } from "react-router-dom";
 import bgManage from "../../assets/img/bg.webp";
 import borderAva from "../../assets/img/border-ava.png";
 import BlogList from "./BlogList";
+import { useRef } from "react";
 
 function BlogManage({ blogs }) {
   const { userInfo } = useSelector((state) => state.auth);
+  const listRef = useRef(null);
 
   let totalLikes = 0;
 
   blogs.forEach((post) => {
     totalLikes += post.likes.length;
   });
+
+  function handleScrollTopList() {
+    const topPosition = listRef.current.offsetTop;
+    window.scrollTo({ top: topPosition - 100, behavior: "smooth" });
+  }
 
   return (
     <div className="blog-manage">
@@ -80,9 +87,13 @@ function BlogManage({ blogs }) {
       </div>
       <section className="section-bg">
         <div className="container">
-          <div className="row  row-gap-3">
+          <div className="row row-gap-3" ref={listRef}>
             <div className="col-xl-9 col-lg-9 col-md-12 col-12">
-              <BlogList blogs={blogs} itemsPerPage={6} />
+              <BlogList
+                blogs={blogs}
+                itemsPerPage={6}
+                onScroll={handleScrollTopList}
+              />
             </div>
             <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12">
               <div className="sticky">

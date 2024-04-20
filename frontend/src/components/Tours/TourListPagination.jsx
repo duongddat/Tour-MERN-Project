@@ -5,7 +5,7 @@ import Pagination from "../Pagination/Pagination.jsx";
 import { useState } from "react";
 // import tours from "../../assets/data/tour";
 
-function TourListPagination({ tours, classes, itemsPerPage }) {
+function TourListPagination({ tours, classes, itemsPerPage, onScroll }) {
   const [itemOffset, setItemOffset] = useState(0);
 
   const endOffset = itemOffset + itemsPerPage;
@@ -14,6 +14,7 @@ function TourListPagination({ tours, classes, itemsPerPage }) {
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % tours.length;
+    onScroll();
     setItemOffset(newOffset);
   };
 

@@ -3,7 +3,7 @@ import Pagination from "../Pagination/Pagination";
 import BlogItem from "./BlogItem";
 import noDataMessage from "../../assets/img/no-data-message.png";
 
-function BlogList({ blogs, itemsPerPage }) {
+function BlogList({ blogs, itemsPerPage, onScroll }) {
   const [itemOffset, setItemOffset] = useState(0);
 
   const endOffset = itemOffset + itemsPerPage;
@@ -12,6 +12,7 @@ function BlogList({ blogs, itemsPerPage }) {
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % blogs.length;
+    onScroll();
     setItemOffset(newOffset);
   };
 

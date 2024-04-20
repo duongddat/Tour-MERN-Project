@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 
 import headingBorderImg from "../../assets/img/heading-border.webp";
@@ -21,6 +21,13 @@ export default function TourPage() {
   const [tourData, setTourData] = useState([]);
   const [isShowDropDown, setIsShowDropDown] = useState(false);
   const [sortTour, setSortTour] = useState(defaultSort);
+  const listRef = useRef(null);
+
+  function handleScrollTopList() {
+    const topPosition = listRef.current.offsetTop;
+    window.scrollTo({ top: topPosition - 100, behavior: "smooth" });
+  }
+
   //================= Load Data ==================================
   useEffect(() => {
     async function getTour() {
@@ -138,7 +145,7 @@ export default function TourPage() {
         </div>
         <section>
           <div className="container">
-            <div className="row">
+            <div className="row row-gap-5" ref={listRef}>
               <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12">
                 <TourFilter countries={countries} onFilter={handleFilter} />
               </div>
@@ -150,7 +157,8 @@ export default function TourPage() {
                   <TourListPagination
                     tours={tourData}
                     classes="col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12"
-                    itemsPerPage={8}
+                    itemsPerPage={6}
+                    onScroll={handleScrollTopList}
                   />
                 )}
               </div>
