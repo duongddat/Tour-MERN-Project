@@ -6,6 +6,7 @@ const Country = require("../models/countryModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const AIPFeatures = require("../utils/apiFeatures");
+const covertSearchKey = require("../utils/covertSearchUnikey");
 
 //=====================CONFIGURE IMG FILE=============================
 const multerStorage = multer.memoryStorage();
@@ -116,7 +117,9 @@ exports.getTourByCountry = catchAsync(async (req, res, next) => {
 });
 
 exports.getTourBySearch = catchAsync(async (req, res, next) => {
-  const key = new RegExp(req.query.key, "i"); // Tạo 1 biểu thức chính quy (cờ i biểu thị tìm kiếm ko phân biệt hoa thường)
+  const keysearch = covertSearchKey(req.query.key);
+
+  const key = new RegExp(keysearch, "i"); // Tạo 1 biểu thức chính quy (cờ i biểu thị tìm kiếm ko phân biệt hoa thường)
   const duration = parseInt(req.query.duration);
   const maxGroupSize = parseInt(req.query.maxGroupSize);
 
