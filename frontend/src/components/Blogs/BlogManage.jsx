@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import bgManage from "../../assets/img/bg.webp";
 import borderAva from "../../assets/img/border-ava.png";
 import BlogList from "./BlogList";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 function BlogManage({ blogs }) {
+  const navigative = useNavigate();
   const { userInfo } = useSelector((state) => state.auth);
   const listRef = useRef(null);
 
@@ -20,6 +21,16 @@ function BlogManage({ blogs }) {
     const topPosition = listRef.current.offsetTop;
     window.scrollTo({ top: topPosition - 100, behavior: "smooth" });
   }
+
+  useEffect(() => {
+    if (userInfo === null) {
+      navigative("/blog");
+    }
+  }, [userInfo, navigative]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="blog-manage">

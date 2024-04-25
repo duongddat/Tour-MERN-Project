@@ -1,11 +1,15 @@
 import { Await, useLoaderData } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 
 import TourDetail from "../../components/TourDetail/TourDetail";
 import Booking from "../../components/Booking/Booking";
 
 function DetailTourPage() {
   const { tour } = useLoaderData();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <section>

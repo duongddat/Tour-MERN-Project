@@ -31,6 +31,15 @@ section {
   padding: 50px 0px;
 }
 
+df-messenger {
+  --df-messenger-bot-message: #878fac;
+  --df-messenger-button-titlebar-color: #007fff;
+  --df-messenger-chat-background-color: #fafafa;
+  --df-messenger-font-color: #fff;
+  --df-messenger-send-icon: #878fac;
+  --df-messenger-user-message: #657ef8;
+}
+
 h1,
 h2,
 h3,
@@ -180,10 +189,12 @@ table tbody td {
   padding: 6px 12px;
 }
 /*Boostrap Custom */
+.fixed-top {
+  z-index: 99 !important;
+}
 .dropdowm {
   position: relative;
 }
-
 .dropdown-container {
   min-width: 200px;
   width: -moz-fit-content;

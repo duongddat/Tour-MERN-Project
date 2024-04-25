@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Chat from "../components/Chat/Chat";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -17,10 +18,7 @@ const RootPage = () => {
     const splitLocation = location.pathname.split("/");
     const currentRoute = splitLocation[1];
 
-    if (
-      prevRouteRef.current !== currentRoute ||
-      splitLocation[2] === "detail"
-    ) {
+    if (prevRouteRef.current !== currentRoute) {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -60,6 +58,7 @@ const RootPage = () => {
       <MainLayout>
         <ToastContainer />
         <Outlet />
+        <Chat />
       </MainLayout>
     </>
   );

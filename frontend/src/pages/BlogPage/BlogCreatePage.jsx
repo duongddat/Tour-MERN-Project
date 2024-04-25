@@ -24,6 +24,10 @@ function BlogCreatePage() {
     getData();
   }, [countries]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <section>
       <div className="container container-medium">
