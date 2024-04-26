@@ -35,7 +35,7 @@ async function loaderCountry() {
 }
 
 async function loaderReview() {
-  const response = await fetch("http://localhost:8080/reviews");
+  const response = await fetch("http://localhost:8080/reviews/top-review");
 
   if (!response.ok) {
     throw json(
