@@ -247,7 +247,7 @@ function HomePage() {
                         data={{
                           datasets: [
                             {
-                              label: "Count",
+                              label: "Chiếm",
                               data: chartData,
                               backgroundColor: backgroundColors,
                               borderColor: borderColors,

@@ -2,8 +2,10 @@ const multer = require("multer");
 const sharp = require("sharp");
 
 const Post = require("../models/postModel");
+const Country = require("../models/countryModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const { default: mongoose } = require("mongoose");
 
 //=====================CONFIGURE IMG FILE=============================
 const multerStorage = multer.memoryStorage();
@@ -74,6 +76,84 @@ exports.getPostOfUser = catchAsync(async (req, res, next) => {
     status: "success",
     message: "Successfully retrieved",
     lenght: posts.length,
+    data: {
+      posts,
+    },
+  });
+});
+
+exports.getListPostByCountry = catchAsync(async (req, res, next) => {
+  const slug = req.params.slug;
+
+  const country = await Country.findOne({ slug });
+  if (!country) {
+    return next(new AppError("The slug was not found in any countries", 404));
+  }
+
+  const posts = await Post.find({ country: country._id });
+
+  res.status(200).json({
+    status: "success",
+    message: "Successfully retrieved",
+    lenght: posts.length,
+    data: {
+      posts,
+    },
+  });
+});
+
+exports.getRelatedPosts = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+  const post = await Post.findById(id);
+
+  if (!post) {
+    return next(new AppError("No post found with that ID", 404));
+  }
+
+  const posts = await Post.aggregate([
+    {
+      $match: {
+        _id: { $ne: new mongoose.Types.ObjectId(id) },
+        country: post.country._id,
+      },
+    },
+    { $sample: { size: 3 } },
+    {
+      $project: {
+        likes: 0,
+        description: 0,
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user",
+      },
+    },
+    {
+      $lookup: {
+        from: "countries",
+        localField: "country",
+        foreignField: "_id",
+        as: "country",
+      },
+    },
+    {
+      $project: {
+        "user.role": 0,
+        "user.password": 0,
+        "user.passwordChangedAt": 0,
+        "user.passwordOTPReset": 0,
+        "user.passwordResetExpires": 0,
+      },
+    },
+  ]);
+
+  res.status(200).json({
+    status: "success",
+    message: "Successfully retrieved",
     data: {
       posts,
     },

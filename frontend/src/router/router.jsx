@@ -111,6 +111,11 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <BlogPage />, loader: loadBlogData },
           {
+            path: "country/:slug",
+            element: <BlogPage />,
+            loader: loadBlogData,
+          },
+          {
             path: "manage",
             element: <BlogManagePage />,
             loader: loadBlogManage,

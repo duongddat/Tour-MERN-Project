@@ -7,12 +7,13 @@ import headingBorderImg from "../../assets/img/heading-border.webp";
 import BlogList from "../../components/Blogs/BlogList";
 import "./BlogPage.css";
 import { setMessage } from "../../store/message-slice";
+import CountryTag from "../../components/CountryHeader/CountryTag";
 
 function BlogPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
-  const { blogs } = useLoaderData();
+  const { blogs, countries } = useLoaderData();
 
   const listRef = useRef(null);
 
@@ -74,23 +75,34 @@ function BlogPage() {
             </Suspense>
           </div>
           <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12">
-            <div className="tour-content px-3 sticky">
-              <div className="text-center py-2 px-1 mb-2">
-                <h5 className="md fs-5 fw-bold mb-3">Creator HoYo</h5>
-                <p className="sm mb-2">
-                  Hãy tham cùng chúng tôi! Cùng nhau chia sẽ những kỷ niệm
-                </p>
-              </div>
-              <div className="blog-tool__list">
-                <Link to="/blog/create" className="blog-tool__item">
-                  <i className="ri-add-circle-fill"></i>
-                  <span className="sm fs-6">Tạo bài viết</span>
-                </Link>
-                <div className="blog-tool__item" onClick={handleCheckUser}>
-                  <i className="ri-settings-5-fill"></i>
-                  <span className="sm fs-6">Quản lý bài viết</span>
+            <div className="sticky">
+              <div className="tour-content px-3 mb-3">
+                <div className="text-center py-2 px-1 mb-2">
+                  <h5 className="md fs-5 fw-bold mb-3">Creator HoYo</h5>
+                  <p className="sm mb-2">
+                    Hãy tham cùng chúng tôi! Cùng nhau chia sẽ những kỷ niệm
+                  </p>
+                </div>
+                <div className="blog-tool__list">
+                  <Link to="/blog/create" className="blog-tool__item">
+                    <i className="ri-add-circle-fill"></i>
+                    <span className="sm fs-6">Tạo bài viết</span>
+                  </Link>
+                  <div className="blog-tool__item" onClick={handleCheckUser}>
+                    <i className="ri-settings-5-fill"></i>
+                    <span className="sm fs-6">Quản lý bài viết</span>
+                  </div>
                 </div>
               </div>
+              <Suspense
+                fallback={
+                  <p style={{ textAlign: "center" }}>Loading Blog...</p>
+                }
+              >
+                <Await resolve={countries}>
+                  {(loadedData) => <CountryTag countries={loadedData} />}
+                </Await>
+              </Suspense>
             </div>
           </div>
         </div>

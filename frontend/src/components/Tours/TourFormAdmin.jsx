@@ -21,8 +21,8 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
   useEffect(() => {
     if (tour != null) {
       const formattedLocations = tour.locations.map((location) => ({
-        locationLong: location.coordinates[0].toString(),
-        locationLat: location.coordinates[1].toString(),
+        locationLat: location.coordinates[0].toString(),
+        locationLong: location.coordinates[1].toString(),
         locationDay: location.day.toString(),
         locationDescription: location.description,
       }));

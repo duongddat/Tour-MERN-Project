@@ -97,7 +97,12 @@ function BlogItem({ blog }) {
                 </div>
               </div>
               <div className="blog-description sm">{parsedDescription}</div>
-              <p className="blog-country sm"># {blog.country.name}</p>
+              <Link
+                to={`/blog/country/${blog.country.slug}`}
+                className="blog-country sm"
+              >
+                # {blog.country.name}
+              </Link>
             </div>
             <div className="blog__footer d-flex flex-wrap justify-content-between row-gap-3">
               <div

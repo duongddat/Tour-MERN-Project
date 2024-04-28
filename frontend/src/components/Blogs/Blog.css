@@ -206,3 +206,31 @@
   font-weight: 700;
   color: var(--text-color);
 }
+
+.list-related {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.item-related {
+  height: 120px;
+}
+
+.item-related__img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.fs-small {
+  font-size: 12px;
+}
+
+.pb-none {
+  margin: 0;
+}
+
+.sm-x {
+  font-size: 9px;
+}
