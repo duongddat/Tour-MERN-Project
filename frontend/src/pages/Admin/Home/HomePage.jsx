@@ -207,9 +207,19 @@ function HomePage() {
                       <span>{userInfo.email}</span>
                     </div>
                     <div className="user-detail__flied">
+                      <i className="ri-phone-fill"></i>
+                      <strong>Số điện thoại:</strong>
+                      <span>{userInfo.phone || ""}</span>
+                    </div>
+                    <div className="user-detail__flied">
+                      <i className="ri-home-3-fill"></i>
+                      <strong>Địa chỉ:</strong>
+                      <span>{userInfo.address || ""}</span>
+                    </div>
+                    <div className="user-detail__flied">
                       <i className="ri-information-fill"></i>
                       <strong>Chức vụ:</strong>
-                      <span>{userInfo.role}</span>
+                      <span className="text-capitalize">{userInfo.role}</span>
                     </div>
                     <div className="user-detail__flied">
                       <i className="ri-calendar-event-line"></i>

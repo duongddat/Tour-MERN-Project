@@ -261,6 +261,9 @@ table tbody td {
 .h-100vh {
   height: 100vh;
 }
+.h-none {
+  min-height: fit-content !important;
+}
 .gap-80 {
   gap: 80px;
 }

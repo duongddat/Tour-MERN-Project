@@ -47,7 +47,15 @@ function UserForm({ isLoading, action, user = null }) {
 
   function handleSubmitForm(event) {
     event.preventDefault();
-    const { name, email, password, passwordConfirm, imagePhoto } = event.target;
+    const {
+      name,
+      email,
+      password,
+      passwordConfirm,
+      phone,
+      address,
+      imagePhoto,
+    } = event.target;
 
     if (password.value !== passwordConfirm.value) {
       dispatch(
@@ -65,6 +73,8 @@ function UserForm({ isLoading, action, user = null }) {
     formData.append("email", email.value);
     formData.append("password", password.value);
     formData.append("passwordConfirm", passwordConfirm.value);
+    formData.append("phone", phone.value);
+    formData.append("address", address.value);
 
     if (selectedOption) {
       formData.append("role", selectedOption.value);
@@ -120,7 +130,6 @@ function UserForm({ isLoading, action, user = null }) {
               />
             </div>
             <div className="col-lg-4 col-md-6 col-12">
-              {" "}
               <label htmlFor="role" className="form-label">
                 Vai trò:
               </label>
@@ -136,13 +145,41 @@ function UserForm({ isLoading, action, user = null }) {
         </div>
         <div className="mb-4">
           <div className="row row-gap-4">
+            <div className="col-lg-3 col-md-4 col-12">
+              <label htmlFor="email" className="form-label">
+                Số điện thoại:
+              </label>
+              <input
+                type="number"
+                id="phone"
+                name="phone"
+                className="form-control"
+                placeholder="Nhập số điện thoại"
+                defaultValue={user ? user.phone : ""}
+              />
+            </div>
+            <div className="col-lg-9 col-md-8 col-12">
+              <label htmlFor="email" className="form-label">
+                Địa chỉ:
+              </label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                className="form-control"
+                placeholder="Nhập địa chỉ"
+                defaultValue={user ? user.address : ""}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="mb-4">
+          <div className="row row-gap-4">
             <div className="col-lg-6 col-md-6 col-12">
-              {" "}
               <label htmlFor="password" className="form-label">
                 Mật khẩu
                 {user === null && (
                   <span>
-                    {" "}
                     (<span className="text-red">*</span>)
                   </span>
                 )}
@@ -161,7 +198,6 @@ function UserForm({ isLoading, action, user = null }) {
                 Xác nhận mật khẩu
                 {user === null && (
                   <span>
-                    {" "}
                     (<span className="text-red">*</span>)
                   </span>
                 )}

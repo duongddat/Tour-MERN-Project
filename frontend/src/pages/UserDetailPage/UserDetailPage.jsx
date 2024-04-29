@@ -48,9 +48,19 @@ function UserDetailPage() {
                     <span>{loadedUser.email}</span>
                   </div>
                   <div className="user-detail__flied">
+                    <i className="ri-phone-fill"></i>
+                    <strong>Số điện thoại:</strong>
+                    <span>{loadedUser.phone || ""}</span>
+                  </div>
+                  <div className="user-detail__flied">
+                    <i className="ri-home-3-fill"></i>
+                    <strong>Địa chỉ:</strong>
+                    <span>{loadedUser.address || ""}</span>
+                  </div>
+                  <div className="user-detail__flied">
                     <i className="ri-information-fill"></i>
                     <strong>Chức vụ:</strong>
-                    <span>{loadedUser.role}</span>
+                    <span className="text-capitalize">{loadedUser.role}</span>
                   </div>
                   <div className="user-detail__flied">
                     <i className="ri-calendar-event-line"></i>

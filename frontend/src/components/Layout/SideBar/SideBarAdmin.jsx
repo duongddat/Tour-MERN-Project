@@ -45,9 +45,11 @@ function SideBarAdmin() {
   }, [windowSize]);
 
   function handleToggleSideBar() {
-    const sideBarElement = sideRef.current;
+    if (windowSize.width > 500) {
+      const sideBarElement = sideRef.current;
 
-    sideBarElement.classList.toggle("expand");
+      sideBarElement.classList.toggle("expand");
+    }
   }
 
   function handleLogOut() {

@@ -125,9 +125,18 @@ function BlogDetail({ blog }) {
             <div>
               <img src={headingBorderImg} alt="Heading Border Image" />
             </div>
-            <div className="mhy-text__detail">
+            <div className="mhy-text__detail mb-2">
               <h5>Nội dung:</h5>
               <div className="text-description">{parse(blog.description)}</div>
+            </div>
+            <div className="mhy-text__detail">
+              <h5 className="mb-3">Chủ đề:</h5>
+              <Link
+                to={`/blog/country/${blog.country.slug}`}
+                className="blog-country sm tag"
+              >
+                # {blog.country.name}
+              </Link>
             </div>
           </div>
           <div className="blog-detail__footer">

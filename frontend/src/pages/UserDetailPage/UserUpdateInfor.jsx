@@ -37,9 +37,9 @@ function UserUpdateInfor() {
 
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
-    const { name, email, photo } = data;
+    const { name, email, photo, phone, address } = data;
 
-    const requestData = { name, email };
+    const requestData = { name, email, phone, address };
     if (photo.name !== null) {
       requestData.photo = photo;
     }
@@ -121,6 +121,26 @@ function UserUpdateInfor() {
                     required
                   />
                   <label htmlFor="email">Email</label>
+                </div>
+                <div className="input-field mb-4">
+                  <input
+                    type="number"
+                    id="phone"
+                    name="phone"
+                    defaultValue={loadedUser.phone}
+                    required
+                  />
+                  <label htmlFor="phone">Số điện thoại</label>
+                </div>
+                <div className="input-field mb-4">
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    defaultValue={loadedUser.address}
+                    required
+                  />
+                  <label htmlFor="address">Địa chỉ</label>
                 </div>
                 <div className="input-field mt-2 mb-3">
                   <button

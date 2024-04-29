@@ -76,6 +76,32 @@ function DetailUserPage() {
                           isDisabled
                         />
                       </div>
+                      <div className="col-lg-6 col-md-6 col-12">
+                        <label htmlFor="phone" className="form-label">
+                          Số điện thoại:
+                        </label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          defaultValue={loadedUser ? loadedUser.phone : ""}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mb-4">
+                    <div className="row row-gap-4">
+                      <div className="col-lg-6 col-md-6 col-12">
+                        <label htmlFor="address" className="form-label">
+                          Địa chỉ:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          defaultValue={loadedUser ? loadedUser.address : ""}
+                          disabled
+                        />
+                      </div>
                       {user != null && (
                         <div className="col-lg-6 col-md-6 col-12">
                           <label className="form-label text-default">
