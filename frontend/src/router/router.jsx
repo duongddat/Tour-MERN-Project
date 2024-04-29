@@ -50,6 +50,10 @@ import Revenue from "../pages/Admin/Statistical/Revenue.jsx";
 import Schedule from "../pages/Admin/Statistical/Schedule.jsx";
 import ManageBooking from "../pages/Admin/Booking/ManageBooking.jsx";
 import DetailBooking from "../pages/Admin/Booking/BookingDetail.jsx";
+import ManageDiscountPage from "../pages/Admin/Discount/ManageDiscountPage.jsx";
+import AddDiscountPage from "../pages/Admin/Discount/CreateDiscountPage.jsx";
+import EditDiscountPage from "../pages/Admin/Discount/EditDiscountPage.jsx";
+import DetailDiscountPage from "../pages/Admin/Discount/DetailDiscountPage.jsx";
 
 import ProtectedRoute from "./ProtectedRoute.jsx";
 
@@ -81,6 +85,9 @@ import { loader as loadRevenue } from "../utils/Admin/loadRevenue.js";
 import { loader as loadSchedule } from "../utils/Admin/loadSchedule.js";
 import { loader as loadBooking } from "../utils/Admin/loadBookingAdmin.js";
 import { loader as loadBookingDetailAdmin } from "../utils/Admin/loadBookingDetail.js";
+import { loader as loadDiscountAdmin } from "../utils/Admin/loadDiscountAdmin.js";
+import { loader as loadDiscountDetailAdmin } from "../utils/Admin/loadDiscountDetail.js";
+import { loader as loadDiscountEditAdmin } from "../utils/Admin/loadDiscountEdit.js";
 
 const router = createBrowserRouter([
   {
@@ -338,6 +345,31 @@ const router = createBrowserRouter([
             path: ":idUser/detail",
             element: <DetailUserAdminPage />,
             loader: loadUserDetailAdmin,
+          },
+        ],
+      },
+      {
+        path: "discounts",
+        children: [
+          {
+            index: true,
+            element: <ManageDiscountPage />,
+            loader: loadDiscountAdmin,
+          },
+          {
+            path: "add",
+            element: <AddDiscountPage />,
+            loader: loadCountryAdmin,
+          },
+          {
+            path: ":idDiscount/edit",
+            element: <EditDiscountPage />,
+            loader: loadDiscountEditAdmin,
+          },
+          {
+            path: ":idDiscount/detail",
+            element: <DetailDiscountPage />,
+            loader: loadDiscountDetailAdmin,
           },
         ],
       },

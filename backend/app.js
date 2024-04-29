@@ -13,6 +13,7 @@ const countryRouter = require("./routes/countryRouter");
 const reviewRouter = require("./routes/reviewRouter");
 const bookingRouter = require("./routes/bookingRouter");
 const postRouter = require("./routes/postRouter");
+const discountRouter = require("./routes/discountRouter");
 const statisticalRouter = require("./routes/statisticalRouter");
 
 dotenv.config({ path: "./.env" });
@@ -51,6 +52,7 @@ app.use("/users", userRouter);
 app.use("/auth", authRouter);
 app.use("/booking", bookingRouter);
 app.use("/posts", postRouter);
+app.use("/discounts", discountRouter);
 app.use("/statis", statisticalRouter);
 
 app.use(globalErrorHandler);

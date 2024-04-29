@@ -381,6 +381,91 @@ export async function deleteUserAdmin(idUser) {
 
   return response;
 }
+//============================Discount Page============================
+//1.Create Discount
+export async function createDiscountAdmin(data) {
+  const { formData } = data;
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to use this route." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch("http://localhost:8080/discounts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(formData),
+  });
+
+  const resData = await response.json();
+
+  return resData;
+}
+
+//2.Edit Discount
+export async function editDiscountAdmin(data) {
+  const { formData, idDiscount } = data;
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to use this route." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(
+    `http://localhost:8080/discounts/${idDiscount}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    }
+  );
+
+  const resData = await response.json();
+
+  return resData;
+}
+//3. Delete Discount
+export async function deleteDiscountAdmin(idDiscount) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to use this route." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(
+    `http://localhost:8080/discounts/${idDiscount}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return response;
+}
 //============================Booking Page=============================
 export async function deleteBookingAdmin(idBooking) {
   const token = localStorage.getItem("token");

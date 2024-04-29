@@ -108,6 +108,17 @@ function SideBarAdmin() {
             </li>
             <li className="sidebar-item">
               <NavLink
+                to="/admin/discounts"
+                className={({ isActive }) =>
+                  `sidebar-link ${isActive ? "active-admin" : ""}`
+                }
+              >
+                <i className="ri-discount-percent-line"></i>
+                <span>Mã giảm giá</span>
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink
                 to="/admin/users"
                 className={({ isActive }) =>
                   `sidebar-link ${isActive ? "active-admin" : ""}`

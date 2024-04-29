@@ -14,7 +14,6 @@ function CountryForm({ action, isLoading, country = null }) {
       data.idCountry = country._id;
     }
 
-    console.log(data);
     action(data);
   }
 
