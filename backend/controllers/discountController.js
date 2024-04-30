@@ -1,8 +1,24 @@
-const moment = require("moment");
-
 const Discount = require("../models/discountModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+
+exports.checkDiscountCode = catchAsync(async (req, res, next) => {
+  const { code, countryId } = req.body;
+
+  const discount = await Discount.isValidDiscountCode(code, countryId);
+
+  if (!discount) {
+    return next(new AppError("Invalid discount code", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    message: "Successfully retrieved",
+    data: {
+      percentage: discount.percentage,
+    },
+  });
+});
 
 exports.getAllDiscounts = catchAsync(async (req, res, next) => {
   const discounts = await Discount.find({});

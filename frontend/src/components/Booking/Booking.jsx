@@ -1,6 +1,6 @@
 import { Form } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import moment from "moment";
 
 import { currencyFormatter } from "../../helper/formattingPrice";
@@ -11,13 +11,63 @@ import "./Booking.css";
 function Booking({ tour }) {
   const { userInfo, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState(null);
+  const [code, setCode] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [discountedPrice, setDiscountedPrice] = useState(0);
 
-  const totalPrice = (tour.priceDiscount || tour.price) * (amount || 1);
+  useEffect(() => {
+    const price = (tour.priceDiscount || tour.price) * (amount || 1);
+    setTotalPrice(price);
+  }, [amount, tour]);
+
+  useEffect(() => {
+    const discountedPrice =
+      totalPrice - (totalPrice * discountPercentage) / 100;
+    setDiscountedPrice(discountedPrice);
+  }, [totalPrice, discountPercentage]);
 
   function handleChangeAmount(event) {
     setAmount(event.target.value);
+  }
+
+  async function handleApplyCode() {
+    try {
+      const countryId = tour.country._id;
+      if (code !== null && countryId !== null) {
+        const response = await fetch(
+          "http://localhost:8080/discounts/check-discount",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ code, countryId }),
+          }
+        );
+        const resData = await response.json();
+
+        if (!response.ok) {
+          setDiscountPercentage(0);
+          dispatch(setMessage({ type: "error", message: resData.message }));
+          return;
+        }
+
+        const { data, message } = resData;
+        setDiscountPercentage(data.percentage);
+        dispatch(setMessage({ type: "success", message: message }));
+      }
+    } catch (error) {
+      setDiscountPercentage(0);
+      dispatch(setMessage({ type: "error", message: error.message }));
+    }
+  }
+
+  function onChangeCode(event) {
+    const newCode = event.target.value;
+    setCode(newCode);
   }
 
   const handleCreateBooking = useCallback(
@@ -78,6 +128,7 @@ function Booking({ tour }) {
             body: JSON.stringify({
               guestSize: guestSize,
               bookAt: formattedDate,
+              discount: discountPercentage,
             }),
           }
         );
@@ -99,7 +150,7 @@ function Booking({ tour }) {
       }
       setLoading(false);
     },
-    [dispatch, userInfo, token, tour]
+    [dispatch, userInfo, token, tour, discountPercentage]
   );
 
   return (
@@ -172,7 +223,26 @@ function Booking({ tour }) {
               />
             </div>
           </div>
-          <div className="booking__bottom mt-2">
+          <div className="mt-3 mb-2">
+            <h5>Mã giảm</h5>
+            <div className="booking__info-form">
+              <div className="mb-1 d-flex gap-5">
+                <input
+                  type="text"
+                  placeholder="Nhập mã giảm giá"
+                  id="code"
+                  onChange={onChangeCode}
+                />
+                <div
+                  className="button pointer w-max-content"
+                  onClick={handleApplyCode}
+                >
+                  Áp mã
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="booking__bottom p-1 mt-2">
             <ul className="list-group">
               <li className="list-group-item border-0 px-0">
                 <h5 className="d-flex align-items-center gap-1">
@@ -180,9 +250,15 @@ function Booking({ tour }) {
                 </h5>
                 <span>{currencyFormatter.format(totalPrice)}</span>
               </li>
+              <li className="list-group-item border-0 px-0">
+                <h5 className="d-flex align-items-center gap-1">
+                  Phần trăm giảm giá:
+                </h5>
+                <span>{discountPercentage} %</span>
+              </li>
               <li className="list-group-item border-0 px-0 total">
                 <h5>Tổng tiền:</h5>
-                <span>{currencyFormatter.format(totalPrice)}</span>
+                <span>{currencyFormatter.format(discountedPrice)}</span>
               </li>
             </ul>
             <button type="submit" className="button w-100" disabled={loading}>

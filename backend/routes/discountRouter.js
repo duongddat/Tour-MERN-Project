@@ -4,6 +4,8 @@ const discountController = require("../controllers/discountController");
 
 const router = express.Router();
 
+router.route("/check-discount").post(discountController.checkDiscountCode);
+
 router
   .route("/")
   .get(discountController.getAllDiscounts)

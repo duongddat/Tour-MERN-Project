@@ -43,6 +43,16 @@ discountSchema.pre(/^find/, function (next) {
   next();
 });
 
+discountSchema.statics.isValidDiscountCode = async function (code, countryId) {
+  const discount = await this.findOne({
+    code,
+    country: countryId,
+    expiryDate: { $gte: new Date() },
+    isActive: true,
+  });
+  return discount;
+};
+
 const Discount = mongoose.model("Discount", discountSchema);
 
 module.exports = Discount;

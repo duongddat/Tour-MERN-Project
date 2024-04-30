@@ -253,6 +253,12 @@ table tbody td {
 .search-box:hover {
   box-shadow: var(--shadow-sm) !important;
 }
+.pointer {
+  cursor: pointer;
+}
+.w-max-content {
+  min-width: max-content;
+}
 .w-100 {
   width: 100%;
 }

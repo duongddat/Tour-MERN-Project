@@ -9,13 +9,14 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
-  const { guestSize, bookAt } = req.body;
+  const { guestSize, bookAt, discount = 0 } = req.body;
 
   //1. Get the currently booked tour and save booking
   //Current booked tour
   const tour = await Tour.findById(req.params.tourID);
 
   const totalPrice = guestSize * 1 * (tour.priceDiscount || tour.price);
+  const discountedPrice = totalPrice - (totalPrice * discount) / 100;
   const parsedDate = moment(bookAt, "DD/MM/YYYY").toDate();
 
   //Save booking tour
@@ -24,7 +25,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     user: req.user._id,
     guestSize,
     bookAt: parsedDate,
-    price: totalPrice,
+    price: discountedPrice,
   });
 
   //2. Create checkout session
@@ -35,13 +36,13 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     line_items: [
       {
         price_data: {
-          unit_amount: Math.round(totalPrice * 0.000041 * 100), //cover VND to USD
-          currency: "usd",
+          unit_amount: discountedPrice,
+          currency: "VND",
           product_data: {
             name: tour.title,
             description: `Ngày khởi hành: ${bookAt} -:- Số lượng người: ${guestSize} x ${
               tour.priceDiscount || tour.price
-            } đồng`,
+            } đồng ${discount !== 0 && `-:- Giảm giá: ${discount} %`}`,
             images: [
               "https://upload-os-bbs.hoyolab.com/upload/2023/03/24/4dca08bc4e21bb299398af982531bb79_405534880414408859.png?x-oss-process=image%2Fresize%2Cs_500%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_80",
             ],
