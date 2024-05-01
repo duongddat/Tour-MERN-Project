@@ -47,7 +47,7 @@ exports.register = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
   });
 
-  const url = `${req.protocol}://${req.get("host")}/me`;
+  const url = `${process.env.CLIENT_SITE_URL}/user/detail`;
   await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 201, res);
@@ -185,7 +185,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   // 3) Send it to user's email
   try {
-    const resetURL = `${req.protocol}://${req.get("host")}/auth/resetPassword`;
+    const resetURL = `${process.env.CLIENT_SITE_URL}/verify-otp`;
 
     await new Email(user, resetURL, resetOTP).sendPasswordReset();
 
