@@ -30,7 +30,13 @@ function MyTourPage() {
           </div>
         </div>
         <div className="mx-auto tour-content">
-          <h5 className="table-title">Lịch sử đặt tour</h5>
+          <div className="d-flex flex-wrap justify-content-between align-items-center">
+            <h5 className="table-title">Lịch sử đặt tour</h5>
+            <div className="table-note">
+              (<span className="text-red">*</span>)Lưu ý: Huỷ tour trước 2 ngày
+              khởi hành
+            </div>
+          </div>
           <div className="mb-2">
             <img src={headingBorderImg} alt="Heading Border Image" />
           </div>

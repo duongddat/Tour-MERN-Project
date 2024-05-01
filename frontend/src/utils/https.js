@@ -324,3 +324,30 @@ export async function deleteBlog(blogId) {
 
   return response;
 }
+
+export async function cancelBooking(bookingId) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw json(
+      { message: "Please login to delete review." },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const response = await fetch(
+    `http://localhost:8080/booking/cancel-booking/${bookingId}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+
+  const resData = await response.json();
+
+  return resData;
+}

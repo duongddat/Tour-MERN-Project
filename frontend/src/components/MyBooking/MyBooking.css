@@ -14,3 +14,9 @@
 .table-text__red {
   color: red;
 }
+
+.table-note {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
+}

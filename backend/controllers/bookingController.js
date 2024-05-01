@@ -151,3 +151,41 @@ exports.deleteBooking = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+exports.cancelBooking = catchAsync(async (req, res, next) => {
+  const bookingId = req.params.bookingId;
+  const booking = await Booking.findOne({ _id: bookingId, user: req.user._id });
+
+  if (!booking) {
+    return next(new AppError("Booking not found", 404));
+  }
+
+  if (booking.cancelled) {
+    return next(new AppError("Booking cannot be cancelled", 404));
+  }
+
+  const currentDate = new Date();
+  const bookingDate = new Date(booking.bookAt);
+  const twoDaysBeforeBookingDate = new Date(bookingDate);
+  twoDaysBeforeBookingDate.setDate(bookingDate.getDate() - 2);
+
+  if (currentDate > twoDaysBeforeBookingDate) {
+    return next(
+      new AppError(
+        "Booking cannot be cancelled less than 2 days before the booking date",
+        404
+      )
+    );
+  }
+
+  booking.cancelled = true;
+  await booking.save();
+
+  res.status(200).json({
+    status: "success",
+    message: "Booking cancelled successfully",
+    data: {
+      booking,
+    },
+  });
+});

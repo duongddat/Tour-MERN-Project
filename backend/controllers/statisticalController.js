@@ -153,6 +153,7 @@ exports.bookingGuideStatistics = catchAsync(async (req, res, next) => {
           $gte: new Date(currentYear, 0, 1),
           $lt: new Date(currentYear + 1, 0, 1),
         },
+        cancelled: { $ne: true },
       },
     },
     {

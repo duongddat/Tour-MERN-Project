@@ -171,10 +171,7 @@ ul {
   font-weight: 500;
 }
 .table-link {
-  color: var(--primary-color);
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: underline;
+  line-height: 20px;
 }
 table tbody th,
 table tbody td {

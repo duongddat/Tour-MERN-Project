@@ -36,7 +36,12 @@ function Schedule() {
     },
     {
       name: "Trại thái",
-      selector: (row) => <BookingCountdown bookAt={row.bookAt} />,
+      selector: (row) =>
+        row.cancelled === undefined || row.cancelled === false ? (
+          <BookingCountdown bookAt={row.bookAt} />
+        ) : (
+          <span className="text-booking booking-remaining">Yêu cầu huỷ</span>
+        ),
     },
     {
       name: "Tổng tiền",
