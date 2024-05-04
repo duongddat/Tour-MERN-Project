@@ -5,21 +5,21 @@ const tourSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, "Tên chuyến tham quan không được để trống!"],
       unique: true,
       trim: true,
-      maxlength: [90, "A tour name must have less or equal then 90 characters"],
-      minlength: [10, "A tour name must have more or equal then 10 characters"],
+      maxlength: [90, "Tên chuyến tham quan phải có ít hơn hoặc bằng 90 ký tự"],
+      minlength: [10, "Tên chuyến tham quan phải có ít nhất 10 ký tự"],
     },
     slug: String,
     country: {
       type: mongoose.Schema.ObjectId,
       ref: "Country",
-      require: [true, "A tour must have a country"],
+      require: [true, "Chuyến tham quan phải thuộc về một quốc gia"],
     },
     duration: {
       type: Number,
-      required: [true, "A tour must have a duration"],
+      required: [true, "Chuyến tham quan phải có thời lượng"],
     },
     maxGroupSize: {
       type: Number,
@@ -27,12 +27,12 @@ const tourSchema = new mongoose.Schema(
     },
     imageCover: {
       type: String,
-      required: [true, "A tour must have a cover image"],
+      required: [true, "Chuyến tham quan phải có ảnh bìa"],
     },
     images: [String],
     description: {
       type: String,
-      required: [true, "A tour must have a description"],
+      required: [true, "Chuyến tham quan phải có mô tả"],
     },
     price: {
       type: Number,
@@ -44,8 +44,8 @@ const tourSchema = new mongoose.Schema(
     ratingsAverage: {
       type: Number,
       default: 4.5,
-      min: [1, "Rating must be above 1.0"],
-      max: [5, "Rating must be below 5.0"],
+      min: [1, "Đánh giá phải lớn hơn 1.0"],
+      max: [5, "Đánh giá phải nhỏ hơn 5.0"],
       set: (val) => Math.round(val * 10) / 10,
     },
     ratingsQuantity: {

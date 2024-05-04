@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { Await, Link, useLoaderData } from "react-router-dom";
 
 import headingBorderImg from "../../assets/img/heading-border.webp";
@@ -7,6 +7,11 @@ import "./UserDetailPage.css";
 
 function UserDetailPage() {
   const { user } = useLoaderData();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="tour-content">
       <Suspense

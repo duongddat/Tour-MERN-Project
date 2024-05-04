@@ -9,7 +9,7 @@ import { setMessage } from "../../store/message-slice";
 import { useAction } from "../../hooks/useAction";
 import { deleteBlog, likeBlog } from "../../utils/https";
 import "./Blog.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Spin from "../common/Spin";
 import ShowModal from "../common/ShowModal";
 
@@ -23,6 +23,10 @@ function BlogDetail({ blog }) {
     deleteBlog,
     "/blog/manage"
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const liked = userInfo && blog.likes.includes(userInfo._id);
 

@@ -4,7 +4,7 @@ const postSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Title can not be empty!"],
+      required: [true, "Tiêu đề không được để trống!"],
     },
     description: {
       type: String,
@@ -13,12 +13,12 @@ const postSchema = new mongoose.Schema(
     country: {
       type: mongoose.Schema.ObjectId,
       ref: "Country",
-      required: [true, "Post must belong to a country"],
+      required: [true, "Bài đăng phải có một danh mục quốc gia"],
     },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-      required: [true, "Post must belong to a user"],
+      required: [true, "Bài đăng phải thuộc về người dùng"],
     },
     likes: [
       {

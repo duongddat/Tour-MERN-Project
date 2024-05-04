@@ -7,24 +7,24 @@ const bookingSchema = new mongoose.Schema({
   tour: {
     type: mongoose.Schema.ObjectId,
     ref: "Tour",
-    required: [true, "Booking must belong to a Tour!"],
+    required: [true, "Đặt chỗ phải có chuyên tham quan!"],
   },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
-    required: [true, "Booking must belong to a User!"],
+    required: [true, "Đặt chỗ phải có người dùng!"],
   },
   guestSize: {
     type: Number,
-    required: [true, "Booking must have a guestSize."],
+    required: [true, "Đặt chỗ phải có số lượng khách!"],
   },
   price: {
     type: Number,
-    required: [true, "Booking must have a price."],
+    required: [true, "Đặt chỗ phải có tổng tiền!"],
   },
   bookAt: {
     type: Date,
-    required: [true, "Booking must have a date"],
+    required: [true, "Đặt chỗ phải có ngày!"],
   },
   createdAt: {
     type: Date,
@@ -57,7 +57,7 @@ bookingSchema.pre("save", function (next) {
   const bookingDate = moment(this.bookAt, "DD/MM/YYYY");
 
   if (bookingDate.isBefore(currentDate, "day")) {
-    return next(new AppError("Booking date cannot be in the past.", 400));
+    return next(new AppError("Ngày đặt không thể là ngày trong quá khứ.", 400));
   }
   next();
 });

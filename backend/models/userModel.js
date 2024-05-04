@@ -8,21 +8,24 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Please tell us your name!"],
+      required: [true, "Vui lòng cung cấp tên của người dùng!"],
       trim: true,
     },
     email: {
       type: String,
-      required: [true, "Please provide your email"],
+      required: [true, "Vui lòng cung cấp địa chỉ email của người dùng"],
       unique: true,
-      validate: [validator.isEmail, "Please provide a valid email"],
+      validate: [
+        validator.isEmail,
+        "Vui lòng cung cấp một địa chỉ email hợp lệ!",
+      ],
     },
     phone: {
       type: String,
       unique: true,
       validate: [
         validator.isMobilePhone,
-        "Please provide a valid phone number",
+        "Vui lòng cung cấp một số điện thoại hợp lệ",
       ],
     },
     address: String,
@@ -37,13 +40,13 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Please provide a password"],
+      required: [true, "Vui lòng cung cấp mật khẩu của người dùng"],
       minLength: 6,
       select: false,
     },
     passwordConfirm: {
       type: String,
-      required: [true, "Please confirm your password"],
+      required: [true, "Vui lòng xác nhận mật khẩu của người dùng"],
       validate: {
         //This only works on CREATE and SAVE!!! (this.update)
         validator: function (el) {
@@ -52,7 +55,7 @@ const userSchema = new mongoose.Schema(
           }
           return true;
         },
-        message: "Passwords are not the same",
+        message: "Mật khẩu không trùng khớp",
       },
     },
     passwordChangedAt: Date,

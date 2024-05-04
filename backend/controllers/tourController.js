@@ -15,7 +15,13 @@ const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) {
     cb(null, true);
   } else {
-    cb(new AppError("Not an image! Please upload only images.", 400), false);
+    cb(
+      new AppError(
+        "Không phải là hình ảnh! Vui lòng chỉ tải lên hình ảnh.",
+        400
+      ),
+      false
+    );
   }
 };
 
@@ -79,7 +85,7 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     lenght: tours.length,
     data: {
       tours,
@@ -92,7 +98,12 @@ exports.getTourByCountry = catchAsync(async (req, res, next) => {
 
   const country = await Country.findOne({ slug });
   if (!country) {
-    return next(new AppError("The slug was not found in any countries", 404));
+    return next(
+      new AppError(
+        "Slug không được tìm thấy trong bất kỳ danh mục quốc gia nào",
+        404
+      )
+    );
   }
 
   const features = new AIPFeatures(
@@ -108,7 +119,7 @@ exports.getTourByCountry = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     lenght: tours.length,
     data: {
       tours,
@@ -155,7 +166,7 @@ exports.getTourBySearch = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     lenght: tours.length,
     data: {
       tours,
@@ -171,12 +182,14 @@ exports.getTour = catchAsync(async (req, res, next) => {
   });
 
   if (!tour) {
-    return next(new AppError("No tour found with that ID", 404));
+    return next(
+      new AppError("Không tìm thấy chuyến tham quan nào có ID đó", 404)
+    );
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     data: {
       tour,
     },
@@ -191,12 +204,14 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
   });
 
   if (!tour) {
-    return next(new AppError("No tour found with that ID", 404));
+    return next(
+      new AppError("Không tìm thấy chuyến tham quan nào có slug đó", 404)
+    );
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     data: {
       tour,
     },
@@ -211,10 +226,7 @@ exports.createTour = catchAsync(async (req, res, next) => {
 
   if (priceDiscount && (priceDiscount < 0 || priceDiscount >= price)) {
     return next(
-      new AppError(
-        "Price Discount should be non-negative and below regular price!",
-        400
-      )
+      new AppError("Giảm giá phải không âm và thấp hơn giá hiệnt tại!", 400)
     );
   }
 
@@ -229,7 +241,7 @@ exports.createTour = catchAsync(async (req, res, next) => {
   const newTour = await Tour.create({ ...req.body, startLocation, locations });
   res.status(200).json({
     status: "success",
-    message: "Successfully created",
+    message: "Tạo mới chuyến tham quan thành công",
     data: {
       tour: newTour,
     },
@@ -246,10 +258,7 @@ exports.updateTour = catchAsync(async (req, res, next) => {
 
   if (priceDiscount && (priceDiscount <= 0 || priceDiscount >= price)) {
     return next(
-      new AppError(
-        "Price Discount should be non-negative and below regular price!",
-        400
-      )
+      new AppError("Giảm giá phải không âm và thấp hơn giá hiệnt tại!", 400)
     );
   }
 
@@ -271,7 +280,9 @@ exports.updateTour = catchAsync(async (req, res, next) => {
   );
 
   if (!tour) {
-    return next(new AppError("No tour found with that ID", 404));
+    return next(
+      new AppError("Không tìm thấy chuyến tham quan nào có ID đó", 404)
+    );
   }
 
   if (priceDiscount === undefined || priceDiscount === null) {
@@ -281,7 +292,7 @@ exports.updateTour = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "Successfully updated",
+    message: "Cập nhật chuyến tham quan thành công!",
     data: {
       tour,
     },
@@ -293,12 +304,13 @@ exports.deleteTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findByIdAndDelete(id);
 
   if (!tour) {
-    return next(new AppError("No tour found with that ID", 404));
+    return next(
+      new AppError("Không tìm thấy chuyến tham quan nào có ID đó", 404)
+    );
   }
 
   res.status(204).json({
     status: "success",
-    message: "Successfully deleted",
     data: null,
   });
 });

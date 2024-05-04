@@ -8,12 +8,12 @@ exports.checkDiscountCode = catchAsync(async (req, res, next) => {
   const discount = await Discount.isValidDiscountCode(code, countryId);
 
   if (!discount) {
-    return next(new AppError("Invalid discount code", 404));
+    return next(new AppError("Mã giảm giá không hợp lệ!", 404));
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     data: {
       percentage: discount.percentage,
     },
@@ -21,11 +21,11 @@ exports.checkDiscountCode = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllDiscounts = catchAsync(async (req, res, next) => {
-  const discounts = await Discount.find({});
+  const discounts = await Discount.find({}).sort({ createdAt: -1 });
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     lenght: discounts.length,
     data: {
       discounts,
@@ -38,12 +38,12 @@ exports.getDiscount = catchAsync(async (req, res, next) => {
   const discount = await Discount.findById(id);
 
   if (!discount) {
-    return next(new AppError("No discount found with that ID", 404));
+    return next(new AppError("Không tìm thấy mã giảm giá nào với ID đó!", 404));
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     data: {
       discount,
     },
@@ -55,6 +55,7 @@ exports.createDiscount = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
+    message: "Tạo mã giảm giá thành công",
     data: {
       Discount: newDiscount,
     },
@@ -69,12 +70,12 @@ exports.updateDiscount = catchAsync(async (req, res, next) => {
   });
 
   if (!discount) {
-    return next(new AppError("No Discount found with that ID", 404));
+    return next(new AppError("Không tìm thấy mã giảm giá nào với ID đó!", 404));
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully updated",
+    message: "Đã cập nhật dữ liệu thành công!",
     data: {
       discount,
     },
@@ -86,12 +87,11 @@ exports.deleteDiscount = catchAsync(async (req, res, next) => {
   const discount = await Discount.findByIdAndDelete(id);
 
   if (!discount) {
-    return next(new AppError("No Discount found with that ID", 404));
+    return next(new AppError("Không tìm thấy mã giảm giá nào với ID đó!", 404));
   }
 
   res.status(204).json({
     status: "success",
-    message: "Successfully deleted",
     data: null,
   });
 });

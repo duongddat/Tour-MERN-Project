@@ -330,7 +330,7 @@ export async function cancelBooking(bookingId) {
 
   if (!token) {
     throw json(
-      { message: "Please login to delete review." },
+      { message: "Please login to cancle booking." },
       {
         status: 400,
       }

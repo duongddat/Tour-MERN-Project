@@ -39,6 +39,22 @@ function ManageUserPage() {
     { name: "Họ tên", selector: (row) => row.name, sortable: true },
     { name: "Email", selector: (row) => row.email, sortable: true },
     {
+      name: "Vai trò",
+      selector: (row) => (
+        <span
+          className={`table-item__special ${
+            row.role === "admin"
+              ? "role-admin"
+              : row.role === "guide"
+              ? "role-guide"
+              : "role-user"
+          }`}
+        >
+          Role: {row.role}
+        </span>
+      ),
+    },
+    {
       name: "Ảnh đại diện",
       selector: (row) => (
         <img

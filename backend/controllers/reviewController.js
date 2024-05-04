@@ -56,7 +56,7 @@ exports.createReview = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
-    messaage: "Success to create review",
+    messaage: "Tạo đánh giá thành công!",
     data: {
       newReview,
     },
@@ -71,7 +71,7 @@ exports.checkReviewOfUser = catchAsync(async (req, res, next) => {
     !(req.method === "DELETE" && req.user.role === "admin")
   ) {
     return next(
-      new AppError("This review is not yours or doesn't exist!", 401)
+      new AppError("Đánh giá này không phải của bạn hoặc không tồn tại!", 401)
     );
   }
 
@@ -87,6 +87,7 @@ exports.updateReview = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
+    messaage: "Cập nhật đánh giá thành công!",
     data: {
       review: updatedReview,
     },

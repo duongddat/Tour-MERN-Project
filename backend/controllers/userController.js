@@ -12,7 +12,13 @@ const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) {
     cb(null, true);
   } else {
-    cb(new AppError("Not an image! Please upload only images.", 400), false);
+    cb(
+      new AppError(
+        "Không phải là hình ảnh! Vui lòng chỉ tải lên hình ảnh.",
+        400
+      ),
+      false
+    );
   }
 };
 
@@ -36,11 +42,11 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find({});
+  const users = await User.find({}).sort({ createdAt: -1 });
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     lenght: users.length,
     data: {
       users,
@@ -53,12 +59,12 @@ exports.getUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(id);
 
   if (!user) {
-    return next(new AppError("No user found with that ID", 404));
+    return next(new AppError("Không tìm thấy người dùng nào có ID đó", 404));
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     data: {
       user,
     },
@@ -70,7 +76,7 @@ exports.getGuide = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     lenght: users.length,
     data: {
       users,
@@ -85,6 +91,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
+    message: "Tạo mới người dùng thành công",
     data: {
       data: newUser,
     },
@@ -101,12 +108,12 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   });
 
   if (!user) {
-    return next(new AppError("No user found with that ID", 404));
+    return next(new AppError("Không tìm thấy người dùng nào có ID đó", 404));
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully updated",
+    message: "Cập nhật dữ liệu thành công!",
     data: {
       user,
     },
@@ -118,12 +125,11 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   const user = await User.findByIdAndDelete(id);
 
   if (!user) {
-    return next(new AppError("No user found with that ID", 404));
+    return next(new AppError("Không tìm thấy người dùng nào có ID đó", 404));
   }
 
   res.status(204).json({
     status: "success",
-    message: "Successfully deleted",
     data: null,
   });
 });
@@ -147,7 +153,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
-        "This route is not for password updates. Please use /updateMyPassword.",
+        "Tuyến đường này không dành cho cập nhật mật khẩu. Vui lòng sử dụng chức năng cập nhật mật khẩu!",
         400
       )
     );
@@ -165,7 +171,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "Successful to update info",
+    message: "Cập nhật thông tin thành công!",
     data: {
       user: updateUser,
     },

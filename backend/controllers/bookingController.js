@@ -59,7 +59,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   if (!session) {
     return res.status(400).json({
       status: "error",
-      message: "Something went wrong",
+      message: "Đã xảy ra lỗi! Vui lòng thử lại sau!!!",
     });
   }
 
@@ -83,12 +83,12 @@ exports.paidTour = catchAsync(async (req, res, next) => {
   );
 
   if (!updateBooking.acknowledged) {
-    return next(new AppError("Try to later!!!!", 401));
+    return next(new AppError("Vui lòng thử lại sau!!!", 401));
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully to Pay",
+    message: "Thanh toán thành công!",
   });
 });
 
@@ -109,7 +109,7 @@ exports.getAllBookingOfUser = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllBooking = catchAsync(async (req, res, next) => {
-  const booking = await Booking.find();
+  const booking = await Booking.find().sort({ createdAt: -1, bookAt: -1 });
 
   res.status(200).json({
     status: "success",
@@ -125,12 +125,12 @@ exports.getBooking = catchAsync(async (req, res, next) => {
   const booking = await Booking.findById(id);
 
   if (!booking) {
-    return next(new AppError("No booking found with that ID", 404));
+    return next(new AppError("Không tìm thấy chuyến du lịch với ID đó", 404));
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Đã truy xuất thành công",
     data: {
       booking,
     },
@@ -142,12 +142,11 @@ exports.deleteBooking = catchAsync(async (req, res, next) => {
   const booking = await Booking.findByIdAndDelete(id);
 
   if (!booking) {
-    return next(new AppError("No booking found with that ID", 404));
+    return next(new AppError("Không tìm thấy đặt tour nào với ID đó", 404));
   }
 
   res.status(204).json({
     status: "success",
-    message: "Successfully deleted",
     data: null,
   });
 });
@@ -157,11 +156,11 @@ exports.cancelBooking = catchAsync(async (req, res, next) => {
   const booking = await Booking.findOne({ _id: bookingId, user: req.user._id });
 
   if (!booking) {
-    return next(new AppError("Booking not found", 404));
+    return next(new AppError("Không tìm thấy đặt tour nào với ID đó", 404));
   }
 
   if (booking.cancelled) {
-    return next(new AppError("Booking cannot be cancelled", 404));
+    return next(new AppError("Đặt tour này đã hủy bỏ!!!", 404));
   }
 
   const currentDate = new Date();
@@ -172,7 +171,7 @@ exports.cancelBooking = catchAsync(async (req, res, next) => {
   if (currentDate > twoDaysBeforeBookingDate) {
     return next(
       new AppError(
-        "Booking cannot be cancelled less than 2 days before the booking date",
+        "Đặt tour không thể hủy bỏ ít hơn 2 ngày trước ngày khởi hành tour!!!",
         404
       )
     );
@@ -183,7 +182,7 @@ exports.cancelBooking = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "Booking cancelled successfully",
+    message: "Hủy đặt tour thành công!",
     data: {
       booking,
     },

@@ -46,6 +46,11 @@ function ManageDiscountPage() {
       sortable: true,
     },
     {
+      name: "Danh mục",
+      selector: (row) => row.country.name,
+      sortable: true,
+    },
+    {
       name: "Phần trăm giảm giá",
       selector: (row) => row.percentage + "%",
       sortable: true,

@@ -7,7 +7,7 @@ exports.getAllCountries = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công!",
     lenght: countries.length,
     data: {
       countries,
@@ -20,12 +20,14 @@ exports.getCountry = catchAsync(async (req, res, next) => {
   const country = await Country.findById(id);
 
   if (!country) {
-    return next(new AppError("No country found with that ID", 404));
+    return next(
+      new AppError("Không tìm thấy danh mục quốc gia nào với ID đó", 404)
+    );
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công!",
     data: {
       country,
     },
@@ -51,12 +53,14 @@ exports.updateCountry = catchAsync(async (req, res, next) => {
   });
 
   if (!country) {
-    return next(new AppError("No country found with that ID", 404));
+    return next(
+      new AppError("Không tìm thấy danh mục quốc gia nào với ID đó", 404)
+    );
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully updated",
+    message: "Đã cập nhật dữ liệu thành công!",
     data: {
       country,
     },
@@ -68,12 +72,13 @@ exports.deleteCountry = catchAsync(async (req, res, next) => {
   const country = await Country.findByIdAndDelete(id);
 
   if (!country) {
-    return next(new AppError("No country found with that ID", 404));
+    return next(
+      new AppError("Không tìm thấy danh mục quốc gia nào với ID đó", 404)
+    );
   }
 
   res.status(204).json({
     status: "success",
-    message: "Successfully deleted",
     data: null,
   });
 });

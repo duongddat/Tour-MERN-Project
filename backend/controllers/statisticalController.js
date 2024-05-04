@@ -76,7 +76,7 @@ exports.getRecordsOfMonth = catchAsync(async (req, res, next) => {
       model = Review;
       break;
     default:
-      return next(new AppError("Invalid type parameter", 400));
+      return next(new AppError("Tham số không hợp lệ", 400));
   }
 
   // Query for counting new records for each week in the current month
@@ -224,7 +224,7 @@ exports.revenueStatistics = catchAsync(async (req, res, next) => {
         .toDate();
     }
   } else {
-    return next(new AppError("Year is a required parameter'", 404));
+    return next(new AppError("Vui lòng cung cấp năm!", 404));
   }
 
   // Aggregate bookings based on the provided query

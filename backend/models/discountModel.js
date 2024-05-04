@@ -4,23 +4,23 @@ const discountSchema = new mongoose.Schema(
   {
     code: {
       type: String,
-      required: [true, "Discount must have a code"],
+      required: [true, "Giảm giá phải có mã"],
       unique: true,
     },
     percentage: {
       type: Number,
-      required: [true, "Discount must have a Percentage"],
+      required: [true, "Giảm giá phải có phần trăm giảm giá"],
       min: 0,
       max: 100,
     },
     expiryDate: {
       type: Date,
-      required: [true, "Discount must have expiry date"],
+      required: [true, "Giảm giá phải có thời hạn sử dụng"],
     },
     country: {
       type: mongoose.Schema.ObjectId,
       ref: "Country",
-      required: [true, "Discount must belong to a country"],
+      required: [true, "Giảm giá phải thuộc về một danh mục quốc gia"],
     },
     isActive: {
       type: Boolean,
@@ -33,6 +33,17 @@ const discountSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+discountSchema.pre(/^find/, async function (next) {
+  const currentDate = new Date();
+
+  await this.model.updateMany(
+    { expiryDate: { $lt: currentDate } },
+    { $set: { isActive: false } }
+  );
+
+  next();
+});
 
 discountSchema.pre(/^find/, function (next) {
   this.populate({

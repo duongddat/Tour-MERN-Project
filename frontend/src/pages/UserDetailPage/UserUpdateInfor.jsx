@@ -39,7 +39,13 @@ function UserUpdateInfor() {
     const data = Object.fromEntries(fd.entries());
     const { name, email, photo, phone, address } = data;
 
-    const requestData = { name, email, phone, address };
+    const requestData = { name, email };
+    if (phone) {
+      requestData.phone = phone;
+    }
+    if (address) {
+      requestData.address = address;
+    }
     if (photo.name !== null) {
       requestData.photo = photo;
     }
@@ -49,7 +55,7 @@ function UserUpdateInfor() {
       dispatch(setMessage({ type: resData.status, message: resData.message }));
       if (resData.status === "success") {
         dispatch(setCredentials(resData));
-        navigate("/user/update-info");
+        navigate("/user/detail");
       }
     } catch (error) {
       dispatch(setMessage({ type: "error", message: error.message }));
@@ -128,7 +134,6 @@ function UserUpdateInfor() {
                     id="phone"
                     name="phone"
                     defaultValue={loadedUser.phone}
-                    required
                   />
                   <label htmlFor="phone">Số điện thoại</label>
                 </div>
@@ -138,7 +143,6 @@ function UserUpdateInfor() {
                     id="address"
                     name="address"
                     defaultValue={loadedUser.address}
-                    required
                   />
                   <label htmlFor="address">Địa chỉ</label>
                 </div>

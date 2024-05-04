@@ -5,7 +5,7 @@ const countrySchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "A country must have name"],
+      required: [true, "Danh mục quốc gia phải có tên"],
       unique: true,
       trim: true,
     },

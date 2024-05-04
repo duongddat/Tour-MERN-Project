@@ -24,11 +24,16 @@ html
                                                         td
                                                             //CONTENT
                                                             block content
-                            div.footer-email
-                                div.footer-title
-                                    h5.footer-text Explore the world through your lens with HoYoViVu - Real travel experiences await!
-                                    img(src="https://img-os-static.hoyolab.com/communityWeb/upload/1e61d2b42b2755bb200a24c5d7b77d20.png?x-oss-process=image%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_80" alt="img").footer-img
-                                a(href=`${url}`, target='_blank').footer-button Go to HoYoViVu
+                            .footer-email
+                                table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+                                    tbody
+                                        tr
+                                            td.footer-title 
+                                                h5.footer-text Explore the world through your lens with HoYoViVu - Real travel experiences await!
+                                                img(src="https://img-os-static.hoyolab.com/communityWeb/upload/1e61d2b42b2755bb200a24c5d7b77d20.png?x-oss-process=image%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_80" alt="img").footer-img
+                                        tr
+                                            td(align='center')
+                                                a(href="http://localhost:5173/", target='_blank').footer-button Go to HoYoViVu
 
                             // START FOOTER
                             .footer
@@ -39,4 +44,4 @@ html
                                                 span.apple-link HoYoViVu Inc, Copyright © XADD. All Rights Reserved
                                                 br
                                                 |  Follow HoYoViVu on Social Media
-                                                a(href='#') Follow
+                                                a(href='https://www.facebook.com/profile.php?id=61558991602653') Follow

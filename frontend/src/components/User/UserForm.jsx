@@ -71,10 +71,18 @@ function UserForm({ isLoading, action, user = null }) {
     const formData = new FormData();
     formData.append("name", name.value);
     formData.append("email", email.value);
-    formData.append("password", password.value);
-    formData.append("passwordConfirm", passwordConfirm.value);
-    formData.append("phone", phone.value);
-    formData.append("address", address.value);
+    if (password.value) {
+      formData.append("password", password.value);
+    }
+    if (passwordConfirm.value) {
+      formData.append("passwordConfirm", passwordConfirm.value);
+    }
+    if (phone.value) {
+      formData.append("phone", phone.value);
+    }
+    if (address.value) {
+      formData.append("address", address.value);
+    }
 
     if (selectedOption) {
       formData.append("role", selectedOption.value);
@@ -131,7 +139,7 @@ function UserForm({ isLoading, action, user = null }) {
             </div>
             <div className="col-lg-4 col-md-6 col-12">
               <label htmlFor="role" className="form-label">
-                Vai trò:
+                Vai trò(<span className="text-red">*</span>):
               </label>
               <Select
                 value={selectedOption}

@@ -90,7 +90,7 @@ const RegisterPage = () => {
                     className="button btn-submit"
                     disabled={loading}
                   >
-                    {loading ? <Spin text="Creating..." /> : "Đăng ký"}
+                    {loading ? <Spin text="Đăng ký..." /> : "Đăng ký"}
                   </button>
                 </div>
                 <div className="text-footer text-center mt-3">

@@ -1,29 +1,32 @@
 const AppError = require("./../utils/appError");
 
 const handleCastErrorDB = (err) => {
-  const message = `Invalid ${err.path}: ${err.value}.`;
+  const message = `Không hợp lệ ${err.path}: ${err.value}.`;
   return new AppError(message, 400);
 };
 
 const handleDuplicateFieldDB = (err) => {
   const value = err.errmsg.match(/(["'])(?:(?=(\\?))\2.)*?\1/)[0];
 
-  const message = `Duplicate field value: ${value}. Please use another value!`;
+  const message = `Trùng trường dữ liệu: ${value}. Vui lòng sử dụng một dữ liệu khác!`;
   return new AppError(message, 400);
 };
 
 const handleValidationErrorDB = (err) => {
   const errors = Object.values(err.errors).map((el) => el.message);
 
-  const message = `Invalid input data. ${errors.join(", ")}`;
+  const message = `Dữ liệu đầu vào không hợp lệ. ${errors.join(", ")}`;
   return new AppError(message, 400);
 };
 
 const handleJWTError = () =>
-  new AppError("Invalid token. Please log in again!", 401);
+  new AppError("Mã token không hợp lệ. Xin vui lòng đăng nhập lại!", 401);
 
 const handleJWTExpiredError = () =>
-  new AppError("Your token has expired has expired! Please log in again.", 401);
+  new AppError(
+    "Mã token của bạn đã hết hạn đã hết hạn! Xin vui lòng đăng nhập lại.",
+    401
+  );
 
 const sendErrorDev = (err, req, res) => {
   // A) API
@@ -39,7 +42,7 @@ const sendErrorDev = (err, req, res) => {
   // B) RENDERED WEBSITE
   console.error("ERROR 💥", err);
   return res.status(err.statusCode).render("error", {
-    title: "Something went wrong!",
+    title: "Đã xảy ra lỗi!",
     msg: err.message,
   });
 };
@@ -60,7 +63,7 @@ const sendErrorProd = (err, req, res) => {
     // 2) Send generic message
     return res.status(500).json({
       status: "error",
-      message: "Something went very wrong!",
+      message: "Đã xảy ra lỗi!",
     });
   }
 
@@ -69,7 +72,7 @@ const sendErrorProd = (err, req, res) => {
   if (err.isOperational) {
     console.log(err);
     return res.status(err.statusCode).render("error", {
-      title: "Something went wrong!",
+      title: "Đã xảy ra lỗi!",
       msg: err.message,
     });
   }
@@ -78,8 +81,8 @@ const sendErrorProd = (err, req, res) => {
   console.error("ERROR 💥", err);
   // 2) Send generic message
   return res.status(err.statusCode).render("error", {
-    title: "Something went wrong!",
-    msg: "Please try again later.",
+    title: "Đã xảy ra lỗi!",
+    msg: "Vui lòng thử lại sau",
   });
 };
 
@@ -90,7 +93,17 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || "error";
 
   if (process.env.NODE_ENV === "development") {
-    sendErrorDev(err, req, res);
+    // sendErrorDev(err, req, res);
+
+    let error = { ...err };
+    error.message = err.message;
+
+    if (err.name === "CastError") error = handleCastErrorDB(err);
+    if (err.code === 11000) error = handleDuplicateFieldDB(err);
+    if (err.name === "ValidationError") error = handleValidationErrorDB(err);
+    if (err.name === "JsonWebTokenError") error = handleJWTError();
+    if (err.name === "TokenExpiredError") error = handleJWTExpiredError();
+    sendErrorProd(error, req, res);
   } else if (process.env.NODE_ENV === "production") {
     let error = { ...err };
     error.message = err.message;

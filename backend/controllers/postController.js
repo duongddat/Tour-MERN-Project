@@ -14,7 +14,13 @@ const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) {
     cb(null, true);
   } else {
-    cb(new AppError("Not an image! Please upload only images.", 400), false);
+    cb(
+      new AppError(
+        "Không phải là hình ảnh! Vui lòng chỉ tải lên các hình ảnh!",
+        400
+      ),
+      false
+    );
   }
 };
 
@@ -56,11 +62,11 @@ exports.setUserIds = (req, res, next) => {
 };
 
 exports.getAllPostes = catchAsync(async (req, res, next) => {
-  const posts = await Post.find({});
+  const posts = await Post.find({}).sort({ createdAt: -1 });
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     lenght: posts.length,
     data: {
       posts,
@@ -70,11 +76,11 @@ exports.getAllPostes = catchAsync(async (req, res, next) => {
 
 exports.getPostOfUser = catchAsync(async (req, res, next) => {
   const id = req.user.id;
-  const posts = await Post.find({ user: id });
+  const posts = await Post.find({ user: id }).sort({ createdAt: -1 });
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     lenght: posts.length,
     data: {
       posts,
@@ -87,14 +93,19 @@ exports.getListPostByCountry = catchAsync(async (req, res, next) => {
 
   const country = await Country.findOne({ slug });
   if (!country) {
-    return next(new AppError("The slug was not found in any countries", 404));
+    return next(
+      new AppError(
+        "Slug này không được tìm thấy trong bất kỳ danh mục quốc gia nào!",
+        404
+      )
+    );
   }
 
   const posts = await Post.find({ country: country._id });
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     lenght: posts.length,
     data: {
       posts,
@@ -107,7 +118,7 @@ exports.getRelatedPosts = catchAsync(async (req, res, next) => {
   const post = await Post.findById(id);
 
   if (!post) {
-    return next(new AppError("No post found with that ID", 404));
+    return next(new AppError("Không tìm thấy bài đăng nào có ID đó!", 404));
   }
 
   const posts = await Post.aggregate([
@@ -153,7 +164,7 @@ exports.getRelatedPosts = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     data: {
       posts,
     },
@@ -165,12 +176,12 @@ exports.getPost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(id);
 
   if (!post) {
-    return next(new AppError("No post found with that ID", 404));
+    return next(new AppError("Không tìm thấy bài đăng nào có ID đó!", 404));
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully retrieved",
+    message: "Truy xuất thành công",
     data: {
       post,
     },
@@ -182,7 +193,7 @@ exports.createPost = catchAsync(async (req, res, next) => {
 
   res.status(201).json({
     status: "success",
-    message: "Successfull to create blog",
+    message: "Tạo bài viết thành công",
     data: {
       data: newPost,
     },
@@ -196,7 +207,9 @@ exports.checkPostOfUser = catchAsync(async (req, res, next) => {
     (!currentPost || currentPost.user._id != req.user.id) &&
     !(req.method === "DELETE" && req.user.role === "admin")
   ) {
-    return next(new AppError("This post is not yours or doesn't exist!", 401));
+    return next(
+      new AppError("Bài viết này không phải của bạn hoặc không tồn tại!", 401)
+    );
   }
 
   next();
@@ -210,12 +223,12 @@ exports.updatePost = catchAsync(async (req, res, next) => {
   });
 
   if (!post) {
-    return next(new AppError("No post found with that ID", 404));
+    return next(new AppError("Không tìm thấy bài đăng nào có ID đó!", 404));
   }
 
   res.status(200).json({
     status: "success",
-    message: "Successfully updated",
+    message: "Cập nhật dữ liệu thành công!",
     data: {
       post,
     },
@@ -227,12 +240,11 @@ exports.deletePost = catchAsync(async (req, res, next) => {
   const post = await Post.findByIdAndDelete(id);
 
   if (!post) {
-    return next(new AppError("No post found with that ID", 404));
+    return next(new AppError("Không tìm thấy bài đăng nào có ID đó!", 404));
   }
 
   res.status(204).json({
     status: "success",
-    message: "Successfully deleted",
     data: null,
   });
 });
@@ -246,13 +258,13 @@ exports.likePost = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
       status: "success",
-      message: "The Post has been liked!",
+      message: "Bài viết đã được thích!",
     });
   } else {
     await Post.updateOne({ _id: id }, { $pull: { likes: req.user._id } });
     res.status(200).json({
       status: "success",
-      message: "The Post has been disliked!",
+      message: "Bài viết đã được bỏ thích!",
     });
   }
 });
