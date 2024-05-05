@@ -1,4 +1,7 @@
 const Country = require("../models/countryModel");
+const Tour = require("../models/tourModel");
+const Blog = require("../models/postModel");
+const Discount = require("../models/discountModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
@@ -69,6 +72,26 @@ exports.updateCountry = catchAsync(async (req, res, next) => {
 
 exports.deleteCountry = catchAsync(async (req, res, next) => {
   const id = req.params.id;
+
+  // Kiểm tra xem country tồn tại trong  tour
+  const tourExist = await Tour.exists({ country: id });
+
+  // Kiểm tra xem country tồn tại trong bài đăng blog
+  const blogExist = await Blog.exists({ country: id });
+
+  // Kiểm tra xem country tồn tại trong danh sách discount
+  const discountExist = await Discount.exists({ country: id });
+
+  // Nếu idUser tồn tại trong  review, blog hoặc booking
+  if (tourExist || blogExist || discountExist) {
+    return next(
+      new AppError(
+        "Danh mục quốc gia này đã tham gia vào dữ liệu của hệ thống (Tour, Blog, Discount), không thể xóa.",
+        400
+      )
+    );
+  }
+
   const country = await Country.findByIdAndDelete(id);
 
   if (!country) {

@@ -13,7 +13,7 @@ exports.checkDiscountCode = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: "success",
-    message: "Truy xuất thành công",
+    message: "Áp mã giảm giá thành công!",
     data: {
       percentage: discount.percentage,
     },

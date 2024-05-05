@@ -3,6 +3,8 @@ const sharp = require("sharp");
 
 const Tour = require("../models/tourModel");
 const Country = require("../models/countryModel");
+const Booking = require("../models/bookingModel");
+const Review = require("../models/reviewModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const AIPFeatures = require("../utils/apiFeatures");
@@ -78,6 +80,24 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
   const features = new AIPFeatures(Tour.find(), req.query)
     .filter()
     .sort()
+    .limitFields();
+
+  const tours = await features.query;
+
+  res.status(200).json({
+    status: "success",
+    message: "Truy xuất thành công",
+    lenght: tours.length,
+    data: {
+      tours,
+    },
+  });
+});
+
+exports.getTopTours = catchAsync(async (req, res, next) => {
+  const features = new AIPFeatures(Tour.find(), req.query)
+    .filter()
+    .sort()
     .limitFields()
     .paginate();
 
@@ -112,8 +132,7 @@ exports.getTourByCountry = catchAsync(async (req, res, next) => {
   )
     .filter()
     .sort()
-    .limitFields()
-    .paginate();
+    .limitFields();
 
   const tours = await features.query;
 
@@ -159,8 +178,7 @@ exports.getTourBySearch = catchAsync(async (req, res, next) => {
   const features = new AIPFeatures(Tour.find(query), additionalQueries)
     .filter()
     .sort()
-    .limitFields()
-    .paginate();
+    .limitFields();
 
   const tours = await features.query;
 
@@ -256,7 +274,7 @@ exports.updateTour = catchAsync(async (req, res, next) => {
   const price = req.body.price;
   const priceDiscount = req.body.priceDiscount;
 
-  if (priceDiscount && (priceDiscount <= 0 || priceDiscount >= price)) {
+  if (priceDiscount && (priceDiscount * 1 <= 0 || priceDiscount * 1 >= price)) {
     return next(
       new AppError("Giảm giá phải không âm và thấp hơn giá hiệnt tại!", 400)
     );
@@ -301,6 +319,23 @@ exports.updateTour = catchAsync(async (req, res, next) => {
 
 exports.deleteTour = catchAsync(async (req, res, next) => {
   const id = req.params.id;
+
+  // Kiểm tra xem tour tồn tại trong review
+  const reviewExist = await Review.exists({ tour: id });
+
+  // Kiểm tra xem tour tồn tại trong danh sách booking
+  const bookingExist = await Booking.exists({ tour: id });
+
+  // Nếu tour tồn tại trong  review hoặc booking
+  if (reviewExist || bookingExist) {
+    return next(
+      new AppError(
+        "Chuyến tham qua đã tham gia vào dữ liệu của hệ thống (Booking, Review), không thể xóa.",
+        400
+      )
+    );
+  }
+
   const tour = await Tour.findByIdAndDelete(id);
 
   if (!tour) {

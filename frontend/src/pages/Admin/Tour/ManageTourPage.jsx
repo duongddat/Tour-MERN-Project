@@ -57,7 +57,8 @@ function ManageTourPage() {
     },
     {
       name: "Giá",
-      selector: (row) => currencyFormatter.format(row.price),
+      selector: (row) =>
+        currencyFormatter.format(row.priceDiscount || row.price),
       sortable: true,
       style: {
         color: "red",

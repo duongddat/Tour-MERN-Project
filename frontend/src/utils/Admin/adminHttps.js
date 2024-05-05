@@ -75,7 +75,12 @@ export async function deleteTourAdmin(idTour) {
     },
   });
 
-  return response;
+  let resData = response;
+  if (response.status === 400) {
+    resData = await response.json();
+  }
+
+  return resData;
 }
 //=========================Country Admin========================
 //1.Create Country
@@ -154,7 +159,12 @@ export async function deleteCountryAdmin(idCountry) {
     },
   });
 
-  return response;
+  let resData = response;
+  if (response.status === 400) {
+    resData = await response.json();
+  }
+
+  return resData;
 }
 //=======================Blog Admin======================
 //1.Create Post
@@ -379,7 +389,12 @@ export async function deleteUserAdmin(idUser) {
     },
   });
 
-  return response;
+  let resData = response;
+  if (response.status === 400) {
+    resData = await response.json();
+  }
+
+  return resData;
 }
 //============================Discount Page============================
 //1.Create Discount

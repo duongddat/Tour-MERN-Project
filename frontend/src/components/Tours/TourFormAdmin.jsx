@@ -178,7 +178,6 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
         : null;
 
     if (priceDiscountValue) {
-      console.log("hhahaha");
       formData.append("priceDiscount", priceDiscount.value * 1);
     }
 

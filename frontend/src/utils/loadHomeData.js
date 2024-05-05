@@ -2,7 +2,7 @@ import { defer, json } from "react-router-dom";
 
 async function loaderTour() {
   const response = await fetch(
-    "http://localhost:8080/tours?sort=-ratingsAverage&page=1&limit=8"
+    "http://localhost:8080/tours/top-tour?sort=-ratingsAverage&page=1&limit=8"
   );
 
   if (!response.ok) {

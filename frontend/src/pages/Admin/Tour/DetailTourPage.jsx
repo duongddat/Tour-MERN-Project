@@ -14,8 +14,8 @@ function DetailTourPage() {
 
   useEffect(() => {
     const formattedLocations = tour.locations.map((location) => ({
-      locationLong: location.coordinates[0].toString(),
-      locationLat: location.coordinates[1].toString(),
+      locationLat: location.coordinates[0].toString(),
+      locationLong: location.coordinates[1].toString(),
       locationDay: location.day.toString(),
       locationDescription: location.description,
     }));

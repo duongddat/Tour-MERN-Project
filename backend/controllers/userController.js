@@ -2,6 +2,9 @@ const multer = require("multer");
 const sharp = require("sharp");
 
 const User = require("../models/userModel");
+const Review = require("../models/reviewModel");
+const Blog = require("../models/postModel");
+const Booking = require("../models/bookingModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
@@ -122,6 +125,26 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
   const id = req.params.id;
+
+  // Kiểm tra xem user tồn tại trong review
+  const reviewExist = await Review.exists({ user: id });
+
+  // Kiểm tra xem user tồn tại trong bài đăng blog
+  const blogExist = await Blog.exists({ user: id });
+
+  // Kiểm tra xem user tồn tại trong danh sách booking
+  const bookingExist = await Booking.exists({ user: id });
+
+  // Nếu user tồn tại trong  review, blog hoặc booking
+  if (reviewExist || blogExist || bookingExist) {
+    return next(
+      new AppError(
+        "Người dùng đã tham gia vào dữ liệu của hệ thống (Review, Blog, Booking), không thể xóa.",
+        400
+      )
+    );
+  }
+
   const user = await User.findByIdAndDelete(id);
 
   if (!user) {
