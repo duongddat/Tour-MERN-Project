@@ -2,6 +2,15 @@
   border-radius: 12px;
   overflow: hidden;
 }
+.blog-container {
+  overflow: hidden;
+}
+.text-description img {
+  max-width: 50%;
+  border-radius: 12px;
+  object-fit: cover;
+  margin: 10px 0;
+}
 
 .blog-image {
   width: 100%;
@@ -162,7 +171,7 @@
   border-color: #e5e6e7 !important;
 }
 .quill-height .ql-container {
-  height: 280px;
+  height: 350px;
   width: 100%;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;

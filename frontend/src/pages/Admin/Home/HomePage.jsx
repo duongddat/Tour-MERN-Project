@@ -50,7 +50,7 @@ function HomePage() {
                       <div className="static-title">
                         <h6 className="d-flex align-items-center">
                           Tour
-                          <span>| today</span>
+                          <span>| Hôm nay</span>
                         </h6>
                       </div>
                       <div className="d-flex align-items-center mb-3">
@@ -79,7 +79,7 @@ function HomePage() {
                       <div className="static-title">
                         <h6 className="d-flex align-items-center">
                           Bài viết
-                          <span>| today</span>
+                          <span>| Hôm nay</span>
                         </h6>
                       </div>
                       <div className="d-flex align-items-center mb-3">
@@ -108,7 +108,7 @@ function HomePage() {
                       <div className="static-title">
                         <h6 className="d-flex align-items-center">
                           Bình luận
-                          <span>| today</span>
+                          <span>| Hôm nay</span>
                         </h6>
                       </div>
                       <div className="d-flex align-items-center mb-3">
@@ -137,7 +137,7 @@ function HomePage() {
                       <div className="static-title">
                         <h6 className="d-flex align-items-center">
                           Người dùng
-                          <span>| today</span>
+                          <span>| Hôm nay</span>
                         </h6>
                       </div>
                       <div className="d-flex align-items-center mb-3">

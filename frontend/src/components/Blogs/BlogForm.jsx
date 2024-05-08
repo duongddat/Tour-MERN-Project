@@ -17,6 +17,30 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
   const [description, setDescription] = useState(blog ? blog.description : "");
   const [selectedOption, setSelectedOption] = useState(null);
   const optionsCountry = convertToSelectOptions(countries, "_id", "name");
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike"],
+      ["blockquote"],
+      ["link"],
+
+      [{ header: 1 }, { header: 2 }],
+      [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+  ];
 
   useEffect(() => {
     if (blog !== null) {
@@ -182,6 +206,9 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
           <ReactQuill
             theme="snow"
             className="quill-height"
+            placeholder="Nội dung bài viết..."
+            modules={modules}
+            formats={formats}
             value={description}
             onChange={setDescription}
           />

@@ -34,7 +34,7 @@ function BlogDetailPage() {
       <div className="container">
         <div className="row row-gap-5">
           <div className="col-xl-9 col-lg-8 col-md-12 col-12">
-            <div className="tour-content">
+            <div className="tour-content blog-container">
               <Suspense
                 fallback={
                   <p style={{ textAlign: "center" }}>Loading Blog...</p>
