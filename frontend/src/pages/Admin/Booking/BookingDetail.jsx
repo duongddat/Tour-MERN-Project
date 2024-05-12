@@ -97,6 +97,14 @@ function BookingDetail() {
                             disabled
                           />
                         </div>
+                        <div className="w-100 text-center">
+                          <Link
+                            to={`/admin/users/${loadedBooking.user._id}/detail`}
+                            className="button btn-submit"
+                          >
+                            Chi tiết người dùng
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>

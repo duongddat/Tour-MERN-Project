@@ -98,17 +98,34 @@ function Header() {
                     {(userInfo.role === "admin" ||
                       userInfo.role === "guide") && (
                       <>
-                        <DropdownItem title="Trang quản trị" to="/admin" />
+                        <DropdownItem
+                          title="Trang quản trị"
+                          to="/admin"
+                          icon={"ri-admin-fill"}
+                        />
                         <DropdownItem divider />
                       </>
                     )}
-                    <DropdownItem title="Quản lý tài khoản" to="/user/detail" />
-                    <DropdownItem title="Quản lý bài viết" to="/blog/manage" />
-                    <DropdownItem title="Lịch sử đặt tour" to="/my-tour" />
+                    <DropdownItem
+                      title="Quản lý tài khoản"
+                      to="/user/detail"
+                      icon={"ri-settings-5-fill"}
+                    />
+                    <DropdownItem
+                      title="Quản lý bài viết"
+                      to="/blog/manage"
+                      icon={"ri-inbox-2-fill"}
+                    />
+                    <DropdownItem
+                      title="Lịch sử đặt tour"
+                      to="/my-tour"
+                      icon={"ri-history-fill"}
+                    />
                     <DropdownItem divider />
                     <li>
                       <button className="dropdown-item" onClick={handleLogOut}>
-                        Log out
+                        <i className="ri-logout-box-r-fill"></i>
+                        <span>Đăng xuất</span>
                       </button>
                     </li>
                   </ul>
@@ -118,10 +135,10 @@ function Header() {
             {!userInfo && (
               <>
                 <Link to="/login" className="button">
-                  Login
+                  Đăng nhập
                 </Link>
                 <Link to="/register" className="button">
-                  Register
+                  Đăng ký
                 </Link>
               </>
             )}

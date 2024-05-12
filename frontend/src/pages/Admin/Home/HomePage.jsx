@@ -187,7 +187,11 @@ function HomePage() {
                     />
                     <Link
                       className="user-detail__update button"
-                      to={`/admin/users/${userInfo._id}/edit`}
+                      to={
+                        userInfo.role === "admin"
+                          ? `/admin/users/${userInfo._id}/edit`
+                          : "/user/update-info"
+                      }
                     >
                       <i className="ri-pencil-fill"></i>
                       <span className="mx-2 d-none d-sm-inline">

@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 
-function DropdownItem({ title, to, divider = false }) {
+function DropdownItem({ title, to, icon, divider = false }) {
   return (
     <li>
       {!divider && (
         <Link className="dropdown-item" to={to}>
-          {title}
+          <i className={icon}></i>
+          <span>{title}</span>
         </Link>
       )}
       {divider && <hr className="dropdown-divider" />}

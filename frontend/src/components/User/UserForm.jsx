@@ -3,7 +3,7 @@ import { Form } from "react-router-dom";
 import Select from "react-select";
 
 import Spin from "../common/Spin";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../store/message-slice";
 
 function UserForm({ isLoading, action, user = null }) {
@@ -16,6 +16,8 @@ function UserForm({ isLoading, action, user = null }) {
     { value: "guide", label: "Role: guide" },
     { value: "admin", label: "Role: admin" },
   ];
+
+  const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (user !== null) {
@@ -122,6 +124,7 @@ function UserForm({ isLoading, action, user = null }) {
                 className="form-control"
                 placeholder="Nhập họ và tên"
                 defaultValue={user ? user.name : ""}
+                disabled={user && user._id !== userInfo._id}
               />
             </div>
             <div className="col-lg-4 col-md-6 col-12">
@@ -135,6 +138,7 @@ function UserForm({ isLoading, action, user = null }) {
                 className="form-control"
                 placeholder="Nhập địa chỉ email"
                 defaultValue={user ? user.email : ""}
+                disabled={user && user._id !== userInfo._id}
               />
             </div>
             <div className="col-lg-4 col-md-6 col-12">
@@ -164,6 +168,7 @@ function UserForm({ isLoading, action, user = null }) {
                 className="form-control"
                 placeholder="Nhập số điện thoại"
                 defaultValue={user ? user.phone : ""}
+                disabled={user && user._id !== userInfo._id}
               />
             </div>
             <div className="col-lg-9 col-md-8 col-12">
@@ -177,50 +182,54 @@ function UserForm({ isLoading, action, user = null }) {
                 className="form-control"
                 placeholder="Nhập địa chỉ"
                 defaultValue={user ? user.address : ""}
+                disabled={user && user._id !== userInfo._id}
               />
             </div>
           </div>
         </div>
-        <div className="mb-4">
-          <div className="row row-gap-4">
-            <div className="col-lg-6 col-md-6 col-12">
-              <label htmlFor="password" className="form-label">
-                Mật khẩu
-                {user === null && (
-                  <span>
-                    (<span className="text-red">*</span>)
-                  </span>
-                )}
-                :
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                className="form-control"
-                placeholder="Nhập mật khẩu"
-              />
-            </div>
-            <div className="col-lg-6 col-md-6 col-12">
-              <label htmlFor="password" className="form-label">
-                Xác nhận mật khẩu
-                {user === null && (
-                  <span>
-                    (<span className="text-red">*</span>)
-                  </span>
-                )}
-                :
-              </label>
-              <input
-                type="password"
-                id="passwordConfirm"
-                name="passwordConfirm"
-                className="form-control"
-                placeholder="Nhập xác nhận mật khẩu"
-              />
+        {(!user || (user && user._id === userInfo._id)) && (
+          <div className="mb-4">
+            <div className="row row-gap-4">
+              <div className="col-lg-6 col-md-6 col-12">
+                <label htmlFor="password" className="form-label">
+                  Mật khẩu
+                  {user === null && (
+                    <span>
+                      (<span className="text-red">*</span>)
+                    </span>
+                  )}
+                  :
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  className="form-control"
+                  placeholder="Nhập mật khẩu"
+                />
+              </div>
+              <div className="col-lg-6 col-md-6 col-12">
+                <label htmlFor="password" className="form-label">
+                  Xác nhận mật khẩu
+                  {user === null && (
+                    <span>
+                      (<span className="text-red">*</span>)
+                    </span>
+                  )}
+                  :
+                </label>
+                <input
+                  type="password"
+                  id="passwordConfirm"
+                  name="passwordConfirm"
+                  className="form-control"
+                  placeholder="Nhập xác nhận mật khẩu"
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
         <div className="mb-4">
           <label className="form-label">Ảnh đại diện:</label>
           <div className="form-img-upload_tip">

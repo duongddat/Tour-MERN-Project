@@ -230,7 +230,7 @@ function AboutUsPage() {
         </div>
       </section>
       <section className="section-bg pt-5 pb-5">
-        <div className="text-center mb-5" data-aos="flip-left">
+        <div className="text-center mb-5" data-aos="zoom-in">
           <div className="d-flex justify-content-center mb-2">
             <Subtitle subtitle="Community Support" />
           </div>
@@ -238,7 +238,7 @@ function AboutUsPage() {
             Đồng hành và hỗ trợ bạn mỗi bước trên hành trình khám phá của mình.
           </h4>
         </div>
-        <div className="container container-medium" data-aos="flip-left">
+        <div className="container container-medium" data-aos="zoom-in">
           <div className="list-avatars">
             <img
               className="avatar"

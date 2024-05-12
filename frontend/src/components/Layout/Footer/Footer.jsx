@@ -4,19 +4,19 @@ import "./Footer.css";
 const nav_link = [
   {
     path: "/home",
-    dispatch: "Home",
+    dispatch: "Giới thiệu",
   },
   {
     path: "/tours",
-    dispatch: "Tour",
+    dispatch: "Tour du lịch",
   },
   {
     path: "/blog",
-    dispatch: "Blog",
+    dispatch: "Tin tức & Bài viết",
   },
   {
     path: "/about-us",
-    dispatch: "About us",
+    dispatch: "Điều khoản & Chính sách",
   },
 ];
 
@@ -40,37 +40,31 @@ function Footer() {
             </div>
           </div>
           <div className="col-sm-6 col-lg-3">
-            <h3 className="footer-heading">Discover</h3>
+            <h3 className="footer-heading">Liên quan</h3>
             <ul className="footer-link-list">
               <li className="footer-link-item">
-                <Link title="genshin impact" className="footer-link">
-                  Genshin Impact
+                <Link title="HoYoTab" className="footer-link">
+                  HoYoTab
                 </Link>
               </li>
               <li className="footer-link-item">
-                <Link title="honkai impact" className="footer-link">
-                  Honkai Imapct 3rd
+                <Link title="HoYoFig" className="footer-link">
+                  HoYoFig
                 </Link>
               </li>
+            </ul>
+            <h3 className="footer-heading">Liên hệ</h3>
+            <ul className="footer-link-list">
               <li className="footer-link-item">
-                <Link title="honkai star rail" className="footer-link">
-                  Honkai Star Rail
-                </Link>
+                <span className="footer-link">Hotline: 039999999</span>
               </li>
               <li className="footer-link-item">
-                <Link title="tea of themis" className="footer-link">
-                  Tea Of Themis
-                </Link>
-              </li>
-              <li className="footer-link-item">
-                <Link title="zenless zone zero" className="footer-link">
-                  Zenless Zone Zero
-                </Link>
+                <span className="footer-link">Email: hoyovivu@vivu.com</span>
               </li>
             </ul>
           </div>
           <div className="col-sm-6 col-lg-3">
-            <h3 className="footer-heading">Quick Links</h3>
+            <h3 className="footer-heading">Thông tin</h3>
             <ul className="footer-link-list">
               {nav_link.map((item, index) => (
                 <li key={index} className="footer-link-item">
@@ -79,14 +73,14 @@ function Footer() {
                     title={item.dispatch}
                     className="footer-link"
                   >
-                    {item.dispatch} Page
+                    {item.dispatch}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
           <div className="col-lg-2">
-            <h3 className="footer-heading">Contact Us</h3>
+            <h3 className="footer-heading">Cộng đồng</h3>
             <ul className="footer-link-list">
               <li className="footer-link-item">
                 <Link title="genshin impact" className="footer-link">
