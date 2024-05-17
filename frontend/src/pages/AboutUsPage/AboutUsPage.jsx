@@ -29,15 +29,15 @@ function AboutUsPage() {
                 <img src={CurveImg} alt="curve image" className="curve" />
               </span>
               <h1 className="d-flex flex-column gap-2">
-                {`Hi, I'm `}
+                {`Join us, `}
                 <div className="wrap text-wrap">
                   <Typewriter
                     words={[
-                      "Coder!",
-                      "Web developer",
-                      "UI/UX developer",
-                      "Mobile developer",
-                      "Desktop developer",
+                      "Explore more!",
+                      "Discover joy",
+                      "Travel tales",
+                      "Miraculous journey",
+                      "More and more...",
                     ]}
                     loop={5}
                     cursor

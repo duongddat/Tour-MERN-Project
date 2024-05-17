@@ -213,7 +213,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 exports.verifyOTP = catchAsync(async (req, res, next) => {
   // 1) Get user based on the OTP
   const OTP = req.body.otp;
-  console.log(OTP);
 
   const user = await User.findOne({
     passwordOTPReset: OTP,

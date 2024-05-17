@@ -190,7 +190,7 @@ exports.getYearsWithRevenue = catchAsync(async (req, res, next) => {
       },
     },
     {
-      $sort: { _id: 1 },
+      $sort: { _id: -1 },
     },
   ]);
 
@@ -249,7 +249,7 @@ exports.revenueStatistics = catchAsync(async (req, res, next) => {
     },
     {
       $sort: {
-        month: 1, // Sắp xếp theo chiều tăng dần của tháng
+        month: 1,
       },
     },
   ]);

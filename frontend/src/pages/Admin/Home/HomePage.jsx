@@ -17,18 +17,27 @@ defaults.plugins.title.font.size = 20;
 defaults.plugins.title.padding = 20;
 defaults.plugins.title.color = "black";
 
-const generateRandomColor = (alpha) => {
-  return `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
-    Math.random() * 256
-  )}, ${Math.floor(Math.random() * 256)}, ${alpha})`;
+const generateRandomColor = () => {
+  return {
+    r: Math.floor(Math.random() * 256),
+    g: Math.floor(Math.random() * 256),
+    b: Math.floor(Math.random() * 256),
+  };
 };
 
-const generateColors = (count, alpha) => {
-  const colors = [];
+const rgba = (color, alpha) => {
+  return `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;
+};
+
+const generateColors = (count, alphaBackground, alphaBorder) => {
+  const backgroundColors = [];
+  const borderColors = [];
   for (let i = 0; i < count; i++) {
-    colors.push(generateRandomColor(alpha));
+    const baseColor = generateRandomColor();
+    backgroundColors.push(rgba(baseColor, alphaBackground));
+    borderColors.push(rgba(baseColor, alphaBorder));
   }
-  return colors;
+  return { backgroundColors, borderColors };
 };
 
 function HomePage() {
@@ -250,11 +259,11 @@ function HomePage() {
                       (data) => data.percentage
                     );
                     const chartLabels = loadedChart.map((data) => data.country);
-                    const backgroundColors = generateColors(
+                    const { backgroundColors, borderColors } = generateColors(
                       chartData.length,
-                      0.8
+                      0.4,
+                      1
                     );
-                    const borderColors = backgroundColors;
 
                     return (
                       <Doughnut

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import LoginImg from "../../assets/img/login.png";
-import BgRegister from "../../assets/img/register.jpg";
+import BgRegister from "../../assets/img/register-2.jpg";
 import { setMessage } from "../../store/message-slice";
 import { registerUser } from "../../store/auth-action";
 import Spin from "../../components/common/Spin";

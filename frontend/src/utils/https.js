@@ -31,7 +31,7 @@ export async function verifyOTP(data) {
   });
 
   const resData = await response.json();
-  const resetToken = resData.data.resetToken;
+  const resetToken = resData.data?.resetToken || null;
 
   if (resetToken) {
     localStorage.setItem("resetToken", resetToken);

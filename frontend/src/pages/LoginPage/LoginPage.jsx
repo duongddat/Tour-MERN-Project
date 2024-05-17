@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import LoginImg from "../../assets/img/login.png";
-import BgLogin from "../../assets/img/bg-login.jpg";
+import BgLogin from "../../assets/img/bg-login-2.jpg";
 import "./LoginPage.css";
 import { userLogin } from "../../store/auth-action.js";
 import Spin from "../../components/common/Spin.jsx";

@@ -120,7 +120,9 @@ function Schedule() {
                 <RevenueBar
                   label={labels}
                   data={totalBookings}
-                  backgroundColor={["rgba(43, 63, 229, 0.8)"]}
+                  backgroundColor={["rgba(43, 63, 229, 0.4)"]}
+                  borderColor={["rgba(43, 63, 229, 1)"]}
+                  borderWidth="2"
                   title="Tour"
                   text="Thống kê lịch trình"
                 />

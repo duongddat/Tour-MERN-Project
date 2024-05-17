@@ -31,7 +31,7 @@ async function loaderYearRevenue() {
   }
 }
 
-async function loaderRevenue({ year }) {
+async function loaderRevenue(year) {
   const token = localStorage.getItem("token");
   if (!token) {
     throw json(
@@ -41,6 +41,7 @@ async function loaderRevenue({ year }) {
       }
     );
   }
+
   const response = await fetch(
     "http://localhost:8080/statis/revenue-booking?year=" + year,
     {

@@ -147,7 +147,7 @@ exports.getTourByCountry = catchAsync(async (req, res, next) => {
 });
 
 exports.getTourBySearch = catchAsync(async (req, res, next) => {
-  const keysearch = covertSearchKey(req.query.key);
+  const keysearch = covertSearchKey(req.query.key || "");
 
   const key = new RegExp(keysearch, "i"); // Tạo 1 biểu thức chính quy (cờ i biểu thị tìm kiếm ko phân biệt hoa thường)
   const duration = parseInt(req.query.duration);
