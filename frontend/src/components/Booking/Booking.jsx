@@ -51,6 +51,7 @@ function Booking({ tour }) {
 
         if (!response.ok) {
           setDiscountPercentage(0);
+          setCode("");
           dispatch(setMessage({ type: "error", message: resData.message }));
           return;
         }
@@ -193,6 +194,7 @@ function Booking({ tour }) {
                 placeholder="Nhập số điện thoại"
                 id="phone"
                 name="phone"
+                defaultValue={userInfo ? userInfo.phone : ""}
                 required
               />
             </div>
@@ -202,6 +204,7 @@ function Booking({ tour }) {
                 placeholder="Nhập email"
                 id="email"
                 name="email"
+                defaultValue={userInfo ? userInfo.email : ""}
                 required
               />
             </div>
@@ -232,6 +235,7 @@ function Booking({ tour }) {
                   placeholder="Nhập mã giảm giá"
                   id="code"
                   onChange={onChangeCode}
+                  value={code}
                 />
                 <div
                   className="button pointer w-max-content"

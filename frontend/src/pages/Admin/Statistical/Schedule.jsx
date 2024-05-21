@@ -118,6 +118,7 @@ function Schedule() {
 
               return (
                 <RevenueBar
+                  type="line"
                   label={labels}
                   data={totalBookings}
                   backgroundColor={["rgba(43, 63, 229, 0.4)"]}
@@ -125,6 +126,8 @@ function Schedule() {
                   borderWidth="2"
                   title="Tour"
                   text="Thống kê lịch trình"
+                  xTitle="Số lượng"
+                  yTitle="Tháng"
                 />
               );
             }}

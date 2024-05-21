@@ -66,11 +66,16 @@ function BlogForm({ countries, isLoading, action, blog = null }) {
       };
     });
 
-    setSelectedImages(imagesArray);
+    setSelectedImages((prevImages) => [...prevImages, ...imagesArray]);
   }
 
   function handleRemoveImage(image) {
-    setSelectedImages(selectedImages.filter((e) => e !== image));
+    const updatedImages = selectedImages.filter((e) => e !== image);
+    setSelectedImages(updatedImages);
+
+    if (updatedImages.length === 0 && inputPhotoRef.current) {
+      inputPhotoRef.current.value = null;
+    }
   }
 
   function handleReset() {

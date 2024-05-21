@@ -8,6 +8,9 @@ const handleCastErrorDB = (err) => {
 const handleDuplicateFieldDB = (err) => {
   const value = err.errmsg.match(/(["'])(?:(?=(\\?))\2.)*?\1/)[0];
 
+  if (err.keyPattern.tour && err.keyPattern.user) {
+    return new AppError("Bạn đã đánh giá trước đó!", 400);
+  }
   const message = `Trùng trường dữ liệu: ${value}. Vui lòng sử dụng một dữ liệu khác!`;
   return new AppError(message, 400);
 };

@@ -63,6 +63,7 @@ function MyBooking({ booking }) {
                 <th scope="col">Tour</th>
                 <th scope="col">Số người</th>
                 <th scope="col">Ngày khởi hành</th>
+                <th scope="col">Ngày đặt</th>
                 <th scope="col">Trạng thái</th>
                 <th scope="col">Tổng tiền</th>
                 <th scope="col">Công cụ</th>
@@ -74,7 +75,8 @@ function MyBooking({ booking }) {
                   <th scope="row">{index + 1}</th>
                   <td>{book.tour.title}</td>
                   <td>{book.guestSize} người</td>
-                  <td>{formatDateDefault(book.bookAt)}</td>
+                  <td className="md">{formatDateDefault(book.bookAt)}</td>
+                  <td className="md">{formatDateDefault(book.createdAt)}</td>
                   <td>
                     {!book.cancelled && (
                       <BookingCountdown bookAt={book.bookAt} />

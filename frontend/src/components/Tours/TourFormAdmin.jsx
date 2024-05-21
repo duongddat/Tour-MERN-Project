@@ -70,7 +70,7 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
       };
     });
 
-    setSelectedImages(imagesArray);
+    setSelectedImages((prevImages) => [...prevImages, ...imagesArray]);
   }
 
   function handleRemoveImageCover() {
@@ -79,7 +79,13 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
   }
 
   function handleRemoveImage(image) {
-    setSelectedImages(selectedImages.filter((e) => e !== image));
+    const updatedImages = selectedImages.filter((e) => e !== image);
+    setSelectedImages(updatedImages);
+
+    if (updatedImages.length === 0 && inputPhotoRef.current) {
+      inputPhotoRef.current.value = null;
+    }
+    // setSelectedImages(selectedImages.filter((e) => e !== image));
   }
 
   function handleResetImg() {

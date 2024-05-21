@@ -25,6 +25,7 @@ html {
 
 body {
   font-family: var(--font-name);
+  scroll-behavior: smooth;
 }
 
 section {

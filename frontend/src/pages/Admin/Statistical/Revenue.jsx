@@ -61,6 +61,8 @@ function Revenue() {
                     borderWidth="2"
                     title="Doanh thu"
                     text="Thống kê doanh thu"
+                    xTitle="Số tiền"
+                    yTitle="Tháng"
                   />
                 )}
                 {statistics.char === "count" && (
@@ -72,6 +74,8 @@ function Revenue() {
                     borderWidth="2"
                     title="Tour"
                     text="Thống kê số tour đã đặt"
+                    xTitle="Số lượng"
+                    yTitle="Tháng"
                   />
                 )}
               </div>

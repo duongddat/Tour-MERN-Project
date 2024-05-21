@@ -12,6 +12,7 @@ import "./ReviewTour.css";
 function ReviewTour({ reviews, tourId }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const formRef = useRef();
   const currentPatch = location.pathname;
 
   const { userInfo } = useSelector((state) => state.auth);
@@ -76,6 +77,17 @@ function ReviewTour({ reviews, tourId }) {
     setRating(review.rating);
     setReviewId(review._id);
     refReview.current.value = review.review;
+    const formElement = formRef.current;
+    const offset = 500;
+
+    const formPosition =
+      formElement.getBoundingClientRect().top + window.scrollY;
+    const offsetPosition = formPosition - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
   }
 
   return (
@@ -87,7 +99,7 @@ function ReviewTour({ reviews, tourId }) {
           tourId={tourId}
         />
       )}
-      <Form className="review-box" onSubmit={handleSubmit}>
+      <Form ref={formRef} className="review-box" onSubmit={handleSubmit}>
         <div className="review-content">
           <label className="text-label md">Chất lượng:</label>
           {[...Array(5)].map((star, index) => {

@@ -16,7 +16,8 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.tourID);
 
   const totalPrice = guestSize * 1 * (tour.priceDiscount || tour.price);
-  const discountedPrice = totalPrice - (totalPrice * discount) / 100;
+  const applyDiscount = (totalPrice * discount) / 100;
+  const discountedPrice = totalPrice - applyDiscount;
   const parsedDate = moment(bookAt, "DD/MM/YYYY").toDate();
 
   //Save booking tour
@@ -36,15 +37,15 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     line_items: [
       {
         price_data: {
-          unit_amount: discountedPrice,
+          unit_amount: Math.round(discountedPrice * 1),
           currency: "VND",
           product_data: {
             name: tour.title,
             description: `Ngày khởi hành: ${bookAt} -:- Số lượng người: ${guestSize} x ${
               tour.priceDiscount || tour.price
-            } đồng ${discount !== 0 && `-:- Giảm giá: ${discount} %`}`,
+            } đồng ${discount !== 0 ? `-:- Giảm giá: ${discount} %` : ""}`,
             images: [
-              "https://upload-os-bbs.hoyolab.com/upload/2023/03/24/4dca08bc4e21bb299398af982531bb79_405534880414408859.png?x-oss-process=image%2Fresize%2Cs_500%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_80",
+              "https://th.bing.com/th/id/R.2f032c6dcc681900ed91ba67a1504191?rik=tuEQwJWELIZOsQ&riu=http%3a%2f%2fwww.trickstrend.com%2fwp-content%2fuploads%2f2020%2f03%2fOnline-Travel-Booking-Market.jpg&ehk=PwTXvBzVMtbSPf8IsxIL%2bv24xUpqqYtj7LNX90ppFVE%3d&risl=&pid=ImgRaw&r=0",
             ],
           },
         },
@@ -95,7 +96,7 @@ exports.paidTour = catchAsync(async (req, res, next) => {
 exports.getAllBookingOfUser = catchAsync(async (req, res, next) => {
   const id = req.user.id;
   const booking = await Booking.find({ user: id }).sort({
-    createAd: -1,
+    createdAt: -1,
     bookAt: -1,
   });
 
