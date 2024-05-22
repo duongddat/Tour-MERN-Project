@@ -21,11 +21,12 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth !important;
 }
 
 body {
   font-family: var(--font-name);
-  scroll-behavior: smooth;
+  scroll-behavior: smooth !important;
 }
 
 section {
@@ -186,6 +187,10 @@ table tbody td {
 }
 .css-t3ipsp-control {
   padding: 6px 12px;
+}
+
+.css-1nmdiq5-menu {
+  z-index: 5 !important;
 }
 /*Boostrap Custom */
 .modal-title {

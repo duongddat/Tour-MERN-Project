@@ -83,7 +83,11 @@ function Footer() {
             <h3 className="footer-heading">Cộng đồng</h3>
             <ul className="footer-link-list">
               <li className="footer-link-item">
-                <Link title="genshin impact" className="footer-link">
+                <Link
+                  to="https://www.facebook.com/profile.php?id=61558991602653"
+                  title="genshin impact"
+                  className="footer-link"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -95,7 +99,11 @@ function Footer() {
                 </Link>
               </li>
               <li className="footer-link-item">
-                <Link title="honkai impact" className="footer-link">
+                <Link
+                  to="https://www.facebook.com/profile.php?id=61558991602653"
+                  title="honkai impact"
+                  className="footer-link"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -107,7 +115,11 @@ function Footer() {
                 </Link>
               </li>
               <li className="footer-link-item">
-                <Link title="honkai star rail" className="footer-link">
+                <Link
+                  to="https://www.facebook.com/profile.php?id=61558991602653"
+                  title="honkai star rail"
+                  className="footer-link"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -119,7 +131,11 @@ function Footer() {
                 </Link>
               </li>
               <li className="footer-link-item">
-                <Link title="tea of themis" className="footer-link">
+                <Link
+                  to="https://www.facebook.com/profile.php?id=61558991602653"
+                  title="tea of themis"
+                  className="footer-link"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"

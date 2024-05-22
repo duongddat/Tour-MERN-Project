@@ -1,4 +1,5 @@
 import { Typewriter } from "react-simple-typewriter";
+import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -56,16 +57,18 @@ function AboutUsPage() {
                 <strong>HoYoViVu</strong> là nguồn cảm hứng cho mọi chuyến đi
                 của bạn!
               </p>
-              <button className="button">
-                Download my CV
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M4 19H20V12H22V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V12H4V19ZM14 9H19L12 16L5 9H10V3H14V9Z"></path>
-                </svg>
-              </button>
+              <Link to="https://www.facebook.com/profile.php?id=61558991602653">
+                <button className="button">
+                  Go to fanpage
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M8 7V11L2 6L8 1V5H13C17.4183 5 21 8.58172 21 13C21 17.4183 17.4183 21 13 21H4V19H13C16.3137 19 19 16.3137 19 13C19 9.68629 16.3137 7 13 7H8Z"></path>
+                  </svg>
+                </button>
+              </Link>
             </div>
             <div
               className="col-xl-5 col-lg-5 col-md-6 col-12 h-100"
