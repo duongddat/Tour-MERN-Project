@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Form } from "react-router-dom";
 import Select from "react-select";
+import { NumericFormat as NumberFormat } from "react-number-format";
 
 import TourLocationFormAdmin from "./TourLocationFormAdmin";
 import { convertToSelectOptions } from "../../helper/setValueOption";
-import { useDispatch } from "react-redux";
 import { setMessage } from "../../store/message-slice";
 import Spin from "../../components/common/Spin";
 
@@ -17,6 +18,18 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
   const [locations, setLocations] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedOptionCountry, setSelectedOptionCountry] = useState(null);
+  const [price, setPrice] = useState(tour?.price || "");
+  const [priceDiscount, setPriceDiscount] = useState(tour?.priceDiscount || "");
+
+  const handlePriceChange = (values) => {
+    const { value } = values;
+    setPrice(value);
+  };
+
+  const handlePriceDiscountChange = (values) => {
+    const { value } = values;
+    setPriceDiscount(value);
+  };
 
   useEffect(() => {
     if (tour != null) {
@@ -85,7 +98,6 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
     if (updatedImages.length === 0 && inputPhotoRef.current) {
       inputPhotoRef.current.value = null;
     }
-    // setSelectedImages(selectedImages.filter((e) => e !== image));
   }
 
   function handleResetImg() {
@@ -121,8 +133,6 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
       startAddress,
       startDescription,
       title,
-      price,
-      priceDiscount,
       duration,
       maxGroupSize,
       description,
@@ -159,7 +169,7 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
 
     const formData = new FormData();
     formData.append("title", title.value);
-    formData.append("price", price.value);
+    formData.append("price", price);
     formData.append("duration", duration.value);
     formData.append("maxGroupSize", maxGroupSize.value);
     formData.append("description", description.value);
@@ -167,24 +177,15 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
     formData.append("startLocation", JSON.stringify(startLocation));
 
     //Thêm priceDiscount vào formData
-    if (
-      priceDiscount.value &&
-      (priceDiscount.value * 1 >= price.value * 1 ||
-        priceDiscount.value * 1 <= 0)
-    ) {
+    if (priceDiscount && (priceDiscount >= price || priceDiscount <= 0)) {
       dispatch(
         setMessage({ type: "error", message: "Giảm giá không hợp lệ!" })
       );
       return;
     }
 
-    const priceDiscountValue =
-      priceDiscount.value.trim() !== ""
-        ? parseFloat(priceDiscount.value)
-        : null;
-
-    if (priceDiscountValue) {
-      formData.append("priceDiscount", priceDiscount.value * 1);
+    if (priceDiscount) {
+      formData.append("priceDiscount", priceDiscount);
     }
 
     // Thêm imageCover vào formData
@@ -248,13 +249,17 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
             <label htmlFor="price" className="form-label">
               Giá (<span className="text-red">*</span>):
             </label>
-            <input
-              type="number"
+            <NumberFormat
               id="price"
               name="price"
               className="form-control"
               placeholder="Giá tour du lịch"
-              defaultValue={tour != null ? tour.price : ""}
+              value={price}
+              onValueChange={handlePriceChange}
+              thousandSeparator={"."}
+              decimalSeparator={","}
+              suffix={" ₫"}
+              prefix={""}
               required
             />
           </div>
@@ -262,15 +267,17 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
             <label htmlFor="priceDiscount" className="form-label">
               Giám giá:
             </label>
-            <input
-              type="number"
+            <NumberFormat
               id="priceDiscount"
               name="priceDiscount"
               className="form-control"
               placeholder="Giảm giá tour du lịch"
-              defaultValue={
-                tour != null && tour.priceDiscount ? tour.priceDiscount : ""
-              }
+              value={priceDiscount}
+              onValueChange={handlePriceDiscountChange}
+              thousandSeparator={"."}
+              decimalSeparator={","}
+              suffix={" ₫"}
+              prefix={""}
             />
           </div>
           <div className="col-lg-3 col-md-4 col-12">

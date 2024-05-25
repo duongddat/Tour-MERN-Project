@@ -157,7 +157,7 @@ function UserForm({ isLoading, action, user = null }) {
         </div>
         <div className="mb-4">
           <div className="row row-gap-4">
-            <div className="col-lg-3 col-md-4 col-12">
+            <div className="col-lg-4 col-md-4 col-12">
               <label htmlFor="email" className="form-label">
                 Số điện thoại:
               </label>
@@ -171,7 +171,7 @@ function UserForm({ isLoading, action, user = null }) {
                 disabled={user && user._id !== userInfo._id}
               />
             </div>
-            <div className="col-lg-9 col-md-8 col-12">
+            <div className="col-lg-8 col-md-8 col-12">
               <label htmlFor="email" className="form-label">
                 Địa chỉ:
               </label>

@@ -43,7 +43,7 @@ function BlogPage() {
           <div>
             <Subtitle subtitle="Blog~" />
             <h4 className="header__title">
-              Khám phá Sự đặt sắc và
+              Khám phá Sự đặc sắc và
               <br /> Cập nhật tin tức mới nhất
             </h4>
           </div>

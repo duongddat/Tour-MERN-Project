@@ -170,7 +170,7 @@ exports.getTourBySearch = catchAsync(async (req, res, next) => {
   //Lọc các query còn lại
   const additionalQueries = {};
   for (const param in req.query) {
-    if (!["key", "duration", "maxGroupSize"].includes(param)) {
+    if (!["key", "maxGroupSize"].includes(param)) {
       additionalQueries[param] = req.query[param];
     }
   }
