@@ -7,6 +7,10 @@ import "aos/dist/aos.css";
 import AboutGif from "../../assets/img/about.gif";
 import CurveImg from "../../assets/img/curve.png";
 import AboutSocail from "../../assets/img/about-travel.png";
+import AboutImg1 from "../../assets/img/about-1.png";
+import AboutImg2 from "../../assets/img/about-2.png";
+import AboutImg3 from "../../assets/img/about-3.png";
+import AboutImg4 from "../../assets/img/about-4.png";
 import Subtitle from "../../shared/Subtitle";
 import "./AboutUsPage.css";
 
@@ -243,26 +247,10 @@ function AboutUsPage() {
         </div>
         <div className="container container-medium" data-aos="zoom-in">
           <div className="list-avatars">
-            <img
-              className="avatar"
-              src="https://th.bing.com/th/id/OIP.XWua3DEYQ4JUm4RNAmMFlQHaFw?w=252&h=196&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-              alt=""
-            />
-            <img
-              className="avatar"
-              src="https://th.bing.com/th/id/OIP.Kt7YMRY3bvp5nqYx5GdU8QAAAA?w=178&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
-              alt=""
-            />
-            <img
-              className="avatar"
-              src="https://upload-os-bbs.hoyolab.com/upload/2023/08/04/921bce1dc71298dfa276e8c0d62832c6_605766907701501849.png"
-              alt=""
-            />
-            <img
-              className="avatar"
-              src="https://picfiles.alphacoders.com/588/thumb-1920-588886.png"
-              alt=""
-            />
+            <img className="avatar" src={AboutImg1} alt="about-img 1" />
+            <img className="avatar" src={AboutImg2} alt="about-img 2" />
+            <img className="avatar" src={AboutImg3} alt="about-img 3" />
+            <img className="avatar" src={AboutImg4} alt="about-img 4" />
             <img
               className="avatar"
               src="https://upload-os-bbs.hoyolab.com/upload/2022/07/29/df4e97e5d0ec3a1d99e93744be626546_260853733117766352.png"
