@@ -2,7 +2,7 @@
 import { defer, json } from "react-router-dom";
 
 async function loaderTour(requestUrl) {
-  const response = await fetch("http://localhost:8080/tours/" + requestUrl);
+  const response = await fetch("http://localhost:8080/tours" + requestUrl);
 
   if (!response.ok) {
     throw json(

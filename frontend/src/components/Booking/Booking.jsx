@@ -30,6 +30,9 @@ function Booking({ tour }) {
   }, [totalPrice, discountPercentage]);
 
   function handleChangeAmount(event) {
+    if (event.target.value < 0) {
+      event.target.value = 1;
+    }
     setAmount(event.target.value);
   }
 
@@ -221,6 +224,7 @@ function Booking({ tour }) {
                 placeholder="Nhập số lượng"
                 id="guestSize"
                 name="guestSize"
+                min={1}
                 onChange={(event) => handleChangeAmount(event)}
                 required
               />

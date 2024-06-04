@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "./FilterTour.css";
 
-function FilterTour({ countries }) {
+function FilterTour({ countries, onReset }) {
   return (
     <div className="card card-filter">
       <div className="card-padding title-filter">
@@ -15,6 +15,7 @@ function FilterTour({ countries }) {
               isActive ? "active-country" : undefined
             }
             end
+            onClick={onReset}
           >
             Tất cả
           </NavLink>
@@ -27,6 +28,7 @@ function FilterTour({ countries }) {
                 className={({ isActive }) =>
                   isActive ? "active-country" : undefined
                 }
+                onClick={onReset}
               >
                 {country.name}
               </NavLink>

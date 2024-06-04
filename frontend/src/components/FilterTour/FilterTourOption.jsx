@@ -1,15 +1,16 @@
-import { useState } from "react";
-
 import "./FilterTour.css";
 
-function FilterTourOption({ onFilter }) {
-  const [ratingFilter, setRatingFilter] = useState("");
-  const [durationFilter, setDurationFilter] = useState("");
-
+function FilterTourOption({
+  onFilter,
+  ratingFilter,
+  setRatingFilter,
+  durationFilter,
+  setDurationFilter,
+}) {
   function handleReset() {
     setRatingFilter("");
     setDurationFilter("");
-    onFilter("", "");
+    onFilter("resetFilter");
   }
 
   return (
@@ -25,55 +26,54 @@ function FilterTourOption({ onFilter }) {
       <div className="card-padding card-filter-detail">
         <div className="md">Xếp hạng sao</div>
         <label
-          id="lte3"
+          id="ratingsAverage[lte]=3"
           className="checkbox_container"
           onClick={() => {
-            setRatingFilter("lte3");
-            onFilter("ratingsAverage", "ratingsAverage[lte]=3");
+            setRatingFilter("ratingsAverage[lte]=3");
+            onFilter("rating", "ratingsAverage[lte]=3");
           }}
         >
           <input
-            id="lt3"
+            id="ratingsAverage[lte]=3"
             type="radio"
             name="rating"
-            checked={ratingFilter === "lte3"}
+            checked={ratingFilter === "ratingsAverage[lte]=3"}
             onChange={() => {}}
           />
           <div className="sm">{`<= 3 sao`}</div>
         </label>
         <label
-          id="gte3&lte4"
+          id="ratingsAverage[gte]=3&ratingsAverage[lte]=4"
           className="checkbox_container"
           onClick={() => {
-            setRatingFilter("gte3&lte4");
-            onFilter(
-              "ratingsAverage",
-              "ratingsAverage[gte]=3&ratingsAverage[lte]=4"
-            );
+            setRatingFilter("ratingsAverage[gte]=3&ratingsAverage[lte]=4");
+            onFilter("rating", "ratingsAverage[gte]=3&ratingsAverage[lte]=4");
           }}
         >
           <input
-            id="gte3&lte4"
+            id="ratingsAverage[gte]=3&ratingsAverage[lte]=4"
             type="radio"
             name="rating"
-            checked={ratingFilter === "gte3&lte4"}
+            checked={
+              ratingFilter === "ratingsAverage[gte]=3&ratingsAverage[lte]=4"
+            }
             onChange={() => {}}
           />
           <div className="sm">{`>= 3 sao và <= 4 sao`}</div>
         </label>
         <label
-          id="gte4"
+          id="ratingsAverage[gte]=4"
           className="checkbox_container"
           onClick={() => {
-            setRatingFilter("gte4");
-            onFilter("ratingsAverage", "ratingsAverage[gte]=4");
+            setRatingFilter("ratingsAverage[gte]=4");
+            onFilter("rating", "ratingsAverage[gte]=4");
           }}
         >
           <input
-            id="gte4"
+            id="ratingsAverage[gte]=4"
             type="radio"
             name="rating"
-            checked={ratingFilter === "gte4"}
+            checked={ratingFilter === "ratingsAverage[gte]=4"}
             onChange={() => {}}
           />
           <div className="sm">{`>= 4 sao`}</div>
@@ -82,35 +82,35 @@ function FilterTourOption({ onFilter }) {
       <div className="card-padding card-filter-detail">
         <div className="md">Xếp hạng thời lượng</div>
         <label
-          id="lte5"
+          id="duration[lte]=5"
           className="checkbox_container"
           onClick={() => {
-            setDurationFilter("lte5");
+            setDurationFilter("duration[lte]=5");
             onFilter("duration", "duration[lte]=5");
           }}
         >
           <input
-            id="lte5"
+            id="duration[lte]=5"
             type="radio"
             name="duration"
-            checked={durationFilter === "lte5"}
+            checked={durationFilter === "duration[lte]=5"}
             onChange={() => {}}
           />
           <div className="sm">{`<= 5 ngày`}</div>
         </label>
         <label
-          id="gte5"
+          id="duration[gte]=5"
           className="checkbox_container"
           onClick={() => {
-            setDurationFilter("gte5");
+            setDurationFilter("duration[gte]=5");
             onFilter("duration", "duration[gte]=5");
           }}
         >
           <input
-            id="gte5"
+            id="duration[gte]=5"
             type="radio"
             name="duration"
-            checked={durationFilter === "gte5"}
+            checked={durationFilter === "duration[gte]=5"}
             onChange={() => {}}
           />
           <div className="sm">{`>= 5 ngày`}</div>

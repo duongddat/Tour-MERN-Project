@@ -149,7 +149,7 @@ exports.bookingGuideStatistics = catchAsync(async (req, res, next) => {
     {
       $match: {
         "tourInfo.guides": req.user._id,
-        createdAt: {
+        bookAt: {
           $gte: new Date(currentYear, 0, 1),
           $lt: new Date(currentYear + 1, 0, 1),
         },
@@ -158,7 +158,7 @@ exports.bookingGuideStatistics = catchAsync(async (req, res, next) => {
     },
     {
       $group: {
-        _id: { $month: "$createdAt" },
+        _id: { $month: "$bookAt" },
         totalBookings: { $sum: 1 },
       },
     },
@@ -210,7 +210,7 @@ exports.revenueStatistics = catchAsync(async (req, res, next) => {
   if (year) {
     const startOfYear = moment().year(year).startOf("year");
     const endOfYear = moment(startOfYear).endOf("year");
-    query.bookAt = {
+    query.createdAt = {
       $gte: startOfYear.toDate(),
       $lte: endOfYear.toDate(),
     };
@@ -218,7 +218,7 @@ exports.revenueStatistics = catchAsync(async (req, res, next) => {
     // If the provided year is the current year, include months up to the current month
     if (parseInt(year) === moment().year()) {
       const currentMonth = moment().month() + 1; // Get the current month (January is 0)
-      query.bookAt.$lte = moment()
+      query.createdAt.$lte = moment()
         .month(currentMonth - 1)
         .endOf("month")
         .toDate();
@@ -234,7 +234,7 @@ exports.revenueStatistics = catchAsync(async (req, res, next) => {
     },
     {
       $group: {
-        _id: { $month: "$bookAt" },
+        _id: { $month: "$createdAt" },
         totalRevenue: { $sum: "$price" },
         totalBookings: { $sum: 1 },
       },

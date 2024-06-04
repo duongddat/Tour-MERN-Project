@@ -158,8 +158,11 @@ exports.getTourBySearch = catchAsync(async (req, res, next) => {
   };
 
   // Check duration
-  if (duration !== undefined && !isNaN(duration)) {
-    query.duration = { $gte: duration };
+  if (req.query.duration !== undefined) {
+    const duration = Number(req.query.duration);
+    if (!isNaN(duration)) {
+      query.duration = { $lte: duration };
+    }
   }
 
   // Check maxGroupSize
@@ -168,9 +171,13 @@ exports.getTourBySearch = catchAsync(async (req, res, next) => {
   }
 
   //Lọc các query còn lại
-  const additionalQueries = {};
+  let additionalQueries = {};
+  const excludeParams = query.duration
+    ? ["key", "maxGroupSize", "duration"]
+    : ["key", "maxGroupSize"];
+
   for (const param in req.query) {
-    if (!["key", "maxGroupSize"].includes(param)) {
+    if (!excludeParams.includes(param)) {
       additionalQueries[param] = req.query[param];
     }
   }

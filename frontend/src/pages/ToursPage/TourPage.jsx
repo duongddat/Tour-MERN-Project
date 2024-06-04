@@ -7,12 +7,17 @@ import TourDropDown from "../../components/common/TourDropDown";
 import TourListPagination from "../../components/Tours/TourListPagination";
 import TourFilter from "../../components/common/TourFilter";
 import "./TourPage.css";
-// import { sortTourHTTP } from "../../https";
 
 const defaultSort = {
   name: "",
   path: "",
 };
+
+const getSessionStorage = (key, defaultValue) => {
+  const saved = sessionStorage.getItem(key);
+  return saved ? JSON.parse(saved) : defaultValue;
+};
+
 export default function TourPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,8 +25,28 @@ export default function TourPage() {
   const [loading, setLoading] = useState(false);
   const [tourData, setTourData] = useState([]);
   const [isShowDropDown, setIsShowDropDown] = useState(false);
-  const [sortTour, setSortTour] = useState(defaultSort);
+  const [sortTour, setSortTour] = useState(
+    getSessionStorage("sortTour", defaultSort)
+  );
+  const [ratingFilter, setRatingFilter] = useState(
+    getSessionStorage("ratingFilter", "")
+  );
+  const [durationFilter, setDurationFilter] = useState(
+    getSessionStorage("durationFilter", "")
+  );
   const listRef = useRef(null);
+
+  useEffect(() => {
+    sessionStorage.setItem("sortTour", JSON.stringify(sortTour));
+  }, [sortTour]);
+
+  useEffect(() => {
+    sessionStorage.setItem("ratingFilter", JSON.stringify(ratingFilter));
+  }, [ratingFilter]);
+
+  useEffect(() => {
+    sessionStorage.setItem("durationFilter", JSON.stringify(durationFilter));
+  }, [durationFilter]);
 
   function handleScrollTopList() {
     const topPosition = listRef.current.offsetTop;
@@ -52,8 +77,9 @@ export default function TourPage() {
       name,
       path,
     });
+    name !== "" && UpdateQuery("sort", path);
+    name == "" && UpdateQuery("resetSort");
     handleToggleFilter();
-    handleSort(path);
   }
 
   function handleSortTourDecrease() {
@@ -68,59 +94,64 @@ export default function TourPage() {
     handleSortTour("", "");
   }
 
-  //============== Handle Sort===================
-  function handleSort(path) {
-    const currentURL = location.pathname + location.search;
-    const querySort = path;
-
-    if (querySort || querySort === "") {
-      const hasQuery = currentURL.includes("?");
-      const separator = hasQuery ? "&" : "?";
-
-      let sortUrl = currentURL;
-
-      if (querySort !== "") {
-        const sortRegex = /(\?|&)sort=([^&]+)/;
-        const sortMatch = sortUrl.match(sortRegex);
-
-        if (sortMatch) {
-          sortUrl = sortUrl.replace(sortRegex, `$1${querySort}`);
-        } else {
-          sortUrl += separator + querySort;
-        }
-      } else {
-        const sortRegex = /(\?|&)sort=([^&]+)/;
-        sortUrl = sortUrl.replace(sortRegex, "");
-      }
-
-      navigate(sortUrl);
-    }
+  function handleReset() {
+    handleNoSort();
+    setDurationFilter("");
+    setRatingFilter("");
   }
 
-  //===============Handle Filter==============
-  function handleFilter(paramName, paramValue) {
-    let currentURL = location.pathname + location.search;
+  //============== Handle Filter & Sort Option=================
+  function UpdateQuery(name = "", value = "") {
+    let queryOptions = [];
 
-    if (!paramName) {
-      currentURL = currentURL.replace(
-        /(\?|&)(ratingsAverage|duration)(\[lte\]|\[gte\])=([^&]+)/g,
-        ""
-      );
-      navigate(currentURL);
-      return;
+    if (name !== "resetSort" && (name === "sort" || ratingFilter !== "")) {
+      queryOptions.push(name === "sort" ? value : sortTour.path);
     }
-    const regex = new RegExp(
-      `(\\?|&)${paramName}(\\[lte\\]|\\[gte\\])=([^&]+)`,
-      "g"
-    );
-    currentURL = currentURL.replace(regex, "$1");
 
-    const hasQuery = currentURL.includes("?");
-    const separator = hasQuery ? "&" : "?";
+    if (name !== "resetFilter") {
+      if (name === "rating" || ratingFilter !== "") {
+        queryOptions.push(name === "rating" ? value : ratingFilter);
+      }
 
-    const filterUrl = currentURL + separator + paramValue;
+      if (name === "duration" || durationFilter !== "") {
+        queryOptions.push(name === "duration" ? value : durationFilter);
+      }
+    }
 
-    navigate(filterUrl);
+    const queryString =
+      queryOptions.length > 0 ? `${queryOptions.join("&")}` : "";
+
+    let querySearch = "";
+
+    const params = new URLSearchParams(location.search);
+    const newParams = new URLSearchParams();
+
+    if (params.has("key")) {
+      newParams.set("key", params.get("key"));
+    }
+
+    if (
+      params.has("duration") &&
+      name !== "duration" &&
+      durationFilter === ""
+    ) {
+      newParams.set("duration", params.get("duration"));
+    }
+
+    if (params.has("maxGroupSize")) {
+      newParams.set("maxGroupSize", params.get("maxGroupSize"));
+    }
+
+    querySearch = newParams.toString();
+
+    let optionURL =
+      location.pathname +
+      (querySearch !== "" || queryString !== "" ? "?" : "") +
+      (querySearch !== "" ? querySearch : "") +
+      (querySearch !== "" && queryString !== "" ? "&" : "") +
+      (queryString !== "" ? queryString : "");
+
+    navigate(optionURL);
   }
 
   return (
@@ -147,7 +178,15 @@ export default function TourPage() {
           <div className="container">
             <div className="row row-gap-5" ref={listRef}>
               <div className="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12">
-                <TourFilter countries={countries} onFilter={handleFilter} />
+                <TourFilter
+                  countries={countries}
+                  onFilter={UpdateQuery}
+                  ratingFilter={ratingFilter}
+                  setRatingFilter={setRatingFilter}
+                  durationFilter={durationFilter}
+                  setDurationFilter={setDurationFilter}
+                  onReset={handleReset}
+                />
               </div>
               <div className="col-xl-9 col-lg-8 col-md-6 col-sm-12 col-12">
                 {loading && (

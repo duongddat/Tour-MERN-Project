@@ -82,6 +82,7 @@ function DiscountForm({ action, isLoading, countries, discount = null }) {
               name="percentage"
               className="form-control"
               placeholder="Nhập phần trăm giảm giá"
+              min={1}
               defaultValue={
                 discount && discount.percentage !== undefined
                   ? discount.percentage

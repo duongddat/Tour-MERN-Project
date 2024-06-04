@@ -290,6 +290,7 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
               name="duration"
               className="form-control"
               placeholder="Thời lượng tour du lịch"
+              min={1}
               defaultValue={tour != null ? tour.duration : ""}
               required
             />
@@ -304,6 +305,7 @@ function TourFormAdmin({ countries, guides, action, isLoading, tour = null }) {
               name="maxGroupSize"
               className="form-control"
               placeholder="Số lượng khách"
+              min={1}
               defaultValue={tour != null ? tour.maxGroupSize : ""}
               required
             />

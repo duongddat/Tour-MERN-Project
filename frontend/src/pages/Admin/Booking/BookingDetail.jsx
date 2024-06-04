@@ -131,7 +131,7 @@ function BookingDetail() {
                         className="form-control"
                         defaultValue={
                           loadedBooking
-                            ? formatDateDefault(loadedBooking.createdAt)
+                            ? formatDateDefault(loadedBooking.bookAt)
                             : ""
                         }
                         disabled
